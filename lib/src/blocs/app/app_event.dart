@@ -56,7 +56,13 @@ class AppState extends Equatable {
         flavor,
       ];
 
-  static AppState fromJson(Map<String, dynamic> json) {}
+  static AppState fromJson(Map<String, dynamic> json) {
+    //TODO
+    return null;
+  }
 
-  Map<String, dynamic> toJson() {}
+  Map<String, dynamic> toJson() {
+    //TODO
+    return null;
+  }
 }

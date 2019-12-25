@@ -7,12 +7,10 @@ class AppHydratedStorageImpl implements HydratedStorage {
   final Box<Map<String, dynamic>> _db;
   final Map<String, dynamic> _storage;
 
-  static Future<HydratedStorage> getInstance() async {
+  static Future<HydratedStorage> getInstance(HiveInterface _hive) async {
     if (_instance != null) {
       return _instance;
     }
-    final HiveInterface _hive = sl.get<HiveInterface>();
-
     final db = await _hive.openBox<Map<String, dynamic>>('AppState');
     final storage = <String, dynamic>{};
 
@@ -39,14 +37,6 @@ class AppHydratedStorageImpl implements HydratedStorage {
     dynamic value,
   ) async {
     await _db.put(key, value);
-    return _storage[key] = value;
-  }
-
-  @override
-  Future<void> writeToTempCache(
-    String key,
-    dynamic value,
-  ) async {
     return _storage[key] = value;
   }
 

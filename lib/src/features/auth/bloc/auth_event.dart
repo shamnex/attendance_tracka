@@ -1,4 +1,3 @@
-import 'package:attendance_tracka/src/model/user_model.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class AuthEvent extends Equatable {
@@ -16,9 +15,8 @@ class Deauthenticate extends AuthEvent {
 }
 
 class Authenticate extends AuthEvent {
-  Authenticate({this.token, this.user});
+  Authenticate({this.token});
   final String token;
-  final User user;
   @override
-  List<Object> get props => [user, token];
+  List<Object> get props => [token];
 }

@@ -6,22 +6,18 @@ import 'package:attendance_tracka/src/flavor.dart';
 import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
 
-abstract class HTTPClient {
-  TokenManager _tokenManager;
-  HTTPClient(
-    Flavor flavor, {
-    TokenManager tokenManager,
-  });
+abstract class AppHTTPClient {
+  AppHTTPClient(Flavor flavor);
   String baseURL;
   Future<Response> get(String url, {bool isGraphQlEndpoint = true});
   Future<Response> post(String endpoint, {@required dynamic body});
   Future<Response> upload(String endpoint, {@required List<File> file, @required dynamic body});
 }
 
-class AppHTTPClient implements HTTPClient {
+class AppHTTPClientImpl implements AppHTTPClient {
   TokenManager _tokenManager;
   Dio _client;
-  AppHTTPClient(
+  AppHTTPClientImpl(
     Flavor flavor, {
     Dio client,
     TokenManager tokenManager,
@@ -82,13 +78,13 @@ class AppHTTPClient implements HTTPClient {
     _client.interceptors.add(InterceptorsWrapper(onRequest: (Options options) async {
       if (!isFileUpload) {
         // options.contentType = ContentType('application', 'json');
-        options.sendTimeout = 25000;
-        options.receiveTimeout = 25000;
+        options.sendTimeout = 10000;
+        options.receiveTimeout = 10000;
       }
       final token = _tokenManager.token ?? await _tokenManager.getToken() ?? '';
-      options.sendTimeout = 25000;
-      options.receiveTimeout = 25000;
-      options.headers["x-access-token"] = token;
+      options.sendTimeout = 10000;
+      options.receiveTimeout = 10000;
+      options.headers["token"] = token;
       return options; //continue
     }));
   }
