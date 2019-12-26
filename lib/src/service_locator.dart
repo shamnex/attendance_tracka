@@ -1,6 +1,7 @@
 import 'package:attendance_tracka/src/core/blocs/bloc_delegate.dart';
 import 'package:attendance_tracka/src/core/blocs/hydrated_storage.dart';
 import 'package:attendance_tracka/src/features/auth/auth_repository.dart';
+import 'package:attendance_tracka/src/features/user/resources/user_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
@@ -11,7 +12,6 @@ import 'core/network/http_client.dart';
 import 'core/network/token_manager.dart';
 import 'features/auth/bloc/auth_bloc.dart';
 import 'features/user/bloc/bloc.dart';
-import 'features/user/user_repository.dart';
 import 'flavor.dart';
 
 final sl = GetIt.instance;
@@ -23,19 +23,20 @@ Future<void> init(Flavor flavor) async {
   sl.registerLazySingleton<HiveInterface>(() => Hive..init(appDocumentDir.path));
   sl.registerLazySingleton(() => Dio());
 
-  //! GLOBAL STATE REPOSITORIES
-  sl.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(sl()));
-  sl.registerLazySingleton<UserRepository>(() => UserRepositoryImpl(sl()));
+  //!CORE STUFFS
+  sl.registerLazySingleton<TokenManager>(() => TokenManagerImpl(sl()));
+  sl.registerLazySingleton<AppHTTPClient>(() => AppHTTPClientImpl(flavor, client: sl(), tokenManager: sl()));
 
-  //!!APP GLOBAL STATE
-  sl.registerLazySingleton<AuthBloc>(() => AuthBloc(sl()));
-  sl.registerLazySingleton<AppBloc>(() => AppBloc(flavor));
-  sl.registerLazySingleton<UserBloc>(() => UserBloc(value: null, repository: sl()));
   //! LOCAL STORAGE STUFFS
   sl.registerLazySingleton<HydratedBlocDelegate>(() => AppBlocDelegate(sl()));
   final storage = await AppHydratedStorageImpl.getInstance(sl());
   sl.registerLazySingleton<HydratedStorage>(() => storage);
-  //!CORE STUFFS
-  sl.registerLazySingleton<TokenManager>(() => TokenManagerImpl(sl()));
-  sl.registerLazySingleton<AppHTTPClient>(() => AppHTTPClientImpl(flavor, client: sl(), tokenManager: sl()));
+
+  //! GLOBAL STATE REPOSITORIES
+  sl.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(sl()));
+  sl.registerLazySingleton<UserRepository>(() => UserRepositoryImpl(sl()));
+  //!!APP GLOBAL STATE
+  sl.registerLazySingleton<AuthBloc>(() => AuthBloc(sl()));
+  sl.registerLazySingleton<AppBloc>(() => AppBloc(flavor));
+  sl.registerLazySingleton<UserBloc>(() => UserBloc(value: null, repository: sl()));
 }

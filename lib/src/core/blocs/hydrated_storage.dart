@@ -1,4 +1,3 @@
-import 'package:attendance_tracka/src/service_locator.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:hive/hive.dart';
 

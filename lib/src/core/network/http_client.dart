@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:attendance_tracka/env/url.dart';
 import 'package:attendance_tracka/src/core/network/token_manager.dart';
-import 'package:attendance_tracka/src/env/url.dart';
 import 'package:attendance_tracka/src/flavor.dart';
 import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
