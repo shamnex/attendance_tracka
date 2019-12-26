@@ -1,10 +1,9 @@
 import 'package:attendance_tracka/src/core/blocs/base_bloc/base_bloc.dart';
 import 'package:attendance_tracka/src/core/blocs/base_bloc/base_bloc_event.dart';
 import 'package:attendance_tracka/src/core/model/base_model.dart';
-import 'package:attendance_tracka/src/core/network/http_error_handler.dart';
+import 'package:attendance_tracka/src/core/network/http_error_helper.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
-
 import 'base_bloc_state.dart';
 
 class BaseBlocHydrated<T extends BaseModel> extends HydratedBloc<BaseBlocEvent<T>, BaseBlocState<T>>
@@ -57,6 +56,7 @@ class BaseBlocHydrated<T extends BaseModel> extends HydratedBloc<BaseBlocEvent<T
         errorMessage: json['errorMessage'],
         loading: json['loading'],
         isDummy: json['isDummy'],
+        //!TODO Built_Value should help in Jesus Name
         value: (json['value']),
       );
     } catch (_) {

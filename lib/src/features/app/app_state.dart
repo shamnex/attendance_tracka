@@ -1,7 +1,9 @@
-import 'package:attendance_tracka/src/blocs/app/model/app_mode.dart';
 import 'package:attendance_tracka/src/flavor.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
+
+import 'model/app_mode.dart';
+import 'model/app_theme.dart';
 
 @JsonSerializable()
 class AppState extends Equatable {
@@ -9,27 +11,31 @@ class AppState extends Equatable {
   final bool loading;
   final Flavor flavor;
   final AppMode mode;
+  final AppTheme theme;
   final bool hasCompletedWalkThrough;
 
-  AppState({
-    this.mode = AppMode.organizer,
-    this.hasOnboarded = false,
-    this.hasCompletedWalkThrough = false,
-    this.loading = false,
-    this.flavor,
-  }) : assert(flavor != null);
+  AppState(
+      {this.mode = AppMode.organizer,
+      this.hasOnboarded = false,
+      this.hasCompletedWalkThrough = false,
+      this.loading = false,
+      this.flavor,
+      this.theme = AppTheme.OrangeLight})
+      : assert(flavor != null);
 
   AppState copyWith({
     bool hasOnboarded,
     bool hasCompletedWalkThrough,
     bool loading,
     AppMode mode,
-    bool isFirstTime,
+    Flavor flavor,
+    AppTheme theme,
   }) {
     return AppState(
       loading: loading ?? this.loading,
-      flavor: this.flavor,
+      flavor: flavor ?? this.flavor,
       mode: mode ?? this.mode,
+      theme: theme ?? this.theme,
       hasOnboarded: hasOnboarded ?? this.hasOnboarded,
       hasCompletedWalkThrough: hasCompletedWalkThrough ?? this.hasCompletedWalkThrough,
     );
@@ -57,12 +63,13 @@ class AppState extends Equatable {
       ];
 
   static AppState fromJson(Map<String, dynamic> json) {
-    //TODO
+    //TODO implement Built Value
+
     return null;
   }
 
   Map<String, dynamic> toJson() {
-    //TODO
+    //TODO implement Built Value
     return null;
   }
 }

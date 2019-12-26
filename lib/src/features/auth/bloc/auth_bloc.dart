@@ -1,4 +1,4 @@
-import 'package:attendance_tracka/src/core/network/http_error_handler.dart';
+import 'package:attendance_tracka/src/core/network/http_error_helper.dart';
 import 'package:attendance_tracka/src/features/auth/auth_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';

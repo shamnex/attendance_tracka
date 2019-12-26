@@ -1,5 +1,6 @@
 import 'package:attendance_tracka/src/core/blocs/bloc_delegate.dart';
 import 'package:attendance_tracka/src/core/blocs/hydrated_storage.dart';
+import 'package:attendance_tracka/src/features/app/app_bloc.dart';
 import 'package:attendance_tracka/src/features/auth/auth_repository.dart';
 import 'package:attendance_tracka/src/features/user/resources/user_repository.dart';
 import 'package:dio/dio.dart';
@@ -7,7 +8,6 @@ import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
-import 'blocs/app/app_bloc.dart';
 import 'core/network/http_client.dart';
 import 'core/network/token_manager.dart';
 import 'features/auth/bloc/auth_bloc.dart';

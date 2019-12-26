@@ -1,5 +1,5 @@
 import 'package:attendance_tracka/src/core/model/base_model.dart';
-import 'package:attendance_tracka/src/core/network/http_error_handler.dart';
+import 'package:attendance_tracka/src/core/network/http_error_helper.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 
