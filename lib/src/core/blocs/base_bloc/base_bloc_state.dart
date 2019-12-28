@@ -1,59 +1,44 @@
+library base_bloc_state;
+
+import 'package:attendance_tracka/src/core/built_value/serializers.dart';
 import 'package:attendance_tracka/src/core/model/base_model.dart';
-import 'package:equatable/equatable.dart';
+import 'dart:convert';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
 
-class BaseBlocState<T extends BaseModel> extends Equatable {
-  final bool loading;
-  final bool isDummy;
-  final String errorMessage;
-  final T value;
+part 'base_bloc_state.g.dart';
 
-  const BaseBlocState({
-    this.loading = false,
-    this.isDummy = false,
-    this.errorMessage = '',
-    this.value,
-  });
+abstract class BaseBlocState<T extends BaseModel> implements Built<BaseBlocState<T>, BaseBlocStateBuilder<T>> {
+  bool get loading;
+  bool get isDummy;
+  String get errorMessage;
+  @nullable
+  T get value;
+
+  BaseBlocState._();
+
+  factory BaseBlocState([updates(BaseBlocStateBuilder<T> b)]) = _$BaseBlocState<T>;
+
+  String toJson() {
+    return json.encode(serializers.serializeWith(BaseBlocState.serializer, this));
+  }
 
   bool get hasError => errorMessage.isNotEmpty;
   bool get hasValue => value != null && (value?.id != null ?? false || value?.createdAt != null);
 
-  BaseBlocState<T> copyWith({
-    bool loading,
-    bool isDummy,
-    T value,
-    String errorMessage,
-  }) {
-    return BaseBlocState<T>(
-      loading: loading ?? this.loading,
-      isDummy: isDummy ?? this.isDummy,
-      errorMessage: errorMessage ?? this.errorMessage,
-      value: value ?? this.value,
-    );
+  static BaseBlocState fromJson(String jsonString) {
+    return serializers.deserializeWith(BaseBlocState.serializer, json.decode(jsonString));
   }
 
   BaseBlocState<T> clear() {
     return BaseBlocState<T>(
-      loading: false,
-      isDummy: false,
-      errorMessage: '',
-      value: null,
+      (b) => b
+        ..loading = false
+        ..isDummy = false
+        ..errorMessage = ''
+        ..value = null,
     );
   }
 
-  @override
-  List<Object> get props => [
-        loading,
-        ...?value.toJson().values.toList()..removeWhere((value) => value == null),
-        hasError,
-        isDummy,
-        errorMessage,
-        hasError,
-      ];
-
-  @override
-  String toString() => '''
-  loading: $loading ,
-  error: $errorMessage , 
-  value: $value,
-  isDummy: $isDummy   }''';
+  static Serializer<BaseBlocState> get serializer => _$baseBlocStateSerializer;
 }

@@ -1,7 +1,6 @@
 import 'package:attendance_tracka/src/core/network/http_client.dart';
 import 'package:attendance_tracka/src/features/user/model/user_model.dart';
 
-
 abstract class UserRepository {
   Future<User> signup();
   Future<User> login();

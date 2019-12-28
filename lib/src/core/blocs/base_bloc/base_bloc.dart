@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'base_bloc_event.dart';
 import 'base_bloc_state.dart';
 
+typedef S ItemCreator<S extends BaseModel>(Map json);
+
 abstract class BaseBloc<T extends BaseModel> extends Bloc<BaseBlocEvent<T>, BaseBlocState<T>> with DioErrorHelper {
   @mustCallSuper
   BaseBlocState<T> get initialState;
@@ -26,6 +28,7 @@ abstract class BaseBloc<T extends BaseModel> extends Bloc<BaseBlocEvent<T>, Base
   String get id;
 
   T get value;
+  ItemCreator get builder;
 
   BaseBlocState<T> fromJson(Map<String, dynamic> json);
   Map<String, dynamic> toJson(BaseBlocState<T> state);

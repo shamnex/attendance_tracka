@@ -1,23 +1,41 @@
+library user_model;
+
+import 'package:attendance_tracka/src/core/built_value/serializers.dart';
 import 'package:attendance_tracka/src/core/model/base_model.dart';
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
 
-class User extends BaseModel {
-  final String firstName;
-  final String lastName;
-  final UserType type;
-  User({this.firstName, this.lastName, this.type});
+part 'user_model.g.dart';
 
-  @override
-  User fromJson(Map<String, dynamic> json) {
-    return null;
+abstract class User with BaseModel implements Built<User, UserBuilder> {
+  String get firstName;
+  String get lastName;
+  String get id;
+  DateTime get createdAt;
+  UserType get type;
+  User._();
+
+  factory User([updates(UserBuilder b)]) = _$User;
+  static Serializer<User> get serializer => _$userSerializer;
+
+  Map<String, dynamic> toJson() {
+    return serializers.serializeWith(User.serializer, this);
   }
 
-  @override
-  List<Object> get props => [firstName, lastName, type];
-
-  @override
-  Map<String, dynamic> toJson() {
-    return null;
+  static User fromJson(Map<String, dynamic> json) {
+    return serializers.deserializeWith(User.serializer, json);
   }
 }
 
-enum UserType { participant, organizer, volunteers }
+class UserType extends EnumClass {
+  static const UserType participant = _$participant;
+  static const UserType organizer = _$organizer;
+  static const UserType volunteers = _$volunteer;
+
+  const UserType._(String name) : super(name);
+
+  static BuiltSet<UserType> get values => _$values;
+  static UserType valueOf(String name) => _$valueOf(name);
+  static Serializer<UserType> get serializer => _$userTypeSerializer;
+}

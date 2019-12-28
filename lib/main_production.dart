@@ -1,4 +1,4 @@
-import 'package:attendance_tracka/src/features/app/app_bloc.dart';
+import 'package:attendance_tracka/src/features/app/bloc/app_bloc.dart';
 import 'package:attendance_tracka/src/features/app/screens/app.dart';
 import 'package:attendance_tracka/src/features/user/bloc/bloc.dart';
 import 'package:attendance_tracka/src/flavor.dart';

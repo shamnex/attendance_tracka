@@ -3,14 +3,14 @@ import 'package:hive/hive.dart';
 
 class AppHydratedStorageImpl implements HydratedStorage {
   static AppHydratedStorageImpl _instance;
-  final Box<Map<String, dynamic>> _db;
+  final LazyBox<Map<String, dynamic>> _db;
   final Map<String, dynamic> _storage;
 
   static Future<HydratedStorage> getInstance(HiveInterface _hive) async {
     if (_instance != null) {
       return _instance;
     }
-    final db = await _hive.openBox<Map<String, dynamic>>('AppState');
+    final db = await _hive.openLazyBox<Map<String, dynamic>>('AppState');
     final storage = <String, dynamic>{};
 
     if (db.isNotEmpty) {

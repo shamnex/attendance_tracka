@@ -6,7 +6,7 @@ import 'package:attendance_tracka/src/features/user/resources/user_repository.da
 import 'package:dio/dio.dart';
 
 class UserBloc extends BaseBlocHydrated<User> {
-  UserBloc({User value, this.repository}) : super(value);
+  UserBloc({User value, this.repository}) : super(value, (json) => User.fromJson(json));
 
   final UserRepository repository;
 
@@ -20,9 +20,13 @@ class UserBloc extends BaseBlocHydrated<User> {
 
     try {
       if (event is GetUser) {
-        yield state.copyWith(loading: true, errorMessage: '');
+        yield state.rebuild((b) => b
+          ..loading = true
+          ..errorMessage = '');
         final user = await repository.login();
-        yield state.copyWith(value: user, loading: false);
+        yield state.rebuild((b) => b
+          ..value = user
+          ..loading = false);
       }
 
       if (event is RemoveUser) {
@@ -30,7 +34,7 @@ class UserBloc extends BaseBlocHydrated<User> {
         yield state.clear();
       }
     } on DioError catch (e) {
-      yield state.copyWith(errorMessage: handleNetworkError(e));
+      yield state.rebuild((b) => b..errorMessage = handleNetworkError(e));
     } catch (e) {
       print(e.toString());
     }
