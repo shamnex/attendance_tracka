@@ -1,10 +1,8 @@
 import 'package:attendance_tracka/flavor/flavor.dart';
 
-
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'app_event.dart';
 import 'app_state.dart';
-// import 'package:rxdart/o.dart';
 
 class AppBloc extends HydratedBloc<AppEvent, AppState> {
   AppBloc(Flavor flavor) : _flavor = flavor;
@@ -14,7 +12,7 @@ class AppBloc extends HydratedBloc<AppEvent, AppState> {
   //   Stream<AppEvent> events,
   //   Stream<AppState> Function(AppEvent event) next,
   // ) {
-  //   return super.transformEvents((events as Observable<AppEvent>).debounceTime(Duration(milliseconds: 300)), next);
+  //   return super.transformEvents(events.debounceTime(Duration(milliseconds: 300)), next);
   // }
 
   Flavor _flavor;
@@ -33,7 +31,7 @@ class AppBloc extends HydratedBloc<AppEvent, AppState> {
       yield state.rebuild((b) => b..hasCompletedWalkThrough = true);
     }
     if (event is HasOnboarded) {
-      yield state.rebuild((b) => b..hasOnboarded = true);
+      yield state.rebuild((b) => b..hasOnboarded = !b.hasOnboarded);
     }
   }
 

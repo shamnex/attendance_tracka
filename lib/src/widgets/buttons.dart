@@ -5,13 +5,19 @@ class AppButton extends StatefulWidget {
   final Function onPressed;
   final Widget child;
   final bool loading;
+  final bool _isWhite;
+
+  AppButton.white({Key key, this.onPressed, this.child, this.loading})
+      : _isWhite = true,
+        super(key: key);
 
   AppButton({
     Key key,
     this.loading,
     this.onPressed,
     this.child,
-  }) : super(key: key);
+  })  : _isWhite = false,
+        super(key: key);
 
   @override
   _AppButtonState createState() => _AppButtonState();
@@ -37,7 +43,6 @@ class _AppButtonState extends State<AppButton> {
           ]),
         ),
         Container(
-          margin: EdgeInsets.symmetric(horizontal: 16),
           alignment: Alignment.center,
           child: ClipRRect(
             borderRadius: BorderRadius.all(Radius.circular(60)),
@@ -45,7 +50,7 @@ class _AppButtonState extends State<AppButton> {
               child: FlatButton(
                 splashColor: Colors.transparent,
                 onPressed: widget.onPressed,
-                color: Colors.transparent,
+                color: widget._isWhite ? Colors.white : Colors.transparent,
                 child: widget.child,
               ),
             ),
@@ -53,11 +58,13 @@ class _AppButtonState extends State<AppButton> {
           height: kToolbarHeight,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(60)),
-              gradient: LinearGradient(begin: Alignment(-1.0, 1.0), end: Alignment.bottomRight, colors: [
-                AppColors.secondary,
-                AppColors.primary,
-                AppColors.primary,
-              ])),
+              gradient: widget._isWhite
+                  ? null
+                  : LinearGradient(begin: Alignment.topLeft.add(Alignment(.4, 0)), end: Alignment.bottomRight, colors: [
+                      AppColors.secondary.shade900,
+                      AppColors.primary,
+                      AppColors.primary,
+                    ])),
         ),
       ],
     );

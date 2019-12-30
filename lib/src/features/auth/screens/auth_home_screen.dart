@@ -11,9 +11,11 @@ class AuthHomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async => !await _navigatorKey.currentState.maybePop(),
-      child: Navigator(
-        key: _navigatorKey,
-        onGenerateRoute: AuthRoutes.configureRoutes,
+      child: Material(
+        child: Navigator(
+          key: _navigatorKey,
+          onGenerateRoute: AuthRoutes.configureRoutes,
+        ),
       ),
     );
   }

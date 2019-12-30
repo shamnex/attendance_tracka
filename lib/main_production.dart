@@ -25,12 +25,7 @@ void main() async {
         BlocProvider<AuthBloc>(create: (_) => di.sl.get<AuthBloc>()..add(BeginAuthentication())),
         BlocProvider<UserBloc>(create: (_) => di.sl.get<UserBloc>()),
       ],
-      child: Builder(builder: (context) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          home: const App(),
-        );
-      }),
+      child: const App(),
     ),
   );
 }

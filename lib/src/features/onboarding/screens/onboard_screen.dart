@@ -1,7 +1,7 @@
 import 'package:attendance_tracka/src/constants/colors.dart';
+import 'package:attendance_tracka/src/constants/paddings.dart';
 import 'package:attendance_tracka/src/features/app/bloc/app_bloc.dart';
 import 'package:attendance_tracka/src/features/app/bloc/app_event.dart';
-import 'package:attendance_tracka/src/features/app/model/app_theme.dart';
 import 'package:attendance_tracka/src/widgets/buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -84,10 +84,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
                 ),
                 const Spacer(),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                  padding: AppPaddings.body,
                   child: AppButton(
                     onPressed: () {
-                      BlocProvider.of<AppBloc>(context).add(ThemeChanged(theme: AppTheme.OrangeDark));
+                      BlocProvider.of<AppBloc>(context).add(HasOnboarded());
                     },
                     child: Text(
                       'Get Started'.toUpperCase(),
@@ -97,7 +97,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
                 ),
                 const Spacer(),
                 FlatButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    BlocProvider.of<AppBloc>(context).add(HasOnboarded());
+                  },
                   child: Text(
                     'Skip',
                     style: Theme.of(context).textTheme.button.copyWith(color: AppColors.secondary.shade200),

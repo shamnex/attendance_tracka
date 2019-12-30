@@ -8,7 +8,7 @@ part 'app_mode.g.dart';
 
 class AppMode extends EnumClass {
   static const AppMode organizer = _$organizer;
-  static const AppMode volunteers = _$volunteer;
+  static const AppMode volunteer = _$volunteer;
 
   const AppMode._(String name) : super(name);
 

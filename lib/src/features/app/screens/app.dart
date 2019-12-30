@@ -17,11 +17,11 @@ class App extends StatelessWidget {
         showSemanticsDebugger: false,
         theme: appThemeData[appState.theme],
         onGenerateRoute: AppRoutes.router,
-        builder: (context, home) {
-          return AnimatedSwitcher(
-              duration: Duration(milliseconds: 1000),
-              child: appState.hasOnboarded ? const WelcomeScreen() : const OnboardingScreen());
-        },
+        home: AnimatedSwitcher(
+            switchInCurve: Curves.easeIn,
+            switchOutCurve: Curves.easeIn,
+            duration: Duration(milliseconds: 400),
+            child: appState.hasOnboarded ? const WelcomeScreen() : const OnboardingScreen()),
       );
     });
   }
