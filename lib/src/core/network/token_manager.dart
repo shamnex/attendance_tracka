@@ -10,13 +10,14 @@ abstract class TokenManager {
 
 class TokenManagerImpl implements TokenManager {
   TokenManagerImpl(HiveInterface hive) : _hive = hive;
+  var key = Hive.generateSecureKey();
   static String _tokenKey = 'token';
   final HiveInterface _hive;
   String token;
-  Box<String> db;
+  LazyBox<String> db;
 
   init() async {
-    db = await _hive.openBox<String>(_tokenKey);
+    db = await _hive.openLazyBox<String>(_tokenKey, encryptionKey: key);
   }
 
   @override
@@ -28,7 +29,7 @@ class TokenManagerImpl implements TokenManager {
   @override
   Future<String> getToken() async {
     if (db == null) await init();
-    token = db.get(_tokenKey);
+    token = await db.get(_tokenKey);
     return token;
   }
 

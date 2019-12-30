@@ -1,6 +1,7 @@
+import 'package:attendance_tracka/flavor/flavor.dart';
 import 'package:attendance_tracka/src/core/blocs/bloc_delegate.dart';
 import 'package:attendance_tracka/src/core/blocs/hydrated_storage.dart';
-import 'package:attendance_tracka/src/features/app/app_bloc.dart';
+import 'package:attendance_tracka/src/features/app/bloc/app_bloc.dart';
 import 'package:attendance_tracka/src/features/auth/auth_repository.dart';
 import 'package:attendance_tracka/src/features/user/resources/user_repository.dart';
 import 'package:dio/dio.dart';
@@ -12,7 +13,6 @@ import 'core/network/http_client.dart';
 import 'core/network/token_manager.dart';
 import 'features/auth/bloc/auth_bloc.dart';
 import 'features/user/bloc/bloc.dart';
-import 'flavor.dart';
 
 final sl = GetIt.instance;
 
@@ -26,16 +26,14 @@ Future<void> init(Flavor flavor) async {
   //!CORE STUFFS
   sl.registerLazySingleton<TokenManager>(() => TokenManagerImpl(sl()));
   sl.registerLazySingleton<AppHTTPClient>(() => AppHTTPClientImpl(flavor, client: sl(), tokenManager: sl()));
-
   //! LOCAL STORAGE STUFFS
   sl.registerLazySingleton<HydratedBlocDelegate>(() => AppBlocDelegate(sl()));
   final storage = await AppHydratedStorageImpl.getInstance(sl());
   sl.registerLazySingleton<HydratedStorage>(() => storage);
-
-  //! GLOBAL STATE REPOSITORIES
+  //! GLOBAL REPOSITORIES STUFFS
   sl.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(sl()));
   sl.registerLazySingleton<UserRepository>(() => UserRepositoryImpl(sl()));
-  //!!APP GLOBAL STATE
+  //! GLOBAL STATE STUFFS
   sl.registerLazySingleton<AuthBloc>(() => AuthBloc(sl()));
   sl.registerLazySingleton<AppBloc>(() => AppBloc(flavor));
   sl.registerLazySingleton<UserBloc>(() => UserBloc(value: null, repository: sl()));

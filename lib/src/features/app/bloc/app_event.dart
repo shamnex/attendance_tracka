@@ -1,8 +1,6 @@
+import 'package:attendance_tracka/src/features/app/model/app_mode.dart';
+import 'package:attendance_tracka/src/features/app/model/app_theme.dart';
 import 'package:equatable/equatable.dart';
-
-import 'model/app_mode.dart';
-import 'model/app_theme.dart';
-import '../../flavor.dart';
 
 abstract class AppEvent extends Equatable {
   AppEvent();
@@ -10,12 +8,12 @@ abstract class AppEvent extends Equatable {
 
 class HasOnboarded extends AppEvent {
   @override
-  List<Object> get props => [];
+  List<Object> get props => ['HasOnboarded'];
 }
 
 class HasCompletedWalkThrough extends AppEvent {
   @override
-  List<Object> get props => [];
+  List<Object> get props => ['HasCompletedWalkThrough'];
 }
 
 class ThemeChanged extends AppEvent {
@@ -29,5 +27,5 @@ class AppModeChanged extends AppEvent {
   final AppMode mode;
   AppModeChanged({this.mode});
   @override
-  List<Object> get props => [];
+  List<Object> get props => [mode];
 }

@@ -10,24 +10,34 @@ class BaseBlocHydrated<T extends BaseModel> extends HydratedBloc<BaseBlocEvent<T
     with DioErrorHelper
     implements BaseBloc<T> {
   final T _value;
-  BaseBlocHydrated(
-    T value,
-  ) : _value = value;
+  final ItemCreator _builder;
+  BaseBlocHydrated(T value, ItemCreator<T> builder)
+      : _value = value,
+        _builder = builder;
+
+  @override
+  get builder => _builder;
 
   @override
   @mustCallSuper
   get initialState =>
-      super.initialState ?? BaseBlocState<T>(loading: true, isDummy: false, value: _value, errorMessage: '');
+      super.initialState ??
+      BaseBlocState<T>((b) => b
+        ..loading = true
+        ..isDummy = false
+        ..value = _value
+        ..errorMessage = '');
 
   @override
   @mustCallSuper
   Stream<BaseBlocState<T>> mapEventToState(BaseBlocEvent<T> event) async* {
     if (event is UpdateBaseBlocEvent<T>) {
-      yield state.copyWith(
-        loading: event.loading ?? false,
-        errorMessage: event.error,
-        isDummy: event.isDummy,
-        value: event.value,
+      yield state.rebuild(
+        (b) => b
+          ..loading = event.loading ?? false
+          ..errorMessage = event.error
+          ..isDummy = event.isDummy
+          ..value = event.value,
       );
     }
   }
@@ -53,11 +63,11 @@ class BaseBlocHydrated<T extends BaseModel> extends HydratedBloc<BaseBlocEvent<T
   BaseBlocState<T> fromJson(Map<String, dynamic> json) {
     try {
       return BaseBlocState<T>(
-        errorMessage: json['errorMessage'],
-        loading: json['loading'],
-        isDummy: json['isDummy'],
-        //!TODO Built_Value should help in Jesus Name
-        value: (json['value']),
+        (b) => b
+          ..errorMessage = json['errorMessage']
+          ..loading = json['loading']
+          ..isDummy = json['isDummy']
+          ..value = _builder(json),
       );
     } catch (_) {
       return null;

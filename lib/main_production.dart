@@ -1,7 +1,8 @@
-import 'package:attendance_tracka/src/features/app/app_bloc.dart';
+import 'package:attendance_tracka/flavor/flavor.dart';
+import 'package:attendance_tracka/src/features/app/bloc/app_bloc.dart';
 import 'package:attendance_tracka/src/features/app/screens/app.dart';
 import 'package:attendance_tracka/src/features/user/bloc/bloc.dart';
-import 'package:attendance_tracka/src/flavor.dart';
+
 import 'package:attendance_tracka/src/service_locator.dart' as di;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -24,12 +25,7 @@ void main() async {
         BlocProvider<AuthBloc>(create: (_) => di.sl.get<AuthBloc>()..add(BeginAuthentication())),
         BlocProvider<UserBloc>(create: (_) => di.sl.get<UserBloc>()),
       ],
-      child: Builder(builder: (context) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          home: const App(),
-        );
-      }),
+      child: const App(),
     ),
   );
 }
