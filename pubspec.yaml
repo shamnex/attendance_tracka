@@ -31,7 +31,9 @@ dependencies:
    # Value equality
    equatable: ^1.0.1
    #Network Connection
-   data_connection_checker: ^0.3.4
+   connectivity: ^0.4.6+1
+   rxdart: ^0.23.1
+
    dio: ^3.0.7
    # OS specific path
    path_provider: ^1.3.0

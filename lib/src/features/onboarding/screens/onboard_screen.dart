@@ -10,6 +10,7 @@ import 'dart:math' as math;
 import 'package:provider/provider.dart';
 
 class OnboardingScreen extends StatefulWidget {
+  const OnboardingScreen();
   @override
   _OnboardingScreenState createState() => _OnboardingScreenState();
 }
@@ -44,7 +45,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             SizedBox(
-              height: MediaQuery.of(context).size.height * .05,
+              height: MediaQuery.of(context).size.height * .1,
               child: Center(
                 child: Text(
                   'TRACKA',
@@ -56,7 +57,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
               ),
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * .7,
+              height: MediaQuery.of(context).size.height * .65,
               child: PageView(
                 onPageChanged: (index) {
                   setState(() {
@@ -76,21 +77,22 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
             ),
             Expanded(
                 child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                const Spacer(),
                 _BuildIndicators(
                   activeItem: activeIndex,
                   itemCount: onBoardTexts.length,
                 ),
                 const Spacer(),
-                AppButton(
-                  onPressed: () {
-                    BlocProvider.of<AppBloc>(context).add(ThemeChanged(theme: AppTheme.OrangeLight));
-                  },
-                  child: Text(
-                    'Get Started'.toUpperCase(),
-                    style: Theme.of(context).textTheme.button.copyWith(color: Colors.white),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                  child: AppButton(
+                    onPressed: () {
+                      BlocProvider.of<AppBloc>(context).add(ThemeChanged(theme: AppTheme.OrangeDark));
+                    },
+                    child: Text(
+                      'Get Started'.toUpperCase(),
+                      style: Theme.of(context).textTheme.button.copyWith(color: Colors.white),
+                    ),
                   ),
                 ),
                 const Spacer(),
@@ -121,28 +123,18 @@ class _OnboardCard extends StatefulWidget {
 }
 
 class __OnboardCardState extends State<_OnboardCard> with TickerProviderStateMixin {
-  AnimationController animationController;
-  Animation fade;
   @override
   void initState() {
-    animationController = AnimationController(
-      duration: Duration(seconds: 2),
-      reverseDuration: Duration(seconds: 1),
-      vsync: this,
-    );
-    fade = Tween(begin: 0.0, end: 1.0).animate(animationController);
     super.initState();
   }
 
   @override
   void didChangeDependencies() {
-    animationController.forward();
     super.didChangeDependencies();
   }
 
   @override
   void dispose() {
-    animationController.dispose();
     super.dispose();
   }
 
@@ -150,7 +142,6 @@ class __OnboardCardState extends State<_OnboardCard> with TickerProviderStateMix
   Widget build(BuildContext context) {
     double gauss = math.exp(-(math.pow((widget.offset.abs() - 0.5), 2) / 0.08));
     double scale = (1 - (widget.offset.abs() * .5)).clamp(0.8, 1.0);
-    animationController.forward();
 
     return Transform.scale(
       scale: Curves.easeInOut.transform(scale),
@@ -165,16 +156,16 @@ class __OnboardCardState extends State<_OnboardCard> with TickerProviderStateMix
                   Container(
                     margin: EdgeInsets.only(bottom: 40),
                     height: 100,
-                    width: 200,
+                    width: 140,
                     decoration: BoxDecoration(color: Colors.transparent, boxShadow: [
                       BoxShadow(
-                        blurRadius: 40,
+                        blurRadius: 50,
                         color: AppColors.primary.shade900,
                       ),
                     ]),
                   ),
                   Container(
-                    margin: EdgeInsets.only(bottom: 40, left: 8, right: 9),
+                    margin: EdgeInsets.only(bottom: 40, left: 8, right: 8),
                     decoration: BoxDecoration(
                       color: AppColors.primary.shade50,
                       borderRadius: BorderRadius.circular(16), //<--custom shape
@@ -185,7 +176,6 @@ class __OnboardCardState extends State<_OnboardCard> with TickerProviderStateMix
                             //<--clipping image
                             borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
                             child: SizedBox()),
-                        SizedBox(height: 8),
                         Expanded(
                           child: SizedBox.expand(), //<-- will be replaced soon :)
                         ),
@@ -198,7 +188,7 @@ class __OnboardCardState extends State<_OnboardCard> with TickerProviderStateMix
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
               child: Text(
-                'Keep track of loLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation,',
+                widget.text,
                 style: Theme.of(context).textTheme.body2,
                 maxLines: 2,
                 textAlign: TextAlign.center,

@@ -1,4 +1,6 @@
-import 'package:attendance_tracka/src/flavor.dart';
+import 'package:attendance_tracka/flavor/flavor.dart';
+
+
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'app_event.dart';
 import 'app_state.dart';

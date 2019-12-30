@@ -1,3 +1,4 @@
+import 'package:attendance_tracka/flavor/flavor.dart';
 import 'package:attendance_tracka/src/core/blocs/bloc_delegate.dart';
 import 'package:attendance_tracka/src/core/blocs/hydrated_storage.dart';
 import 'package:attendance_tracka/src/features/app/bloc/app_bloc.dart';
@@ -12,7 +13,6 @@ import 'core/network/http_client.dart';
 import 'core/network/token_manager.dart';
 import 'features/auth/bloc/auth_bloc.dart';
 import 'features/user/bloc/bloc.dart';
-import 'flavor.dart';
 
 final sl = GetIt.instance;
 

@@ -15,10 +15,11 @@ class App extends StatelessWidget {
         showSemanticsDebugger: false,
         theme: appThemeData[appState.theme],
         builder: (context, home) {
-          if (!appState.hasOnboarded) {
-            return OnboardingScreen();
-          }
-          return Scaffold(body: Center(child: Text('Hello World')));
+          return AnimatedSwitcher(
+              duration: Duration(milliseconds: 1000),
+              child: appState.hasOnboarded
+                  ? Scaffold(body: Center(child: Text('Hello World')))
+                  : const OnboardingScreen());
         },
       );
     });

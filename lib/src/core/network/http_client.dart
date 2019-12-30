@@ -2,14 +2,15 @@ import 'dart:async';
 import 'dart:io';
 import 'package:attendance_tracka/env/url.dart';
 import 'package:attendance_tracka/src/core/network/token_manager.dart';
-import 'package:attendance_tracka/src/flavor.dart';
+import 'package:attendance_tracka/flavor/flavor.dart';
+
 import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
 
 abstract class AppHTTPClient {
   AppHTTPClient(Flavor flavor);
   String baseURL;
-  Future<Response> get(String url, {bool isGraphQlEndpoint = true});
+  Future<Response> get(String url);
   Future<Response> post(String endpoint, {@required dynamic body});
   Future<Response> upload(String endpoint, {@required List<File> file, @required dynamic body});
 }
@@ -38,8 +39,8 @@ class AppHTTPClientImpl implements AppHTTPClient {
   }
 
   String baseURL;
-  Future<Response> get(String url, {bool isGraphQlEndpoint = true}) async {
-    return _client.get(isGraphQlEndpoint == true ? isGraphQlEndpoint : baseURL + url);
+  Future<Response> get(String url, {Function(int, int) onReceiveProgress}) async {
+    return _client.get(baseURL + url, onReceiveProgress: onReceiveProgress);
   }
 
   Future<Response> post(String endpoint, {@required dynamic body}) async {
@@ -50,11 +51,7 @@ class AppHTTPClientImpl implements AppHTTPClient {
     );
   }
 
-  Future<Response> upload(
-    String endpoint, {
-    @required List<File> file,
-    @required dynamic body,
-  }) async {
+  Future<Response> upload(String endpoint, {@required List<File> file, @required dynamic body}) async {
     FormData formdata = FormData()..fields.add(MapEntry("query", body));
     formdata.files.addAll(
       List.generate(
@@ -74,17 +71,10 @@ class AppHTTPClientImpl implements AppHTTPClient {
     });
   }
 
-  void _setupLoggingInterceptor({isFileUpload = false}) async {
+  void _setupLoggingInterceptor() async {
     _client.interceptors.add(InterceptorsWrapper(onRequest: (Options options) async {
-      if (!isFileUpload) {
-        // options.contentType = ContentType('application', 'json');
-        options.sendTimeout = 10000;
-        options.receiveTimeout = 10000;
-      }
       final token = _tokenManager.token ?? await _tokenManager.getToken() ?? '';
-      options.sendTimeout = 10000;
-      options.receiveTimeout = 10000;
-      options.headers["token"] = token;
+      options.headers[" bearer"] = token;
       return options; //continue
     }));
   }

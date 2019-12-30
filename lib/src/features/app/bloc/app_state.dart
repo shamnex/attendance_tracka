@@ -4,7 +4,9 @@ import 'package:attendance_tracka/src/core/built_value/serializers.dart';
 import 'package:built_value/built_value.dart';
 import 'package:attendance_tracka/src/features/app/model/app_mode.dart';
 import 'package:attendance_tracka/src/features/app/model/app_theme.dart';
-import 'package:attendance_tracka/src/flavor.dart';
+import 'package:attendance_tracka/flavor/flavor.dart';
+
+
 import 'package:built_value/serializer.dart';
 
 part 'app_state.g.dart';
