@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class AppRoutes {
   static const String welcome = "/welcome";
 
-  static Route<dynamic> router(String, RouteSettings settings) {
+  static Route<dynamic> router(RouteSettings settings) {
     return CupertinoPageRoute(builder: (context) {
       return _widgetBuilder(settings, context);
     });
