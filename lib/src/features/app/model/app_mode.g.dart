@@ -7,13 +7,13 @@ part of app_mode;
 // **************************************************************************
 
 const AppMode _$organizer = const AppMode._('organizer');
-const AppMode _$volunteer = const AppMode._('volunteers');
+const AppMode _$volunteer = const AppMode._('volunteer');
 
 AppMode _$valueOf(String name) {
   switch (name) {
     case 'organizer':
       return _$organizer;
-    case 'volunteers':
+    case 'volunteer':
       return _$volunteer;
     default:
       throw new ArgumentError(name);

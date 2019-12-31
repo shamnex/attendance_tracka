@@ -38,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     autofocus: true,
                     style: TextStyle(color: isVolunteer ? textTheme.body1.color : Colors.white),
                     decoration: !isVolunteer
-                        ? AppInputTheme.outlineInputThem.copyWith(hintText: 'Email')
+                        ? AppInputTheme.outlineInputTheme.copyWith(hintText: 'Email')
                         : InputDecoration(
                             hintText: 'Email',
                             filled: isVolunteer ? true : false,
@@ -51,7 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   obscureText: true,
                   style: TextStyle(color: isVolunteer ? textTheme.body1.color : Colors.white),
                   decoration: !isVolunteer
-                      ? AppInputTheme.outlineInputThem.copyWith(hintText: 'Password')
+                      ? AppInputTheme.outlineInputTheme.copyWith(hintText: 'Password')
                       : InputDecoration(
                           hintText: 'Password',
                           filled: isVolunteer ? true : false,

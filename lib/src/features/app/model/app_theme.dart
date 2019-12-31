@@ -26,7 +26,7 @@ class AppTheme extends EnumClass {
 class AppInputTheme {
   const AppInputTheme._();
 
-  static final outlineInputThem = InputDecoration(
+  static final outlineInputTheme = InputDecoration(
     hasFloatingPlaceholder: true,
     alignLabelWithHint: true,
     contentPadding: AppPaddings.body.copyWith(top: 16, bottom: 16),

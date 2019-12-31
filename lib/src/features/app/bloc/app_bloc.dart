@@ -3,17 +3,18 @@ import 'package:attendance_tracka/flavor/flavor.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'app_event.dart';
 import 'app_state.dart';
+import 'package:rxdart/rxdart.dart';
 
 class AppBloc extends HydratedBloc<AppEvent, AppState> {
   AppBloc(Flavor flavor) : _flavor = flavor;
 
-  // @override
-  // Stream<AppState> transformEvents(
-  //   Stream<AppEvent> events,
-  //   Stream<AppState> Function(AppEvent event) next,
-  // ) {
-  //   return super.transformEvents(events.debounceTime(Duration(milliseconds: 300)), next);
-  // }
+  @override
+  Stream<AppState> transformEvents(
+    Stream<AppEvent> events,
+    Stream<AppState> Function(AppEvent event) next,
+  ) {
+    return super.transformEvents(events.debounceTime(Duration(milliseconds: 100)), next);
+  }
 
   Flavor _flavor;
   @override

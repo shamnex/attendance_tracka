@@ -1,6 +1,9 @@
 import 'package:attendance_tracka/src/features/auth/routes/auth_routes.dart';
+import 'package:attendance_tracka/src/features/auth/screens/login/bloc/login_bloc_bloc.dart';
+import 'package:attendance_tracka/src/features/auth/screens/signup/bloc/signup_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 final _navigatorKey = GlobalKey<NavigatorState>();
 
@@ -11,10 +14,16 @@ class AuthHomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async => !await _navigatorKey.currentState.maybePop(),
-      child: Material(
-        child: Navigator(
-          key: _navigatorKey,
-          onGenerateRoute: AuthRoutes.configureRoutes,
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider<LoginBloc>(create: (context) => LoginBloc()),
+          BlocProvider<SignupBloc>(create: (context) => SignupBloc()),
+        ],
+        child: Material(
+          child: Navigator(
+            key: _navigatorKey,
+            onGenerateRoute: AuthRoutes.configureRoutes,
+          ),
         ),
       ),
     );

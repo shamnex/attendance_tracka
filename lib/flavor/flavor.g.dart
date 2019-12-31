@@ -38,11 +38,13 @@ class _$FlavorSerializer implements PrimitiveSerializer<Flavor> {
   final String wireName = 'Flavor';
 
   @override
-  Object serialize(Serializers serializers, Flavor object, {FullType specifiedType = FullType.unspecified}) =>
+  Object serialize(Serializers serializers, Flavor object,
+          {FullType specifiedType = FullType.unspecified}) =>
       object.name;
 
   @override
-  Flavor deserialize(Serializers serializers, Object serialized, {FullType specifiedType = FullType.unspecified}) =>
+  Flavor deserialize(Serializers serializers, Object serialized,
+          {FullType specifiedType = FullType.unspecified}) =>
       Flavor.valueOf(serialized as String);
 }
 

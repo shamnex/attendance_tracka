@@ -1,6 +1,5 @@
 import 'package:attendance_tracka/src/constants/colors.dart';
 import 'package:attendance_tracka/src/constants/paddings.dart';
-import 'package:attendance_tracka/src/features/app/model/app_mode.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 

@@ -6,7 +6,7 @@ class InputValidators {
       if (value.isEmpty) {
         return 'Field is Required';
       }
-      if (validator.isMultibyte(value)) {
+      if (!validator.isEmail(value)) {
         return 'Please enter a valid email';
       }
     }
