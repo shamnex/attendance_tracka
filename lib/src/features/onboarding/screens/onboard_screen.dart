@@ -17,19 +17,14 @@ class OnboardingScreen extends StatefulWidget {
 
 class _OnboardingScreenState extends State<OnboardingScreen> with TickerProviderStateMixin {
   PageController pageController;
-  double pageOffset = 0;
   int activeIndex = 0;
-  final onBoardTexts = [
-    ' ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam ',
-    ', quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ',
-    'Duis aute irure dolor in reprehenderit in voluptate velit'
-  ];
+  final pageOffset = ValueNotifier<double>(0);
 
   @override
   void initState() {
     pageController = PageController(viewportFraction: 0.8);
     pageController.addListener(() {
-      setState(() => pageOffset = pageController.page); //<-- add listener and set state
+      pageOffset.value = pageController.page; //<-- add listener and set state
     });
     super.initState();
   }
@@ -66,12 +61,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
                 },
                 controller: pageController,
                 children: <Widget>[
-                  ...List.generate(
-                      onBoardTexts.length,
-                      (index) => _OnboardCard(
-                            offset: pageOffset - index,
-                            text: onBoardTexts[index],
-                          ))
+                  ...List.generate(onBoardTexts.length, (index) {
+                    pageOffset.value = pageOffset.value - index;
+
+                    return _OnboardCard(
+                      offset: pageOffset,
+                      text: onBoardTexts[index],
+                    );
+                  })
                 ],
               ),
             ),
@@ -118,7 +115,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
 class _OnboardCard extends StatefulWidget {
   final String text;
   const _OnboardCard({Key key, this.text, this.offset}) : super(key: key);
-  final double offset;
+  final ValueNotifier<double> offset;
 
   @override
   __OnboardCardState createState() => __OnboardCardState();
@@ -142,13 +139,8 @@ class __OnboardCardState extends State<_OnboardCard> with TickerProviderStateMix
 
   @override
   Widget build(BuildContext context) {
-    double gauss = math.exp(-(math.pow((widget.offset.abs() - 0.5), 2) / 0.08));
-    double scale = (1 - (widget.offset.abs() * .5)).clamp(0.8, 1.0);
-
-    return Transform.scale(
-      scale: Curves.easeInOut.transform(scale),
-      child: Transform.translate(
-        offset: Offset(-80 * Curves.easeIn.transform(gauss) * widget.offset.sign, 0),
+    return ValueListenableBuilder(
+        valueListenable: widget.offset,
         child: Column(
           children: <Widget>[
             Expanded(
@@ -198,8 +190,17 @@ class __OnboardCardState extends State<_OnboardCard> with TickerProviderStateMix
             )
           ],
         ),
-      ),
-    );
+        builder: (context, double offset, Widget child) {
+          double gauss = math.exp(-(math.pow((offset.abs() - 0.5), 2) / 0.08));
+          double scale = (1 - (offset.abs() * .5)).clamp(0.8, 1.0);
+          return Transform.scale(
+            scale: Curves.easeInOut.transform(scale),
+            child: Transform.translate(
+              offset: Offset(-80 * Curves.easeIn.transform(gauss) * offset.sign, 0),
+              child: child,
+            ),
+          );
+        });
   }
 }
 
@@ -236,3 +237,9 @@ class _BuildIndicators extends StatelessWidget {
     );
   }
 }
+
+final onBoardTexts = [
+  ' ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam ',
+  ', quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ',
+  'Duis aute irure dolor in reprehenderit in voluptate velit'
+];

@@ -39,7 +39,7 @@ class AppColors {
   static const int _secondaryColor = 0xFF743E00;
   static const Color background = Color(0xFFEDEDED);
   static const Color backgroundDark = Color(0xff303030);
-  static const List<Color> primaryGradient = [primary, secondary];
+  static List<Color> primaryGradient = [primary, secondary.shade900];
 
   static const Color success = Color(0xFF009944);
   static const Color error = Color(0xFFFF7777);

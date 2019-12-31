@@ -1,5 +1,5 @@
-import 'package:attendance_tracka/src/features/auth/screens/login_screen.dart';
-import 'package:attendance_tracka/src/features/auth/screens/signup_screen.dart';
+import 'package:attendance_tracka/src/features/auth/screens/login/login_screen.dart';
+import 'package:attendance_tracka/src/features/auth/screens/signup/signup_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

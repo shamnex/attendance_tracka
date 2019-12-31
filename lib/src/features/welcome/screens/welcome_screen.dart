@@ -1,4 +1,3 @@
-import 'package:attendance_tracka/src/constants/colors.dart';
 import 'package:attendance_tracka/src/constants/paddings.dart';
 import 'package:attendance_tracka/src/features/app/bloc/app_bloc.dart';
 import 'package:attendance_tracka/src/features/app/bloc/app_event.dart';
