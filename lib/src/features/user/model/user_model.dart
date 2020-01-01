@@ -9,10 +9,14 @@ import 'package:built_value/serializer.dart';
 part 'user_model.g.dart';
 
 abstract class User with BaseModel implements Built<User, UserBuilder> {
+  @nullable
   String get firstName;
+  @nullable
   String get lastName;
+
+  String get email;
+  String get organization;
   String get id;
-  DateTime get createdAt;
   UserType get type;
   User._();
 

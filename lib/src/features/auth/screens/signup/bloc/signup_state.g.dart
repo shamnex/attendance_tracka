@@ -33,11 +33,13 @@ class _$SignupStateSerializer implements StructuredSerializer<SignupState> {
       'loading',
       serializers.serialize(object.loading,
           specifiedType: const FullType(bool)),
-      'signedUp',
-      serializers.serialize(object.signedUp,
-          specifiedType: const FullType(bool)),
     ];
-
+    if (object.user != null) {
+      result
+        ..add('user')
+        ..add(serializers.serialize(object.user,
+            specifiedType: const FullType(User)));
+    }
     return result;
   }
 
@@ -68,12 +70,12 @@ class _$SignupStateSerializer implements StructuredSerializer<SignupState> {
           result.errorMessage = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'user':
+          result.user.replace(serializers.deserialize(value,
+              specifiedType: const FullType(User)) as User);
+          break;
         case 'loading':
           result.loading = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'signedUp':
-          result.signedUp = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
       }
@@ -93,9 +95,9 @@ class _$SignupState extends SignupState {
   @override
   final String errorMessage;
   @override
-  final bool loading;
+  final User user;
   @override
-  final bool signedUp;
+  final bool loading;
 
   factory _$SignupState([void Function(SignupStateBuilder) updates]) =>
       (new SignupStateBuilder()..update(updates)).build();
@@ -105,8 +107,8 @@ class _$SignupState extends SignupState {
       this.password,
       this.email,
       this.errorMessage,
-      this.loading,
-      this.signedUp})
+      this.user,
+      this.loading})
       : super._() {
     if (organization == null) {
       throw new BuiltValueNullFieldError('SignupState', 'organization');
@@ -122,9 +124,6 @@ class _$SignupState extends SignupState {
     }
     if (loading == null) {
       throw new BuiltValueNullFieldError('SignupState', 'loading');
-    }
-    if (signedUp == null) {
-      throw new BuiltValueNullFieldError('SignupState', 'signedUp');
     }
   }
 
@@ -143,8 +142,8 @@ class _$SignupState extends SignupState {
         password == other.password &&
         email == other.email &&
         errorMessage == other.errorMessage &&
-        loading == other.loading &&
-        signedUp == other.signedUp;
+        user == other.user &&
+        loading == other.loading;
   }
 
   @override
@@ -155,8 +154,8 @@ class _$SignupState extends SignupState {
                 $jc($jc($jc(0, organization.hashCode), password.hashCode),
                     email.hashCode),
                 errorMessage.hashCode),
-            loading.hashCode),
-        signedUp.hashCode));
+            user.hashCode),
+        loading.hashCode));
   }
 
   @override
@@ -166,8 +165,8 @@ class _$SignupState extends SignupState {
           ..add('password', password)
           ..add('email', email)
           ..add('errorMessage', errorMessage)
-          ..add('loading', loading)
-          ..add('signedUp', signedUp))
+          ..add('user', user)
+          ..add('loading', loading))
         .toString();
   }
 }
@@ -191,13 +190,13 @@ class SignupStateBuilder implements Builder<SignupState, SignupStateBuilder> {
   String get errorMessage => _$this._errorMessage;
   set errorMessage(String errorMessage) => _$this._errorMessage = errorMessage;
 
+  UserBuilder _user;
+  UserBuilder get user => _$this._user ??= new UserBuilder();
+  set user(UserBuilder user) => _$this._user = user;
+
   bool _loading;
   bool get loading => _$this._loading;
   set loading(bool loading) => _$this._loading = loading;
-
-  bool _signedUp;
-  bool get signedUp => _$this._signedUp;
-  set signedUp(bool signedUp) => _$this._signedUp = signedUp;
 
   SignupStateBuilder();
 
@@ -207,8 +206,8 @@ class SignupStateBuilder implements Builder<SignupState, SignupStateBuilder> {
       _password = _$v.password;
       _email = _$v.email;
       _errorMessage = _$v.errorMessage;
+      _user = _$v.user?.toBuilder();
       _loading = _$v.loading;
-      _signedUp = _$v.signedUp;
       _$v = null;
     }
     return this;
@@ -229,14 +228,27 @@ class SignupStateBuilder implements Builder<SignupState, SignupStateBuilder> {
 
   @override
   _$SignupState build() {
-    final _$result = _$v ??
-        new _$SignupState._(
-            organization: organization,
-            password: password,
-            email: email,
-            errorMessage: errorMessage,
-            loading: loading,
-            signedUp: signedUp);
+    _$SignupState _$result;
+    try {
+      _$result = _$v ??
+          new _$SignupState._(
+              organization: organization,
+              password: password,
+              email: email,
+              errorMessage: errorMessage,
+              user: _user?.build(),
+              loading: loading);
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'user';
+        _user?.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'SignupState', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

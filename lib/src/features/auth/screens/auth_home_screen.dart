@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../service_locator.dart';
+
 final _navigatorKey = GlobalKey<NavigatorState>();
 
 class AuthHomeScreen extends StatelessWidget {
@@ -16,8 +18,8 @@ class AuthHomeScreen extends StatelessWidget {
       onWillPop: () async => !await _navigatorKey.currentState.maybePop(),
       child: MultiBlocProvider(
         providers: [
-          BlocProvider<LoginBloc>(create: (context) => LoginBloc()),
-          BlocProvider<SignupBloc>(create: (context) => SignupBloc()),
+          BlocProvider<LoginBloc>(create: (context) => LoginBloc(sl())),
+          BlocProvider<SignupBloc>(create: (context) => SignupBloc(sl())),
         ],
         child: Material(
           child: Navigator(

@@ -24,7 +24,7 @@ abstract class BaseBlocState<T extends BaseModel> implements Built<BaseBlocState
   }
 
   bool get hasError => errorMessage.isNotEmpty;
-  bool get hasValue => value != null && (value?.id != null ?? false || value?.createdAt != null);
+  bool get hasValue => value != null && (value?.id != null ?? false);
 
   static BaseBlocState fromJson(String jsonString) {
     return serializers.deserializeWith(BaseBlocState.serializer, json.decode(jsonString));

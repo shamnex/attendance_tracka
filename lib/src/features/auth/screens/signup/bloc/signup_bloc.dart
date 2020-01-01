@@ -1,13 +1,13 @@
 import 'dart:async';
 import 'package:attendance_tracka/src/core/network/http_error_helper.dart';
-import 'package:attendance_tracka/src/features/auth/bloc/auth_bloc.dart';
+import 'package:attendance_tracka/src/features/auth/auth_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import './bloc.dart';
 
 class SignupBloc extends Bloc<SignupEvent, SignupState> with DioErrorHelper {
-  final AuthBloc authBloc;
-  SignupBloc({this.authBloc});
+  final AuthRepository repo;
+  SignupBloc(this.repo);
   @override
   SignupState get initialState => SignupState.initialState();
 
@@ -28,13 +28,15 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> with DioErrorHelper {
       try {
         yield state.rebuild((b) => b..loading = true);
         await Future.delayed(Duration(seconds: 1));
-        yield state.rebuild((b) => b
-          ..loading = false
-          ..signedUp = true);
+        final user = await repo.signup();
+        yield state.rebuild(
+          (b) => b
+            ..loading = false
+            ..user = user.toBuilder(),
+        );
       } on DioError catch (e) {
         yield state.rebuild((b) => b
           ..loading = false
-          ..signedUp = false
           ..errorMessage = handleNetworkError(e));
       } catch (e) {
         throw Exception();

@@ -12,6 +12,7 @@ abstract class AppHTTPClient {
   String baseURL;
   Future<Response> get(String url);
   Future<Response> post(String endpoint, {@required dynamic body});
+  Future<Response> put(String endpoint, {@required dynamic body});
   Future<Response> upload(String endpoint, {@required List<File> file, @required dynamic body});
 }
 
@@ -45,6 +46,14 @@ class AppHTTPClientImpl implements AppHTTPClient {
 
   Future<Response> post(String endpoint, {@required dynamic body}) async {
     return _client.post(
+      baseURL + endpoint,
+      data: body,
+      options: Options(),
+    );
+  }
+
+  Future<Response> put(String endpoint, {@required dynamic body}) async {
+    return _client.put(
       baseURL + endpoint,
       data: body,
       options: Options(),

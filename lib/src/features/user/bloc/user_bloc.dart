@@ -1,14 +1,14 @@
 import 'package:attendance_tracka/src/core/blocs/base_bloc/base_bloc_event.dart';
 import 'package:attendance_tracka/src/core/blocs/base_bloc/base_bloc_hydrated_bloc.dart';
 import 'package:attendance_tracka/src/core/blocs/base_bloc/base_bloc_state.dart';
+import 'package:attendance_tracka/src/features/auth/auth_repository.dart';
 import 'package:attendance_tracka/src/features/user/model/user_model.dart';
-import 'package:attendance_tracka/src/features/user/resources/user_repository.dart';
 import 'package:dio/dio.dart';
 
 class UserBloc extends BaseBlocHydrated<User> {
   UserBloc({User value, this.repository}) : super(value, (json) => User.fromJson(json));
 
-  final UserRepository repository;
+  final AuthRepository repository;
 
   @override
   get initialState => super.initialState;

@@ -3,6 +3,7 @@ library sign_up_state;
 import 'dart:convert';
 
 import 'package:attendance_tracka/src/core/built_value/serializers.dart';
+import 'package:attendance_tracka/src/features/user/model/user_model.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
@@ -14,8 +15,11 @@ abstract class SignupState implements Built<SignupState, SignupStateBuilder> {
   String get password;
   String get email;
   String get errorMessage;
+  @nullable
+  User get user;
+
   bool get loading;
-  bool get signedUp;
+  bool get isSignedUp => user is User;
   bool get hasError => errorMessage.isNotEmpty;
   SignupState._();
 
@@ -27,8 +31,8 @@ abstract class SignupState implements Built<SignupState, SignupStateBuilder> {
           ..password = ''
           ..email = ''
           ..errorMessage = ''
-          ..signedUp = false
-          ..loading = false,
+          ..loading = false
+          ..user = null,
       );
 
   String toJson() {
