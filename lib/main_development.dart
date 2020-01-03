@@ -1,7 +1,5 @@
 import 'package:attendance_tracka/src/features/app/bloc/app_bloc.dart';
-import 'package:attendance_tracka/src/features/user/bloc/bloc.dart';
 import 'package:attendance_tracka/flavor/flavor.dart';
-
 
 import 'package:attendance_tracka/src/service_locator.dart' as di;
 import 'package:flutter/material.dart';
@@ -24,7 +22,6 @@ void main() async {
       providers: [
         BlocProvider<AppBloc>(create: (_) => di.sl.get<AppBloc>()),
         BlocProvider<AuthBloc>(create: (_) => di.sl.get<AuthBloc>()..add(BeginAuthentication())),
-        BlocProvider<UserBloc>(create: (_) => di.sl.get<UserBloc>()),
       ],
       child: const App(),
     ),

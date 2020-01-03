@@ -15,8 +15,10 @@ abstract class User with BaseModel implements Built<User, UserBuilder> {
   String get lastName;
 
   String get email;
+  @nullable
   String get organization;
   String get id;
+  @nullable
   UserType get type;
   User._();
 
@@ -35,7 +37,7 @@ abstract class User with BaseModel implements Built<User, UserBuilder> {
 class UserType extends EnumClass {
   static const UserType participant = _$participant;
   static const UserType organizer = _$organizer;
-  static const UserType volunteers = _$volunteer;
+  static const UserType volunteer = _$volunteer;
 
   const UserType._(String name) : super(name);
 

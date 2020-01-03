@@ -11,7 +11,6 @@ import 'package:path_provider/path_provider.dart' as path_provider;
 import 'core/network/http_client.dart';
 import 'core/network/token_manager.dart';
 import 'features/auth/bloc/auth_bloc.dart';
-import 'features/user/bloc/bloc.dart';
 
 final sl = GetIt.instance;
 
@@ -29,9 +28,19 @@ Future<void> init(Flavor flavor) async {
   final storage = await AppHydratedStorageImpl.getInstance(sl());
   sl.registerLazySingleton<HydratedStorage>(() => storage);
   //! GLOBAL REPOSITORIES STUFFS
-  sl.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(sl()));
+  sl.registerLazySingleton<AuthRepository>(() {
+    switch (flavor) {
+      case Flavor.development:
+        return MockAuthRepositoryImpl(sl());
+      case Flavor.mock:
+        return MockAuthRepositoryImpl(sl());
+      case Flavor.production:
+        return AuthRepositoryImpl(sl());
+      default:
+        return MockAuthRepositoryImpl(sl());
+    }
+  });
   //! GLOBAL STATE STUFFS
   sl.registerLazySingleton<AuthBloc>(() => AuthBloc(sl()));
   sl.registerLazySingleton<AppBloc>(() => AppBloc(flavor));
-  sl.registerLazySingleton<UserBloc>(() => UserBloc(value: null, repository: sl()));
 }

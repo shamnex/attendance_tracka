@@ -8,7 +8,7 @@ part of user_model;
 
 const UserType _$participant = const UserType._('participant');
 const UserType _$organizer = const UserType._('organizer');
-const UserType _$volunteer = const UserType._('volunteers');
+const UserType _$volunteer = const UserType._('volunteer');
 
 UserType _$valueOf(String name) {
   switch (name) {
@@ -16,7 +16,7 @@ UserType _$valueOf(String name) {
       return _$participant;
     case 'organizer':
       return _$organizer;
-    case 'volunteers':
+    case 'volunteer':
       return _$volunteer;
     default:
       throw new ArgumentError(name);
@@ -45,14 +45,8 @@ class _$UserSerializer implements StructuredSerializer<User> {
       'email',
       serializers.serialize(object.email,
           specifiedType: const FullType(String)),
-      'organization',
-      serializers.serialize(object.organization,
-          specifiedType: const FullType(String)),
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
-      'type',
-      serializers.serialize(object.type,
-          specifiedType: const FullType(UserType)),
     ];
     if (object.firstName != null) {
       result
@@ -65,6 +59,18 @@ class _$UserSerializer implements StructuredSerializer<User> {
         ..add('lastName')
         ..add(serializers.serialize(object.lastName,
             specifiedType: const FullType(String)));
+    }
+    if (object.organization != null) {
+      result
+        ..add('organization')
+        ..add(serializers.serialize(object.organization,
+            specifiedType: const FullType(String)));
+    }
+    if (object.type != null) {
+      result
+        ..add('type')
+        ..add(serializers.serialize(object.type,
+            specifiedType: const FullType(UserType)));
     }
     return result;
   }
@@ -156,14 +162,8 @@ class _$User extends User {
     if (email == null) {
       throw new BuiltValueNullFieldError('User', 'email');
     }
-    if (organization == null) {
-      throw new BuiltValueNullFieldError('User', 'organization');
-    }
     if (id == null) {
       throw new BuiltValueNullFieldError('User', 'id');
-    }
-    if (type == null) {
-      throw new BuiltValueNullFieldError('User', 'type');
     }
   }
 

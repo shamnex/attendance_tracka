@@ -44,7 +44,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   SizedBox(height: 30),
                   TextFormField(
                       onChanged: (value) => signupBloc.add(OrganizationChanged(value)),
-                      validator: (value) => InputValidators.minLength(value, min: 3),
+                      validator: (value) => InputValidators.minLength(value, length: 3),
                       keyboardType: TextInputType.emailAddress,
                       // autofocus: true,
                       style: TextStyle(color: isVolunteer ? textTheme.body1.color : Colors.white),
@@ -80,7 +80,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   TextFormField(
                     obscureText: true,
                     onChanged: (value) => signupBloc.add(PasswordChanged(value)),
-                    validator: (value) => InputValidators.minLength(value, min: 3),
+                    validator: (value) => InputValidators.minLength(value, length: 3),
                     style: TextStyle(color: isVolunteer ? textTheme.body1.color : Colors.white),
                     decoration: !isVolunteer
                         ? AppInputTheme.outlineInputTheme.copyWith(hintText: 'Password')

@@ -1,11 +1,11 @@
 library app_state;
 
 import 'package:attendance_tracka/src/core/built_value/serializers.dart';
+import 'package:attendance_tracka/src/features/app/model/user_model.dart';
 import 'package:built_value/built_value.dart';
 import 'package:attendance_tracka/src/features/app/model/app_mode.dart';
 import 'package:attendance_tracka/src/features/app/model/app_theme.dart';
 import 'package:attendance_tracka/flavor/flavor.dart';
-
 
 import 'package:built_value/serializer.dart';
 
@@ -18,7 +18,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   AppMode get mode;
   AppTheme get theme;
   bool get hasCompletedWalkThrough;
-
+  @nullable
+  User get currentUser;
   AppState._();
 
   static AppState initialState({Flavor flavor}) => AppState((b) => b

@@ -1,11 +1,15 @@
 import 'package:attendance_tracka/src/constants/colors.dart';
+import 'package:attendance_tracka/src/features/app/bloc/app_bloc.dart';
 import 'package:attendance_tracka/src/features/app/model/app_mode.dart';
 import 'package:attendance_tracka/src/features/app/model/app_theme.dart';
 import 'package:attendance_tracka/src/features/auth/routes/auth_routes.dart';
+import 'package:attendance_tracka/src/features/auth/screens/login/bloc/bloc.dart';
 import 'package:attendance_tracka/src/features/auth/screens/partials/auth_screen_scaffold.dart';
+import 'package:attendance_tracka/src/features/app/model/user_model.dart';
 import 'package:attendance_tracka/src/utils/input_validators.dart';
 import 'package:attendance_tracka/src/widgets/buttons.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key key}) : super(key: key);
@@ -16,6 +20,13 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  LoginBloc loginBloc;
+
+  @override
+  void initState() {
+    loginBloc = BlocProvider.of(context);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 TextFormField(
                     keyboardType: TextInputType.emailAddress,
                     validator: InputValidators.email,
+                    onChanged: (value) => loginBloc.add(EmailChanged(value)),
                     autofocus: true,
                     style: TextStyle(color: isVolunteer ? textTheme.body1.color : Colors.white),
                     decoration: !isVolunteer
@@ -49,6 +61,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(height: 16),
                 TextFormField(
                   obscureText: true,
+                  validator: (value) => InputValidators.minLength(value, length: 6),
+                  onChanged: (value) => loginBloc.add(PasswordChanged(value)),
                   style: TextStyle(color: isVolunteer ? textTheme.body1.color : Colors.white),
                   decoration: !isVolunteer
                       ? AppInputTheme.outlineInputTheme.copyWith(hintText: 'Password')
@@ -63,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(height: 30),
                 if (isVolunteer)
                   AppButton(
-                    onPressed: () {},
+                    onPressed: _login,
                     child: Text(
                       'SIGN IN'.toUpperCase(),
                       style: textTheme.button.copyWith(color: Colors.white),
@@ -71,7 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   )
                 else
                   AppButton.white(
-                    onPressed: () {},
+                    onPressed: _login,
                     child: Text(
                       'SIGN IN'.toUpperCase(),
                       style: textTheme.button.copyWith(color: isVolunteer ? Colors.white : textTheme.body1.color),
@@ -100,5 +114,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ];
             }));
+  }
+
+  _login() {
+    if (_formKey.currentState.validate()) {
+      final userType =
+          BlocProvider.of<AppBloc>(context).state.mode == AppMode.organizer ? UserType.organizer : UserType.volunteer;
+      loginBloc.add(Login(userType));
+    }
   }
 }
