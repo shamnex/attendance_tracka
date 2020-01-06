@@ -6,17 +6,15 @@ abstract class AuthEvent extends Equatable {
 
 class BeginAuthentication extends AuthEvent {
   @override
-  List<Object> get props => [];
+  List<Object> get props => ['BeginAuthentication'];
 }
 
 class Deauthenticate extends AuthEvent {
   @override
-  List<Object> get props => [];
+  List<Object> get props => ['Deauthenticate'];
 }
 
 class Authenticate extends AuthEvent {
-  Authenticate({this.token});
-  final String token;
   @override
-  List<Object> get props => [token];
+  List<Object> get props => ['Authenticate'];
 }

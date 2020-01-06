@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:attendance_tracka/src/core/network/http_error_helper.dart';
 import 'package:attendance_tracka/src/features/auth/auth_repository.dart';
-import 'package:attendance_tracka/src/features/app/model/user_model.dart';
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import './bloc.dart';
@@ -43,7 +42,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> with DioErrorHelper {
           ..loading = false
           ..errorMessage = handleNetworkError(e));
       } catch (e) {
-        print(e);
         throw Exception();
       }
     }

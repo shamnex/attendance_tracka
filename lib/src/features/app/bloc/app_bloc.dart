@@ -31,6 +31,9 @@ class AppBloc extends HydratedBloc<AppEvent, AppState> {
     if (event is HasCompletedWalkThrough) {
       yield state.rebuild((b) => b..hasCompletedWalkThrough = true);
     }
+    if (event is HasLoggedUser) {
+      yield state.rebuild((b) => b..currentUser = event.user.toBuilder());
+    }
     if (event is HasOnboarded) {
       yield state.rebuild((b) => b..hasOnboarded = !b.hasOnboarded);
     }

@@ -34,7 +34,6 @@ class AuthScreenScaffold extends StatelessWidget {
             body: SafeArea(
               child: NestedScrollView(
                 headerSliverBuilder: (_, innerBoxIsScrolled) {
-                  print(innerBoxIsScrolled);
                   return [
                     SliverPersistentHeader(
                       pinned: true,

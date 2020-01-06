@@ -9,7 +9,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({Key key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;

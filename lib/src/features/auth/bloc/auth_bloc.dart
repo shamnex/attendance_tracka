@@ -26,15 +26,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with DioErrorHelper {
       }
 
       if (event is Authenticate) {
-        yield AuthLoading();
-        await repository.persistToken(event.token);
         yield AuthAuthenticated();
       }
 
       if (event is Deauthenticate) {
         yield AuthLoading();
         await Future.delayed(const Duration(milliseconds: 300));
-        await repository.deleteToken();
+        await repository.signOut();
         yield AuthUnAuthenticated();
       }
     } on DioError catch (_) {

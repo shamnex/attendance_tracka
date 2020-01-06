@@ -18,7 +18,7 @@ abstract class LoginState implements Built<LoginState, LoginStateBuilder> {
   User get user;
 
   bool get loading;
-  bool get isSignedUp => user is User;
+  bool get loggedIn => user is User;
   bool get hasError => errorMessage.isNotEmpty;
   LoginState._();
 
