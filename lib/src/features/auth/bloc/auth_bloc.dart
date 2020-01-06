@@ -16,7 +16,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with DioErrorHelper {
     try {
       if (event is BeginAuthentication) {
         yield AuthLoading();
-        await Future.delayed(Duration(milliseconds: 400));
+        await Future.delayed(Duration(milliseconds: 1000));
         final hasToken = await repository.hasToken();
         if (hasToken) {
           yield AuthAuthenticated();
