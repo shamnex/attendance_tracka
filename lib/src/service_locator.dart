@@ -31,13 +31,11 @@ Future<void> init(Flavor flavor) async {
   sl.registerLazySingleton<AuthRepository>(() {
     switch (flavor) {
       case Flavor.development:
-        return MockAuthRepositoryImpl(sl());
+        return DevAuthRepositoryImpl(sl(), sl());
       case Flavor.mock:
         return MockAuthRepositoryImpl(sl());
       case Flavor.production:
-        return AuthRepositoryImpl(sl());
-      default:
-        return MockAuthRepositoryImpl(sl());
+        return AuthRepositoryImpl(sl(), sl());
     }
   });
   //! GLOBAL STATE STUFFS

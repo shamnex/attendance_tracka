@@ -10,14 +10,18 @@ part 'user_model.g.dart';
 
 abstract class User with BaseModel implements Built<User, UserBuilder> {
   @nullable
-  String get firstName;
-  @nullable
-  String get lastName;
-
   String get email;
+
   @nullable
+  @BuiltValueField(wireName: 'ORGANISATION_NAME')
   String get organization;
-  String get id;
+
+  @BuiltValueField(wireName: 'ORGANISATIONN_ABB')
+  String get userName;
+
+  @BuiltValueField(wireName: 'API_URL')
+  String get apiURL;
+
   @nullable
   UserType get type;
   User._();

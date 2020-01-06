@@ -42,27 +42,22 @@ class _$UserSerializer implements StructuredSerializer<User> {
   Iterable<Object> serialize(Serializers serializers, User object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
-      'email',
-      serializers.serialize(object.email,
+      'ORGANISATIONN_ABB',
+      serializers.serialize(object.userName,
           specifiedType: const FullType(String)),
-      'id',
-      serializers.serialize(object.id, specifiedType: const FullType(String)),
+      'API_URL',
+      serializers.serialize(object.apiURL,
+          specifiedType: const FullType(String)),
     ];
-    if (object.firstName != null) {
+    if (object.email != null) {
       result
-        ..add('firstName')
-        ..add(serializers.serialize(object.firstName,
-            specifiedType: const FullType(String)));
-    }
-    if (object.lastName != null) {
-      result
-        ..add('lastName')
-        ..add(serializers.serialize(object.lastName,
+        ..add('email')
+        ..add(serializers.serialize(object.email,
             specifiedType: const FullType(String)));
     }
     if (object.organization != null) {
       result
-        ..add('organization')
+        ..add('ORGANISATION_NAME')
         ..add(serializers.serialize(object.organization,
             specifiedType: const FullType(String)));
     }
@@ -71,6 +66,12 @@ class _$UserSerializer implements StructuredSerializer<User> {
         ..add('type')
         ..add(serializers.serialize(object.type,
             specifiedType: const FullType(UserType)));
+    }
+    if (object.id != null) {
+      result
+        ..add('id')
+        ..add(serializers.serialize(object.id,
+            specifiedType: const FullType(String)));
     }
     return result;
   }
@@ -86,29 +87,29 @@ class _$UserSerializer implements StructuredSerializer<User> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'firstName':
-          result.firstName = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'lastName':
-          result.lastName = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
         case 'email':
           result.email = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'organization':
+        case 'ORGANISATION_NAME':
           result.organization = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'id':
-          result.id = serializers.deserialize(value,
+        case 'ORGANISATIONN_ABB':
+          result.userName = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'API_URL':
+          result.apiURL = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'type':
           result.type = serializers.deserialize(value,
               specifiedType: const FullType(UserType)) as UserType;
+          break;
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -136,34 +137,34 @@ class _$UserTypeSerializer implements PrimitiveSerializer<UserType> {
 
 class _$User extends User {
   @override
-  final String firstName;
-  @override
-  final String lastName;
-  @override
   final String email;
   @override
   final String organization;
   @override
-  final String id;
+  final String userName;
+  @override
+  final String apiURL;
   @override
   final UserType type;
+  @override
+  final String id;
 
   factory _$User([void Function(UserBuilder) updates]) =>
       (new UserBuilder()..update(updates)).build();
 
   _$User._(
-      {this.firstName,
-      this.lastName,
-      this.email,
+      {this.email,
       this.organization,
-      this.id,
-      this.type})
+      this.userName,
+      this.apiURL,
+      this.type,
+      this.id})
       : super._() {
-    if (email == null) {
-      throw new BuiltValueNullFieldError('User', 'email');
+    if (userName == null) {
+      throw new BuiltValueNullFieldError('User', 'userName');
     }
-    if (id == null) {
-      throw new BuiltValueNullFieldError('User', 'id');
+    if (apiURL == null) {
+      throw new BuiltValueNullFieldError('User', 'apiURL');
     }
   }
 
@@ -178,12 +179,12 @@ class _$User extends User {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is User &&
-        firstName == other.firstName &&
-        lastName == other.lastName &&
         email == other.email &&
         organization == other.organization &&
-        id == other.id &&
-        type == other.type;
+        userName == other.userName &&
+        apiURL == other.apiURL &&
+        type == other.type &&
+        id == other.id;
   }
 
   @override
@@ -191,36 +192,28 @@ class _$User extends User {
     return $jf($jc(
         $jc(
             $jc(
-                $jc($jc($jc(0, firstName.hashCode), lastName.hashCode),
-                    email.hashCode),
-                organization.hashCode),
-            id.hashCode),
-        type.hashCode));
+                $jc($jc($jc(0, email.hashCode), organization.hashCode),
+                    userName.hashCode),
+                apiURL.hashCode),
+            type.hashCode),
+        id.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('User')
-          ..add('firstName', firstName)
-          ..add('lastName', lastName)
           ..add('email', email)
           ..add('organization', organization)
-          ..add('id', id)
-          ..add('type', type))
+          ..add('userName', userName)
+          ..add('apiURL', apiURL)
+          ..add('type', type)
+          ..add('id', id))
         .toString();
   }
 }
 
 class UserBuilder implements Builder<User, UserBuilder> {
   _$User _$v;
-
-  String _firstName;
-  String get firstName => _$this._firstName;
-  set firstName(String firstName) => _$this._firstName = firstName;
-
-  String _lastName;
-  String get lastName => _$this._lastName;
-  set lastName(String lastName) => _$this._lastName = lastName;
 
   String _email;
   String get email => _$this._email;
@@ -230,24 +223,32 @@ class UserBuilder implements Builder<User, UserBuilder> {
   String get organization => _$this._organization;
   set organization(String organization) => _$this._organization = organization;
 
-  String _id;
-  String get id => _$this._id;
-  set id(String id) => _$this._id = id;
+  String _userName;
+  String get userName => _$this._userName;
+  set userName(String userName) => _$this._userName = userName;
+
+  String _apiURL;
+  String get apiURL => _$this._apiURL;
+  set apiURL(String apiURL) => _$this._apiURL = apiURL;
 
   UserType _type;
   UserType get type => _$this._type;
   set type(UserType type) => _$this._type = type;
 
+  String _id;
+  String get id => _$this._id;
+  set id(String id) => _$this._id = id;
+
   UserBuilder();
 
   UserBuilder get _$this {
     if (_$v != null) {
-      _firstName = _$v.firstName;
-      _lastName = _$v.lastName;
       _email = _$v.email;
       _organization = _$v.organization;
-      _id = _$v.id;
+      _userName = _$v.userName;
+      _apiURL = _$v.apiURL;
       _type = _$v.type;
+      _id = _$v.id;
       _$v = null;
     }
     return this;
@@ -270,12 +271,12 @@ class UserBuilder implements Builder<User, UserBuilder> {
   _$User build() {
     final _$result = _$v ??
         new _$User._(
-            firstName: firstName,
-            lastName: lastName,
             email: email,
             organization: organization,
-            id: id,
-            type: type);
+            userName: userName,
+            apiURL: apiURL,
+            type: type,
+            id: id);
     replace(_$result);
     return _$result;
   }

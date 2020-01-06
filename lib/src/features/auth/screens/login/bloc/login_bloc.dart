@@ -42,6 +42,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> with DioErrorHelper {
           ..loading = false
           ..errorMessage = handleNetworkError(e));
       } catch (e) {
+        print(e);
+        yield state.rebuild((b) => b..loading = false);
+        yield state;
         throw Exception();
       }
     }

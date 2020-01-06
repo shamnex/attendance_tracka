@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:io';
 import 'package:attendance_tracka/env/url.dart';
 import 'package:attendance_tracka/src/core/network/token_manager.dart';
@@ -82,8 +81,8 @@ class AppHTTPClientImpl implements AppHTTPClient {
 
   void _setupLoggingInterceptor() async {
     _client.interceptors.add(InterceptorsWrapper(onRequest: (Options options) async {
-      final token = _tokenManager.token ?? await _tokenManager.getToken() ?? '';
-      options.headers[" bearer"] = token;
+      // final token = _tokenManager.token ?? await _tokenManager.getToken() ?? '';
+      // options.headers[" bearer"] = token;
       return options; //continue
     }));
   }

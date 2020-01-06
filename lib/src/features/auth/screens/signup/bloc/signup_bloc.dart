@@ -24,11 +24,23 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> with DioErrorHelper {
     if (event is OrganizationChanged) {
       yield state.rebuild((b) => b..organization = event.organization);
     }
+    if (event is UserNameChanged) {
+      yield state.rebuild((b) => b..organizationUserName = event.userName);
+    }
+    if (event is ApiChanged) {
+      yield state.rebuild((b) => b..apiURL = event.apiURL);
+    }
     if (event is SignUp) {
       try {
         yield state.rebuild((b) => b..loading = true);
         await Future.delayed(Duration(seconds: 1));
-        final user = await repo.signup();
+        final user = await repo.signup(
+          email: state.email,
+          password: state.password,
+          userType: event.userType,
+          organization: state.organization,
+          apiURL: state.apiURL,
+        );
         yield state.rebuild(
           (b) => b
             ..loading = false
@@ -38,7 +50,9 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> with DioErrorHelper {
         yield state.rebuild((b) => b
           ..loading = false
           ..errorMessage = handleNetworkError(e));
+        print(state.errorMessage);
       } catch (e) {
+        print(e.toString());
         throw Exception();
       }
     }

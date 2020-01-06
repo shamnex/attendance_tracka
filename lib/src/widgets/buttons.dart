@@ -70,3 +70,63 @@ class _AppButtonState extends State<AppButton> {
     );
   }
 }
+
+class AppIconButton extends StatefulWidget {
+  final Function onPressed;
+  final Icon icon;
+  final bool shadow;
+  final bool loading;
+  final Color backgroundColor;
+
+  AppIconButton({
+    Key key,
+    this.loading,
+    this.shadow = false,
+    this.onPressed,
+    this.backgroundColor,
+    this.icon,
+  }) : super(key: key);
+
+  @override
+  _AppIconButtonState createState() => _AppIconButtonState();
+}
+
+class _AppIconButtonState extends State<AppIconButton> {
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.bottomCenter,
+      children: <Widget>[
+        if (widget.shadow)
+          DecoratedBox(
+            child: SizedBox(
+              height: kToolbarHeight / 2,
+              width: kToolbarHeight / 2,
+            ),
+            decoration: BoxDecoration(boxShadow: [
+              BoxShadow(
+                blurRadius: 30,
+                spreadRadius: 10,
+                offset: Offset(10, 0),
+                color: AppColors.secondary,
+              )
+            ]),
+          ),
+        Container(
+          height: kToolbarHeight,
+          width: kToolbarHeight,
+          alignment: Alignment.center,
+          child: IconButton(
+            onPressed: widget.onPressed,
+            color: widget.backgroundColor ?? Colors.transparent,
+            icon: widget.icon,
+          ),
+          decoration: BoxDecoration(
+            color: widget.backgroundColor,
+            borderRadius: BorderRadius.all(Radius.circular(60)),
+          ),
+        ),
+      ],
+    );
+  }
+}

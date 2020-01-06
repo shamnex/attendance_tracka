@@ -2,7 +2,6 @@ import 'package:attendance_tracka/src/constants/border_radius.dart';
 import 'package:attendance_tracka/src/constants/colors.dart';
 import 'package:attendance_tracka/src/constants/paddings.dart';
 import 'package:attendance_tracka/src/features/app/bloc/app_bloc.dart';
-import 'package:attendance_tracka/src/features/app/bloc/app_event.dart';
 import 'package:attendance_tracka/src/features/app/bloc/app_state.dart';
 import 'package:attendance_tracka/src/features/app/model/app_mode.dart';
 import 'package:attendance_tracka/src/widgets/blur_bg_widget.dart';
@@ -12,11 +11,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'auth_app_bar.dart';
 
 class AuthScreenScaffold extends StatelessWidget {
-  const AuthScreenScaffold({Key key, this.title, this.subhead, this.builder, this.loading = false, s})
-      : super(key: key);
+  const AuthScreenScaffold({Key key, this.title, this.builder, this.loading = false, s}) : super(key: key);
 
   final String title;
-  final String subhead;
   final bool loading;
   final List<Widget> Function(AppMode) builder;
 
@@ -26,7 +23,6 @@ class AuthScreenScaffold extends StatelessWidget {
       children: <Widget>[
         BlocBuilder<AppBloc, AppState>(builder: (context, appState) {
           final bool isVolunteer = appState.mode == AppMode.volunteer;
-          final textTheme = Theme.of(context).textTheme;
           final theme = Theme.of(context);
           final mq = MediaQuery.of(context);
           return Scaffold(
@@ -79,34 +75,7 @@ class AuthScreenScaffold extends StatelessWidget {
                           handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
                         ),
                         SliverList(
-                          delegate: SliverChildListDelegate([
-                            RichText(
-                              text: TextSpan(
-                                text: '$subhead ${isVolunteer ? 'a' : 'an'} ',
-                                style: textTheme.title
-                                    .copyWith(color: isVolunteer ? theme.textTheme.body1.color : Colors.white),
-                                children: [
-                                  TextSpan(
-                                      text: isVolunteer ? 'Volunteer' : 'Organizer',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w900,
-                                      ))
-                                ],
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                BlocProvider.of<AppBloc>(context)
-                                    .add(AppModeChanged(mode: isVolunteer ? AppMode.organizer : AppMode.volunteer));
-                              },
-                              child: Text(
-                                'Are you ${isVolunteer ? 'an Organizer' : 'a Volunteer'} ?',
-                                style: textTheme.body1
-                                    .copyWith(height: 1.7, color: isVolunteer ? theme.hintColor : Colors.white),
-                              ),
-                            ),
-                            ...builder(appState.mode)
-                          ]),
+                          delegate: SliverChildListDelegate([...builder(appState.mode)]),
                         ),
                       ],
                     ),

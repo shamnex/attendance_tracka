@@ -30,6 +30,12 @@ class _$SignupStateSerializer implements StructuredSerializer<SignupState> {
       'errorMessage',
       serializers.serialize(object.errorMessage,
           specifiedType: const FullType(String)),
+      'apiURL',
+      serializers.serialize(object.apiURL,
+          specifiedType: const FullType(String)),
+      'organizationUserName',
+      serializers.serialize(object.organizationUserName,
+          specifiedType: const FullType(String)),
       'loading',
       serializers.serialize(object.loading,
           specifiedType: const FullType(bool)),
@@ -70,6 +76,14 @@ class _$SignupStateSerializer implements StructuredSerializer<SignupState> {
           result.errorMessage = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'apiURL':
+          result.apiURL = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'organizationUserName':
+          result.organizationUserName = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'user':
           result.user.replace(serializers.deserialize(value,
               specifiedType: const FullType(User)) as User);
@@ -95,6 +109,10 @@ class _$SignupState extends SignupState {
   @override
   final String errorMessage;
   @override
+  final String apiURL;
+  @override
+  final String organizationUserName;
+  @override
   final User user;
   @override
   final bool loading;
@@ -107,6 +125,8 @@ class _$SignupState extends SignupState {
       this.password,
       this.email,
       this.errorMessage,
+      this.apiURL,
+      this.organizationUserName,
       this.user,
       this.loading})
       : super._() {
@@ -121,6 +141,12 @@ class _$SignupState extends SignupState {
     }
     if (errorMessage == null) {
       throw new BuiltValueNullFieldError('SignupState', 'errorMessage');
+    }
+    if (apiURL == null) {
+      throw new BuiltValueNullFieldError('SignupState', 'apiURL');
+    }
+    if (organizationUserName == null) {
+      throw new BuiltValueNullFieldError('SignupState', 'organizationUserName');
     }
     if (loading == null) {
       throw new BuiltValueNullFieldError('SignupState', 'loading');
@@ -142,6 +168,8 @@ class _$SignupState extends SignupState {
         password == other.password &&
         email == other.email &&
         errorMessage == other.errorMessage &&
+        apiURL == other.apiURL &&
+        organizationUserName == other.organizationUserName &&
         user == other.user &&
         loading == other.loading;
   }
@@ -151,9 +179,15 @@ class _$SignupState extends SignupState {
     return $jf($jc(
         $jc(
             $jc(
-                $jc($jc($jc(0, organization.hashCode), password.hashCode),
-                    email.hashCode),
-                errorMessage.hashCode),
+                $jc(
+                    $jc(
+                        $jc(
+                            $jc($jc(0, organization.hashCode),
+                                password.hashCode),
+                            email.hashCode),
+                        errorMessage.hashCode),
+                    apiURL.hashCode),
+                organizationUserName.hashCode),
             user.hashCode),
         loading.hashCode));
   }
@@ -165,6 +199,8 @@ class _$SignupState extends SignupState {
           ..add('password', password)
           ..add('email', email)
           ..add('errorMessage', errorMessage)
+          ..add('apiURL', apiURL)
+          ..add('organizationUserName', organizationUserName)
           ..add('user', user)
           ..add('loading', loading))
         .toString();
@@ -190,6 +226,15 @@ class SignupStateBuilder implements Builder<SignupState, SignupStateBuilder> {
   String get errorMessage => _$this._errorMessage;
   set errorMessage(String errorMessage) => _$this._errorMessage = errorMessage;
 
+  String _apiURL;
+  String get apiURL => _$this._apiURL;
+  set apiURL(String apiURL) => _$this._apiURL = apiURL;
+
+  String _organizationUserName;
+  String get organizationUserName => _$this._organizationUserName;
+  set organizationUserName(String organizationUserName) =>
+      _$this._organizationUserName = organizationUserName;
+
   UserBuilder _user;
   UserBuilder get user => _$this._user ??= new UserBuilder();
   set user(UserBuilder user) => _$this._user = user;
@@ -206,6 +251,8 @@ class SignupStateBuilder implements Builder<SignupState, SignupStateBuilder> {
       _password = _$v.password;
       _email = _$v.email;
       _errorMessage = _$v.errorMessage;
+      _apiURL = _$v.apiURL;
+      _organizationUserName = _$v.organizationUserName;
       _user = _$v.user?.toBuilder();
       _loading = _$v.loading;
       _$v = null;
@@ -236,6 +283,8 @@ class SignupStateBuilder implements Builder<SignupState, SignupStateBuilder> {
               password: password,
               email: email,
               errorMessage: errorMessage,
+              apiURL: apiURL,
+              organizationUserName: organizationUserName,
               user: _user?.build(),
               loading: loading);
     } catch (_) {

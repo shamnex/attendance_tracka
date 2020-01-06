@@ -15,6 +15,8 @@ abstract class SignupState implements Built<SignupState, SignupStateBuilder> {
   String get password;
   String get email;
   String get errorMessage;
+  String get apiURL;
+  String get organizationUserName;
   @nullable
   User get user;
 
@@ -28,10 +30,12 @@ abstract class SignupState implements Built<SignupState, SignupStateBuilder> {
   static SignupState initialState() => SignupState(
         (b) => b
           ..organization = ''
+          ..organizationUserName = ''
           ..password = ''
           ..email = ''
           ..errorMessage = ''
           ..loading = false
+          ..apiURL = ''
           ..user = null,
       );
 
