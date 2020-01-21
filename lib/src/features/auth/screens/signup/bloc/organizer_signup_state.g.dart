@@ -6,16 +6,22 @@ part of sign_up_state;
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<SignupState> _$signupStateSerializer = new _$SignupStateSerializer();
+Serializer<OrganizerSignupState> _$organizerSignupStateSerializer =
+    new _$OrganizerSignupStateSerializer();
 
-class _$SignupStateSerializer implements StructuredSerializer<SignupState> {
+class _$OrganizerSignupStateSerializer
+    implements StructuredSerializer<OrganizerSignupState> {
   @override
-  final Iterable<Type> types = const [SignupState, _$SignupState];
+  final Iterable<Type> types = const [
+    OrganizerSignupState,
+    _$OrganizerSignupState
+  ];
   @override
-  final String wireName = 'SignupState';
+  final String wireName = 'OrganizerSignupState';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, SignupState object,
+  Iterable<Object> serialize(
+      Serializers serializers, OrganizerSignupState object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'organization',
@@ -50,9 +56,10 @@ class _$SignupStateSerializer implements StructuredSerializer<SignupState> {
   }
 
   @override
-  SignupState deserialize(Serializers serializers, Iterable<Object> serialized,
+  OrganizerSignupState deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new SignupStateBuilder();
+    final result = new OrganizerSignupStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -99,7 +106,7 @@ class _$SignupStateSerializer implements StructuredSerializer<SignupState> {
   }
 }
 
-class _$SignupState extends SignupState {
+class _$OrganizerSignupState extends OrganizerSignupState {
   @override
   final String organization;
   @override
@@ -117,10 +124,11 @@ class _$SignupState extends SignupState {
   @override
   final bool loading;
 
-  factory _$SignupState([void Function(SignupStateBuilder) updates]) =>
-      (new SignupStateBuilder()..update(updates)).build();
+  factory _$OrganizerSignupState(
+          [void Function(OrganizerSignupStateBuilder) updates]) =>
+      (new OrganizerSignupStateBuilder()..update(updates)).build();
 
-  _$SignupState._(
+  _$OrganizerSignupState._(
       {this.organization,
       this.password,
       this.email,
@@ -131,39 +139,44 @@ class _$SignupState extends SignupState {
       this.loading})
       : super._() {
     if (organization == null) {
-      throw new BuiltValueNullFieldError('SignupState', 'organization');
+      throw new BuiltValueNullFieldError(
+          'OrganizerSignupState', 'organization');
     }
     if (password == null) {
-      throw new BuiltValueNullFieldError('SignupState', 'password');
+      throw new BuiltValueNullFieldError('OrganizerSignupState', 'password');
     }
     if (email == null) {
-      throw new BuiltValueNullFieldError('SignupState', 'email');
+      throw new BuiltValueNullFieldError('OrganizerSignupState', 'email');
     }
     if (errorMessage == null) {
-      throw new BuiltValueNullFieldError('SignupState', 'errorMessage');
+      throw new BuiltValueNullFieldError(
+          'OrganizerSignupState', 'errorMessage');
     }
     if (apiURL == null) {
-      throw new BuiltValueNullFieldError('SignupState', 'apiURL');
+      throw new BuiltValueNullFieldError('OrganizerSignupState', 'apiURL');
     }
     if (organizationUserName == null) {
-      throw new BuiltValueNullFieldError('SignupState', 'organizationUserName');
+      throw new BuiltValueNullFieldError(
+          'OrganizerSignupState', 'organizationUserName');
     }
     if (loading == null) {
-      throw new BuiltValueNullFieldError('SignupState', 'loading');
+      throw new BuiltValueNullFieldError('OrganizerSignupState', 'loading');
     }
   }
 
   @override
-  SignupState rebuild(void Function(SignupStateBuilder) updates) =>
+  OrganizerSignupState rebuild(
+          void Function(OrganizerSignupStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  SignupStateBuilder toBuilder() => new SignupStateBuilder()..replace(this);
+  OrganizerSignupStateBuilder toBuilder() =>
+      new OrganizerSignupStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is SignupState &&
+    return other is OrganizerSignupState &&
         organization == other.organization &&
         password == other.password &&
         email == other.email &&
@@ -194,7 +207,7 @@ class _$SignupState extends SignupState {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('SignupState')
+    return (newBuiltValueToStringHelper('OrganizerSignupState')
           ..add('organization', organization)
           ..add('password', password)
           ..add('email', email)
@@ -207,8 +220,9 @@ class _$SignupState extends SignupState {
   }
 }
 
-class SignupStateBuilder implements Builder<SignupState, SignupStateBuilder> {
-  _$SignupState _$v;
+class OrganizerSignupStateBuilder
+    implements Builder<OrganizerSignupState, OrganizerSignupStateBuilder> {
+  _$OrganizerSignupState _$v;
 
   String _organization;
   String get organization => _$this._organization;
@@ -243,9 +257,9 @@ class SignupStateBuilder implements Builder<SignupState, SignupStateBuilder> {
   bool get loading => _$this._loading;
   set loading(bool loading) => _$this._loading = loading;
 
-  SignupStateBuilder();
+  OrganizerSignupStateBuilder();
 
-  SignupStateBuilder get _$this {
+  OrganizerSignupStateBuilder get _$this {
     if (_$v != null) {
       _organization = _$v.organization;
       _password = _$v.password;
@@ -261,24 +275,24 @@ class SignupStateBuilder implements Builder<SignupState, SignupStateBuilder> {
   }
 
   @override
-  void replace(SignupState other) {
+  void replace(OrganizerSignupState other) {
     if (other == null) {
       throw new ArgumentError.notNull('other');
     }
-    _$v = other as _$SignupState;
+    _$v = other as _$OrganizerSignupState;
   }
 
   @override
-  void update(void Function(SignupStateBuilder) updates) {
+  void update(void Function(OrganizerSignupStateBuilder) updates) {
     if (updates != null) updates(this);
   }
 
   @override
-  _$SignupState build() {
-    _$SignupState _$result;
+  _$OrganizerSignupState build() {
+    _$OrganizerSignupState _$result;
     try {
       _$result = _$v ??
-          new _$SignupState._(
+          new _$OrganizerSignupState._(
               organization: organization,
               password: password,
               email: email,
@@ -294,7 +308,7 @@ class SignupStateBuilder implements Builder<SignupState, SignupStateBuilder> {
         _user?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'SignupState', _$failedField, e.toString());
+            'OrganizerSignupState', _$failedField, e.toString());
       }
       rethrow;
     }

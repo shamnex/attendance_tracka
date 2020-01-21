@@ -1,11 +1,12 @@
 import 'package:attendance_tracka/src/features/app/model/user_model.dart';
 import 'package:equatable/equatable.dart';
 
-abstract class SignupEvent extends Equatable {
-  const SignupEvent();
+abstract class OrganizerSignupEvent extends Equatable {
+  const OrganizerSignupEvent();
+  List<Object> get props => [];
 }
 
-class PasswordChanged extends SignupEvent {
+class PasswordChanged extends OrganizerSignupEvent {
   final String password;
   PasswordChanged(this.password);
 
@@ -13,7 +14,7 @@ class PasswordChanged extends SignupEvent {
   List<Object> get props => [password];
 }
 
-class ApiChanged extends SignupEvent {
+class ApiChanged extends OrganizerSignupEvent {
   final String apiURL;
   ApiChanged(this.apiURL);
 
@@ -21,7 +22,7 @@ class ApiChanged extends SignupEvent {
   List<Object> get props => [apiURL];
 }
 
-class UserNameChanged extends SignupEvent {
+class UserNameChanged extends OrganizerSignupEvent {
   final String userName;
   UserNameChanged(this.userName);
 
@@ -29,7 +30,7 @@ class UserNameChanged extends SignupEvent {
   List<Object> get props => [userName];
 }
 
-class EmailChanged extends SignupEvent {
+class EmailChanged extends OrganizerSignupEvent {
   final String email;
   EmailChanged(this.email);
 
@@ -37,7 +38,7 @@ class EmailChanged extends SignupEvent {
   List<Object> get props => [email];
 }
 
-class OrganizationChanged extends SignupEvent {
+class OrganizationChanged extends OrganizerSignupEvent {
   final String organization;
   OrganizationChanged(this.organization);
 
@@ -45,7 +46,7 @@ class OrganizationChanged extends SignupEvent {
   List<Object> get props => [organization];
 }
 
-class SignUp extends SignupEvent {
+class SignUp extends OrganizerSignupEvent {
   final UserType userType;
 
   SignUp(this.userType);

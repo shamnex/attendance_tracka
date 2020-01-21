@@ -1,5 +1,6 @@
 import 'package:attendance_tracka/src/features/auth/routes/auth_routes.dart';
-import 'package:attendance_tracka/src/features/auth/screens/signup/bloc/signup_bloc.dart';
+import 'package:attendance_tracka/src/features/auth/screens/signup/bloc/api_bloc/bloc.dart';
+import 'package:attendance_tracka/src/features/auth/screens/signup/bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,6 +21,7 @@ class AuthHomeScreen extends StatelessWidget {
         providers: [
           BlocProvider<LoginBloc>(create: (context) => LoginBloc(sl())),
           BlocProvider<SignupBloc>(create: (context) => SignupBloc(sl())),
+          BlocProvider<GetApiUrlBloc>(create: (context) => GetApiUrlBloc(sl())),
         ],
         child: Material(
           child: Navigator(

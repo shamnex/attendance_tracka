@@ -5,6 +5,7 @@ import 'package:equatable/equatable.dart';
 
 abstract class AppEvent extends Equatable {
   AppEvent();
+  List<Object> get props => [];
 }
 
 class HasOnboarded extends AppEvent {
@@ -12,12 +13,14 @@ class HasOnboarded extends AppEvent {
   List<Object> get props => ['HasOnboarded'];
 }
 
-class HasLoggedUser extends AppEvent {
+class UserLoggedIn extends AppEvent {
   final User user;
-  HasLoggedUser(this.user);
+  UserLoggedIn(this.user);
   @override
   List<Object> get props => [user];
 }
+
+class UserLoggedOut extends AppEvent {}
 
 class HasCompletedWalkThrough extends AppEvent {
   @override

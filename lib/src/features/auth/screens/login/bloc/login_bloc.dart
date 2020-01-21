@@ -15,38 +15,41 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> with DioErrorHelper {
   Stream<LoginState> mapEventToState(
     LoginEvent event,
   ) async* {
-    if (event is PasswordChanged) {
-      yield state.rebuild((b) => b..password = event.password);
-    }
-    if (event is EmailChanged) {
-      yield state.rebuild((b) => b..email = event.email);
-    }
+    try {
+      if (event is PasswordChanged) {
+        yield state.rebuild((b) => b
+          ..password = event.password
+          ..errorMessage = '');
+      }
+      if (event is EmailChanged) {
+        yield state.rebuild((b) => b
+          ..email = event.email
+          ..errorMessage = '');
+      }
 
-    if (event is Login) {
-      try {
-        yield state.rebuild((b) => b..loading = true);
-        await Future.delayed(Duration(seconds: 1));
+      if (event is Login) {
+        yield state.rebuild((b) => b
+          ..loading = true
+          ..errorMessage = '');
         final user = await repo.login(
           email: state.email,
           password: state.password,
           userType: event.userType,
         );
-
-        yield state.rebuild(
-          (b) => b
-            ..loading = false
-            ..user = user.toBuilder(),
-        );
-      } on DioError catch (e) {
         yield state.rebuild((b) => b
           ..loading = false
-          ..errorMessage = handleNetworkError(e));
-      } catch (e) {
-        print(e);
-        yield state.rebuild((b) => b..loading = false);
-        yield state;
-        throw Exception();
+          ..errorMessage = ''
+          ..user = user.toBuilder());
       }
+    } on DioError catch (e) {
+      yield state.rebuild((b) => b
+        ..loading = false
+        ..errorMessage = handleNetworkError(e));
+    } catch (e) {
+      //TODO CRASHYLITICS??
+      yield state.rebuild(
+        (b) => b..loading = false,
+      );
     }
   }
 }

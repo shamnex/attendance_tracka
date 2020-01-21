@@ -34,6 +34,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   static Serializer<AppState> get serializer => _$appStateSerializer;
 
+  bool get userLoggedIn => currentUser is User;
+
   Map<String, dynamic> toJson() {
     return serializers.serializeWith(AppState.serializer, this);
   }

@@ -39,6 +39,6 @@ Future<void> init(Flavor flavor) async {
     }
   });
   //! GLOBAL STATE STUFFS
-  sl.registerLazySingleton<AuthBloc>(() => AuthBloc(sl()));
   sl.registerLazySingleton<AppBloc>(() => AppBloc(flavor));
+  sl.registerLazySingleton<AuthBloc>(() => AuthBloc(sl(), sl()));
 }

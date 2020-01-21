@@ -6,10 +6,10 @@ import 'package:attendance_tracka/src/core/built_value/serializers.dart';
 import 'package:attendance_tracka/src/features/app/model/user_model.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+part 'organizer_signup_state.g.dart';
 
-part 'signup_state.g.dart';
-
-abstract class SignupState implements Built<SignupState, SignupStateBuilder> {
+abstract class OrganizerSignupState implements Built<OrganizerSignupState, OrganizerSignupStateBuilder> {
+  // fields go here
   // fields go here
   String get organization;
   String get password;
@@ -23,11 +23,21 @@ abstract class SignupState implements Built<SignupState, SignupStateBuilder> {
   bool get loading;
   bool get isSignedUp => user is User;
   bool get hasError => errorMessage.isNotEmpty;
-  SignupState._();
+  OrganizerSignupState._();
 
-  factory SignupState([updates(SignupStateBuilder b)]) = _$SignupState;
+  factory OrganizerSignupState([updates(OrganizerSignupStateBuilder b)]) = _$OrganizerSignupState;
 
-  static SignupState initialState() => SignupState(
+  String toJson() {
+    return json.encode(serializers.serializeWith(OrganizerSignupState.serializer, this));
+  }
+
+  static OrganizerSignupState fromJson(String jsonString) {
+    return serializers.deserializeWith(OrganizerSignupState.serializer, json.decode(jsonString));
+  }
+
+  static Serializer<OrganizerSignupState> get serializer => _$organizerSignupStateSerializer;
+
+  static OrganizerSignupState initialState() => OrganizerSignupState(
         (b) => b
           ..organization = ''
           ..organizationUserName = ''
@@ -38,14 +48,4 @@ abstract class SignupState implements Built<SignupState, SignupStateBuilder> {
           ..apiURL = ''
           ..user = null,
       );
-
-  String toJson() {
-    return json.encode(serializers.serializeWith(SignupState.serializer, this));
-  }
-
-  static SignupState fromJson(String jsonString) {
-    return serializers.deserializeWith(SignupState.serializer, json.decode(jsonString));
-  }
-
-  static Serializer<SignupState> get serializer => _$signupStateSerializer;
 }

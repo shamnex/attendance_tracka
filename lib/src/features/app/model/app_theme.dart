@@ -76,7 +76,7 @@ final appThemeData = {
         borderRadius: AppBorderRadius.a40,
       ),
       disabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: AppColors.primary.shade50.withOpacity(.1)),
+        borderSide: BorderSide(color: AppColors.primary.shade200.withOpacity(.1)),
         borderRadius: AppBorderRadius.a40,
       ),
       errorBorder: OutlineInputBorder(

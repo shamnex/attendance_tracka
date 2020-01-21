@@ -7,11 +7,6 @@ class AuthLoading extends AuthState {
   List<Object> get props => ['AuthLoading'];
 }
 
-class AuthInitialState extends AuthState {
-  @override
-  List<Object> get props => ['AuthInitialState'];
-}
-
 class AuthAuthenticated extends AuthState {
   @override
   List<Object> get props => ['AuthAuthenticated'];

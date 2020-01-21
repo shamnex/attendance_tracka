@@ -25,4 +25,17 @@ class InputValidators {
     }
     return null;
   }
+
+  static String isURL(String value, {bool required = true, length = 4}) {
+    if (value.isEmpty) {
+      return 'Field is Required';
+    }
+    if (validator.isMultibyte(value)) {
+      return 'Invalid Username or Email';
+    }
+    if (!validator.isURL(value)) {
+      return 'Invalid URL';
+    }
+    return null;
+  }
 }

@@ -53,7 +53,6 @@ class _AddVolunteersScreenState extends State<AddVolunteersScreen> {
                         keyboardType: TextInputType.emailAddress,
                         onChanged: (value) => signupBloc.add(EmailChanged(value)),
                         validator: InputValidators.email,
-                        // autofocus: true,
                         style: TextStyle(color: isVolunteer ? textTheme.body1.color : Colors.white),
                         decoration: !isVolunteer
                             ? AppInputTheme.outlineInputTheme.copyWith(hintText: 'Email')

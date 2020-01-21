@@ -9,8 +9,11 @@ import 'package:meta/meta.dart';
 abstract class AppHTTPClient {
   AppHTTPClient(Flavor flavor);
   String baseURL;
-  Future<Response> get(String url);
-  Future<Response> post(String endpoint, {@required dynamic body});
+  Future<Response> get(String url, {bool useBaseURL = true});
+  Future<Response> post(
+    String endpoint, {
+    @required dynamic body,
+  });
   Future<Response> put(String endpoint, {@required dynamic body});
   Future<Response> upload(String endpoint, {@required List<File> file, @required dynamic body});
 }
@@ -39,8 +42,8 @@ class AppHTTPClientImpl implements AppHTTPClient {
   }
 
   String baseURL;
-  Future<Response> get(String url, {Function(int, int) onReceiveProgress}) async {
-    return _client.get(baseURL + url, onReceiveProgress: onReceiveProgress);
+  Future<Response> get(String url, {Function(int, int) onReceiveProgress, bool useBaseURL = true}) async {
+    return _client.get('${useBaseURL ? baseURL : ''}$url', onReceiveProgress: onReceiveProgress);
   }
 
   Future<Response> post(String endpoint, {@required dynamic body}) async {
