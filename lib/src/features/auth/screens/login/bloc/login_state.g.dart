@@ -59,13 +59,13 @@ class _$LoginStateSerializer implements StructuredSerializer<LoginState> {
           result.email = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'errorMessage':
-          result.errorMessage = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
         case 'user':
           result.user.replace(serializers.deserialize(value,
               specifiedType: const FullType(User)) as User);
+          break;
+        case 'errorMessage':
+          result.errorMessage = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
         case 'loading':
           result.loading = serializers.deserialize(value,
@@ -84,9 +84,9 @@ class _$LoginState extends LoginState {
   @override
   final String email;
   @override
-  final String errorMessage;
-  @override
   final User user;
+  @override
+  final String errorMessage;
   @override
   final bool loading;
 
@@ -94,7 +94,7 @@ class _$LoginState extends LoginState {
       (new LoginStateBuilder()..update(updates)).build();
 
   _$LoginState._(
-      {this.password, this.email, this.errorMessage, this.user, this.loading})
+      {this.password, this.email, this.user, this.errorMessage, this.loading})
       : super._() {
     if (password == null) {
       throw new BuiltValueNullFieldError('LoginState', 'password');
@@ -123,18 +123,16 @@ class _$LoginState extends LoginState {
     return other is LoginState &&
         password == other.password &&
         email == other.email &&
-        errorMessage == other.errorMessage &&
         user == other.user &&
+        errorMessage == other.errorMessage &&
         loading == other.loading;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc(
-            $jc($jc($jc(0, password.hashCode), email.hashCode),
-                errorMessage.hashCode),
-            user.hashCode),
+        $jc($jc($jc($jc(0, password.hashCode), email.hashCode), user.hashCode),
+            errorMessage.hashCode),
         loading.hashCode));
   }
 
@@ -143,8 +141,8 @@ class _$LoginState extends LoginState {
     return (newBuiltValueToStringHelper('LoginState')
           ..add('password', password)
           ..add('email', email)
-          ..add('errorMessage', errorMessage)
           ..add('user', user)
+          ..add('errorMessage', errorMessage)
           ..add('loading', loading))
         .toString();
   }
@@ -161,13 +159,13 @@ class LoginStateBuilder implements Builder<LoginState, LoginStateBuilder> {
   String get email => _$this._email;
   set email(String email) => _$this._email = email;
 
-  String _errorMessage;
-  String get errorMessage => _$this._errorMessage;
-  set errorMessage(String errorMessage) => _$this._errorMessage = errorMessage;
-
   UserBuilder _user;
   UserBuilder get user => _$this._user ??= new UserBuilder();
   set user(UserBuilder user) => _$this._user = user;
+
+  String _errorMessage;
+  String get errorMessage => _$this._errorMessage;
+  set errorMessage(String errorMessage) => _$this._errorMessage = errorMessage;
 
   bool _loading;
   bool get loading => _$this._loading;
@@ -179,8 +177,8 @@ class LoginStateBuilder implements Builder<LoginState, LoginStateBuilder> {
     if (_$v != null) {
       _password = _$v.password;
       _email = _$v.email;
-      _errorMessage = _$v.errorMessage;
       _user = _$v.user?.toBuilder();
+      _errorMessage = _$v.errorMessage;
       _loading = _$v.loading;
       _$v = null;
     }
@@ -208,8 +206,8 @@ class LoginStateBuilder implements Builder<LoginState, LoginStateBuilder> {
           new _$LoginState._(
               password: password,
               email: email,
-              errorMessage: errorMessage,
               user: _user?.build(),
+              errorMessage: errorMessage,
               loading: loading);
     } catch (_) {
       String _$failedField;

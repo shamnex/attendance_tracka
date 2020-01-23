@@ -13,10 +13,9 @@ abstract class LoginState implements Built<LoginState, LoginStateBuilder> {
   // fields go here
   String get password;
   String get email;
-  String get errorMessage;
   @nullable
   User get user;
-
+  String get errorMessage;
   bool get loading;
   bool get loggedIn => user is User;
   bool get hasError => errorMessage.isNotEmpty;

@@ -43,6 +43,7 @@ class AppHTTPClientImpl implements AppHTTPClient {
 
   String baseURL;
   Future<Response> get(String url, {Function(int, int) onReceiveProgress, bool useBaseURL = true}) async {
+    print('${useBaseURL ? baseURL : ''}$url');
     return _client.get('${useBaseURL ? baseURL : ''}$url', onReceiveProgress: onReceiveProgress);
   }
 

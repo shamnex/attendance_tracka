@@ -44,7 +44,7 @@ class _OrganiserScreenState extends State<OrganiserScreen> {
                     children: <Widget>[
                       AppButton(
                         onPressed: () {
-                          Navigator.of(context, rootNavigator: true)..pushReplacementNamed(AppRoutes.addVolunteer);
+                          Navigator.of(context, rootNavigator: true)..pushNamed(AppRoutes.addVolunteer);
                         },
                         child: Text(
                           'Add Volunteers',

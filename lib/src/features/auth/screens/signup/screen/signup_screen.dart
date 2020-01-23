@@ -31,6 +31,7 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   void initState() {
     signupBloc = BlocProvider.of(context);
+    print(signupBloc.state.organizationUserName);
     super.initState();
   }
 
@@ -105,6 +106,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           SizedBox(height: 30),
                           if (!isVolunteer)
                             TextFormField(
+                                initialValue: state.organization,
                                 onChanged: (value) => signupBloc.add(OrganizationChanged(value)),
                                 validator: (value) => InputValidators.minLength(value, length: 3),
                                 keyboardType: TextInputType.emailAddress,
@@ -120,12 +122,14 @@ class _SignupScreenState extends State<SignupScreen> {
                                       )),
                           SizedBox(height: 16),
                           TextFormField(
+                              initialValue: state.organizationUserName,
                               obscureText: false,
                               onChanged: (value) {
                                 if (value.trim().isEmpty) return;
-                                isVolunteer
-                                    ? BlocProvider.of<GetApiUrlBloc>(context).add(GetOrganizationApiUrl(value.trim()))
-                                    : signupBloc.add(UserNameChanged(value.trim()));
+                                if (isVolunteer) {
+                                  BlocProvider.of<GetApiUrlBloc>(context).add(GetOrganizationApiUrl(value.trim()));
+                                }
+                                signupBloc.add(UserNameChanged(value.trim()));
                               },
                               validator: (value) {
                                 return InputValidators.minLength(value, length: 6);
@@ -197,6 +201,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             ),
                           SizedBox(height: 16),
                           TextFormField(
+                            initialValue: state.email,
                             enabled: canGetVonteerApiURL,
                             keyboardType: TextInputType.emailAddress,
                             onChanged: (value) => signupBloc.add(EmailChanged(value)),
@@ -207,6 +212,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                 : InputDecoration(
                                     hintText: 'Email',
                                     filled: isVolunteer ? true : false,
+                                    errorStyle: TextStyle(color: Colors.red),
                                     hintStyle: TextStyle(
                                       color: isVolunteer
                                           ? canGetVonteerApiURL ? AppColors.hint : AppColors.hint.withOpacity(.3)
@@ -216,11 +222,9 @@ class _SignupScreenState extends State<SignupScreen> {
                           ),
                           SizedBox(height: 16),
                           TextFormField(
+                            initialValue: state.password,
                             enabled: canGetVonteerApiURL,
                             obscureText: true,
-                            onTap: () {
-                              print('hell');
-                            },
                             onChanged: (value) => signupBloc.add(PasswordChanged(value)),
                             validator: (value) => InputValidators.minLength(value, length: 3),
                             style: TextStyle(color: isVolunteer ? textTheme.body1.color : Colors.white),
@@ -229,6 +233,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                 : InputDecoration(
                                     hintText: 'Password',
                                     filled: isVolunteer ? true : false,
+                                    errorStyle: TextStyle(color: Colors.red),
                                     hintStyle: TextStyle(
                                       color: isVolunteer
                                           ? canGetVonteerApiURL ? AppColors.hint : AppColors.hint.withOpacity(.3)
@@ -294,6 +299,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
   _signup() {
     if (_formKey.currentState.validate()) {
+      FocusScope.of(context).unfocus();
       final userType =
           BlocProvider.of<AppBloc>(context).state.mode == AppMode.organizer ? UserType.organizer : UserType.volunteer;
       signupBloc.add(SignUp(userType));

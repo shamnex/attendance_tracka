@@ -17,9 +17,7 @@ class HomeScreen extends StatelessWidget {
       return BlocBuilder<AuthBloc, AuthState>(
         builder: (context, authState) {
           if (authState is AuthLoading) {
-            return Center(
-              child: Text('Tracka'),
-            );
+            return Center(child: Text('Tracka'));
           }
           if (authState is AuthUnAuthenticated) {
             return WelcomeScreen();

@@ -32,13 +32,11 @@ class BaseBlocHydrated<T extends BaseModel> extends HydratedBloc<BaseBlocEvent<T
   @mustCallSuper
   Stream<BaseBlocState<T>> mapEventToState(BaseBlocEvent<T> event) async* {
     if (event is UpdateBaseBlocEvent<T>) {
-      yield state.rebuild(
-        (b) => b
-          ..loading = event.loading ?? false
-          ..errorMessage = event.error
-          ..isDummy = event.isDummy
-          ..value = event.value,
-      );
+      yield state.rebuild((b) => b
+        ..loading = event.loading ?? false
+        ..errorMessage = event.error ?? state.errorMessage
+        ..isDummy = event.isDummy ?? state.isDummy
+        ..value = event.value ?? state.value);
     }
   }
 
@@ -76,18 +74,15 @@ class BaseBlocHydrated<T extends BaseModel> extends HydratedBloc<BaseBlocEvent<T
 
   @override
   Map<String, dynamic> toJson(BaseBlocState<T> state) {
-    if (state.hasValue) {
-      try {
-        return {
-          'errorMessage': state.errorMessage,
-          'loading': state.loading,
-          'isDummy': false,
-          'value': state.value.toJson(),
-        };
-      } catch (_) {
-        return null;
-      }
+    try {
+      return {
+        'errorMessage': state.errorMessage,
+        'loading': state.loading,
+        'isDummy': false,
+        'value': state.value.toJson(),
+      };
+    } catch (_) {
+      return null;
     }
-    return null;
   }
 }

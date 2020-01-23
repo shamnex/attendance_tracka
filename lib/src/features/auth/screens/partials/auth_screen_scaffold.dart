@@ -11,7 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'auth_app_bar.dart';
 
 class AuthScreenScaffold extends StatelessWidget {
-  const AuthScreenScaffold({Key key, this.title, this.builder, this.loading = false, s}) : super(key: key);
+  const AuthScreenScaffold({Key key, this.title, this.builder, this.loading = false}) : super(key: key);
 
   final String title;
   final bool loading;

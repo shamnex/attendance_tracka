@@ -154,7 +154,7 @@ class DevAuthRepositoryImpl extends TokenManagerImpl implements AuthRepository {
               'actionreq=createorg&orgname=$organization&adminemail=$email&password=$password&apiurl=$apiURL&orgabb=$organizationUserName';
           break;
         case UserType.volunteer:
-          url = '$apiURL?action=signin&useremail=$email&password=$password';
+          url = '$apiURL?actionreq=signin&useremail=$email&password=$password';
           break;
       }
       final res = await _client.get(url, useBaseURL: userType == UserType.organizer);
@@ -188,7 +188,7 @@ class DevAuthRepositoryImpl extends TokenManagerImpl implements AuthRepository {
 
       if (res.data["status"] == "success") {
         var url = res.data['description'];
-        return url;
+        return url['API'];
       } else {
         throw DioError(
             type: DioErrorType.RESPONSE,

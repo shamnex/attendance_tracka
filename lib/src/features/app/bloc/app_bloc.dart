@@ -35,7 +35,7 @@ class AppBloc extends HydratedBloc<AppEvent, AppState> {
       yield state.rebuild((b) => b..currentUser = event.user.toBuilder());
     }
     if (event is HasOnboarded) {
-      yield state.rebuild((b) => b..hasOnboarded = !b.hasOnboarded);
+      yield state.rebuild((b) => b..hasOnboarded = true);
     }
     if (event is UserLoggedOut) {
       yield state.rebuild((b) => b..currentUser = null);

@@ -41,9 +41,7 @@ class UserType extends EnumClass {
   static const UserType participant = _$participant;
   static const UserType organizer = _$organizer;
   static const UserType volunteer = _$volunteer;
-
   const UserType._(String name) : super(name);
-
   static BuiltSet<UserType> get values => _$values;
   static UserType valueOf(String name) => _$valueOf(name);
   static Serializer<UserType> get serializer => _$userTypeSerializer;
