@@ -12,7 +12,7 @@ import 'core/network/http_client.dart';
 import 'core/network/token_manager.dart';
 import 'features/auth/bloc/auth_bloc.dart';
 
-final sl = GetIt.instance;
+final sl = GetIt.instance..allowReassignment = true;
 
 Future<void> init(Flavor flavor) async {
   //! EXTERNAL DEPENDENCIES STUFF
