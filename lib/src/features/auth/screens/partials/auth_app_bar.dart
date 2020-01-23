@@ -8,12 +8,12 @@ class AuthAppBar extends SliverPersistentHeaderDelegate {
     @required this.minHeight,
     @required this.maxHeight,
     @required this.title,
-    @required this.isVolunteer,
+    @required this.lightBG,
   });
   final double minHeight;
   final double maxHeight;
   final String title;
-  final bool isVolunteer;
+  final bool lightBG;
   @override
   double get minExtent => minHeight;
   @override
@@ -33,7 +33,7 @@ class AuthAppBar extends SliverPersistentHeaderDelegate {
         decoration: BoxDecoration(
           color:
               scrolledToTop ? Colors.white.withOpacity((shrinkOffset / maxHeight).clamp(0.5, 1.0)) : Colors.transparent,
-          gradient: scrolledToTop && !isVolunteer
+          gradient: scrolledToTop && !lightBG
               ? null
               : LinearGradient(
                   colors: AppColors.primaryGradient.reversed.toList(),
@@ -53,7 +53,7 @@ class AuthAppBar extends SliverPersistentHeaderDelegate {
               title,
               style: textTheme.display1.copyWith(
                 fontWeight: FontWeight.bold,
-                color: scrolledToTop && isVolunteer ? Colors.white : Colors.black87,
+                color: scrolledToTop && lightBG ? Colors.white : Colors.black87,
               ),
             ),
           ),

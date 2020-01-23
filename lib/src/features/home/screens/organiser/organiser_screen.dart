@@ -1,11 +1,14 @@
 import 'package:attendance_tracka/src/features/app/bloc/app_bloc.dart';
 import 'package:attendance_tracka/src/features/app/bloc/app_state.dart';
 import 'package:attendance_tracka/src/features/auth/bloc/bloc.dart';
+import 'package:attendance_tracka/src/features/home/screens/organiser/routes.dart';
 import 'package:attendance_tracka/src/routes/app_routes.dart';
 import 'package:attendance_tracka/src/widgets/buttons.dart';
 import 'package:attendance_tracka/src/widgets/staggered_animated_column.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'organizer_home_scree.dart';
 
 class OrganiserScreen extends StatefulWidget {
   const OrganiserScreen({Key key}) : super(key: key);
@@ -44,7 +47,7 @@ class _OrganiserScreenState extends State<OrganiserScreen> {
                     children: <Widget>[
                       AppButton(
                         onPressed: () {
-                          Navigator.of(context, rootNavigator: true)..pushNamed(AppRoutes.addVolunteer);
+                          Navigator.of(context).pushNamed(OrganizerRoutes.addVolunteers);
                         },
                         child: Text(
                           'Add Volunteers',

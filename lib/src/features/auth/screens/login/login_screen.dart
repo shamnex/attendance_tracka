@@ -2,6 +2,7 @@ import 'package:attendance_tracka/src/constants/border_radius.dart';
 import 'package:attendance_tracka/src/constants/colors.dart';
 import 'package:attendance_tracka/src/features/app/bloc/app_bloc.dart';
 import 'package:attendance_tracka/src/features/app/bloc/app_event.dart';
+import 'package:attendance_tracka/src/features/app/bloc/app_state.dart';
 import 'package:attendance_tracka/src/features/app/model/app_mode.dart';
 import 'package:attendance_tracka/src/features/app/model/app_theme.dart';
 import 'package:attendance_tracka/src/features/auth/bloc/auth_bloc.dart';
@@ -45,7 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
             if (state.loggedIn) {
               BlocProvider.of<AuthBloc>(context).add(Authenticate());
               BlocProvider.of<AppBloc>(context).add(UserLoggedIn(state.user));
-              Navigator.of(context, rootNavigator: true).pop();
+              Navigator.of(context, rootNavigator: true).maybePop();
             }
             if (state.hasError) {
               Scaffold.of(context).showSnackBar(SnackBar(
@@ -55,109 +56,114 @@ class _LoginScreenState extends State<LoginScreen> {
             }
           },
           child: BlocBuilder<LoginBloc, LoginState>(builder: (context, state) {
-            return AuthScreenScaffold(
-                loading: state.loading,
-                title: 'Sign In',
-                builder: (appMode) {
-                  final bool isVolunteer = appMode == AppMode.volunteer;
-                  final Color modeColor = isVolunteer ? textTheme.body1.color : Colors.white;
-                  return <Widget>[
-                    RichText(
-                      text: TextSpan(
-                        text: 'Signing you in as ${isVolunteer ? 'a' : 'an'} ',
-                        style:
-                            textTheme.title.copyWith(color: isVolunteer ? theme.textTheme.body1.color : Colors.white),
-                        children: [
-                          TextSpan(
-                              text: isVolunteer ? 'Volunteer' : 'Organizer',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w900,
-                              ))
-                        ],
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        BlocProvider.of<AppBloc>(context)
-                            .add(AppModeChanged(mode: isVolunteer ? AppMode.organizer : AppMode.volunteer));
-                      },
-                      child: Text(
-                        'Are you ${isVolunteer ? 'an Organizer' : 'a Volunteer'} ?',
-                        style:
-                            textTheme.body1.copyWith(height: 1.7, color: isVolunteer ? theme.hintColor : Colors.white),
-                      ),
-                    ),
-                    SizedBox(height: 30),
-                    TextFormField(
-                        keyboardType: TextInputType.emailAddress,
-                        validator: InputValidators.email,
-                        onChanged: (value) => loginBloc.add(EmailChanged(value)),
-                        style: TextStyle(color: isVolunteer ? textTheme.body1.color : Colors.white),
-                        decoration: !isVolunteer
-                            ? AppInputTheme.outlineInputTheme.copyWith(hintText: 'Email')
-                            : InputDecoration(
-                                hintText: 'Email',
-                                filled: isVolunteer ? true : false,
-                                hintStyle: TextStyle(
-                                  color: isVolunteer ? AppColors.hint : Colors.white,
-                                ),
-                              )),
-                    SizedBox(height: 16),
-                    TextFormField(
-                      obscureText: true,
-                      validator: (value) => InputValidators.minLength(value, length: 6),
-                      onChanged: (value) => loginBloc.add(PasswordChanged(value)),
-                      style: TextStyle(color: isVolunteer ? textTheme.body1.color : Colors.white),
-                      decoration: !isVolunteer
-                          ? AppInputTheme.outlineInputTheme.copyWith(hintText: 'Password')
-                          : InputDecoration(
-                              hintText: 'Password',
-                              filled: isVolunteer ? true : false,
-                              hintStyle: TextStyle(
-                                color: isVolunteer ? AppColors.hint : Colors.white,
-                              ),
-                            ),
-                    ),
-                    SizedBox(height: 30),
-                    if (isVolunteer)
-                      AppButton(
-                        onPressed: _login,
-                        child: Text(
-                          'SIGN IN'.toUpperCase(),
-                          style: textTheme.button.copyWith(color: Colors.white),
-                        ),
-                      )
-                    else
-                      AppButton.white(
-                        onPressed: _login,
-                        child: Text(
-                          'SIGN IN'.toUpperCase(),
-                          style: textTheme.button.copyWith(color: isVolunteer ? Colors.white : textTheme.body1.color),
-                        ),
-                      ),
-                    SizedBox(height: 8),
-                    FlatButton(
-                      onPressed: () {
-                        Navigator.of(context).pushNamed(AuthRoutes.signup);
-                      },
-                      child: SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        child: RichText(
+            return BlocBuilder<AppBloc, AppState>(builder: (context, appState) {
+              return AuthScreenScaffold(
+                  loading: state.loading,
+                  lightBG: appState.mode == AppMode.volunteer,
+                  title: 'Sign In',
+                  builder: (lightBG) {
+                    final Color modeColor = lightBG ? textTheme.body1.color : Colors.white;
+                    final isVolunteer = appState.mode == AppMode.organizer;
+                    return SliverList(
+                      delegate: SliverChildListDelegate([
+                        RichText(
                           text: TextSpan(
-                              style: textTheme.body2.copyWith(color: modeColor),
-                              text: 'Don\'t have an accoun? ',
-                              children: [
-                                TextSpan(
-                                    text: 'Sign up!',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: isVolunteer ? AppColors.secondary : Colors.white))
-                              ]),
+                            text: 'Signing you in as ${isVolunteer ? 'a' : 'an'} ',
+                            style:
+                                textTheme.title.copyWith(color: lightBG ? theme.textTheme.body1.color : Colors.white),
+                            children: [
+                              TextSpan(
+                                  text: lightBG ? 'Volunteer' : 'Organizer',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w900,
+                                  ))
+                            ],
+                          ),
                         ),
-                      ),
-                    ),
-                  ];
-                });
+                        GestureDetector(
+                          onTap: () {
+                            BlocProvider.of<AppBloc>(context)
+                                .add(AppModeChanged(mode: isVolunteer ? AppMode.volunteer : AppMode.organizer));
+                          },
+                          child: Text(
+                            'Are you ${isVolunteer ? 'Volunteer' : 'an Organizer'} ?',
+                            style:
+                                textTheme.body1.copyWith(height: 1.7, color: lightBG ? theme.hintColor : Colors.white),
+                          ),
+                        ),
+                        SizedBox(height: 30),
+                        TextFormField(
+                            keyboardType: TextInputType.emailAddress,
+                            validator: InputValidators.email,
+                            onChanged: (value) => loginBloc.add(EmailChanged(value)),
+                            style: TextStyle(color: lightBG ? textTheme.body1.color : Colors.white),
+                            decoration: !lightBG
+                                ? AppInputTheme.outlineInputTheme.copyWith(hintText: 'Email')
+                                : InputDecoration(
+                                    hintText: 'Email',
+                                    filled: lightBG ? true : false,
+                                    hintStyle: TextStyle(
+                                      color: lightBG ? AppColors.hint : Colors.white,
+                                    ),
+                                  )),
+                        SizedBox(height: 16),
+                        TextFormField(
+                          obscureText: true,
+                          validator: (value) => InputValidators.minLength(value, length: 6),
+                          onChanged: (value) => loginBloc.add(PasswordChanged(value)),
+                          style: TextStyle(color: lightBG ? textTheme.body1.color : Colors.white),
+                          decoration: !lightBG
+                              ? AppInputTheme.outlineInputTheme.copyWith(hintText: 'Password')
+                              : InputDecoration(
+                                  hintText: 'Password',
+                                  filled: lightBG ? true : false,
+                                  hintStyle: TextStyle(
+                                    color: lightBG ? AppColors.hint : Colors.white,
+                                  ),
+                                ),
+                        ),
+                        SizedBox(height: 30),
+                        if (lightBG)
+                          AppButton(
+                            onPressed: _login,
+                            child: Text(
+                              'SIGN IN'.toUpperCase(),
+                              style: textTheme.button.copyWith(color: Colors.white),
+                            ),
+                          )
+                        else
+                          AppButton.white(
+                            onPressed: _login,
+                            child: Text(
+                              'SIGN IN'.toUpperCase(),
+                              style: textTheme.button.copyWith(color: lightBG ? Colors.white : textTheme.body1.color),
+                            ),
+                          ),
+                        SizedBox(height: 8),
+                        FlatButton(
+                          onPressed: () {
+                            Navigator.of(context).pushNamed(AuthRoutes.signup);
+                          },
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            child: RichText(
+                              text: TextSpan(
+                                  style: textTheme.body2.copyWith(color: modeColor),
+                                  text: 'Don\'t have an accoun? ',
+                                  children: [
+                                    TextSpan(
+                                        text: 'Sign up!',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: lightBG ? AppColors.secondary : Colors.white))
+                                  ]),
+                            ),
+                          ),
+                        ),
+                      ]),
+                    );
+                  });
+            });
           }),
         ),
       ),

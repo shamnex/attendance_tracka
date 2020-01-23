@@ -1,8 +1,11 @@
 import 'dart:async';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+import '../organizer_repository.dart';
 import './bloc.dart';
 
 class OrganizerScreenBloc extends HydratedBloc<OrganizerScreenEvent, OrganizerScreenState> {
+  OrganizerScreenBloc(this.repo);
+  final OrganizerRepository repo;
   @override
   OrganizerScreenState get initialState => super.initialState ?? OrganizerScreenState.initialState();
 

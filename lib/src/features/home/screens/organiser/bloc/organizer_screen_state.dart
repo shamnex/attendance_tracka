@@ -1,7 +1,5 @@
 library organizer_screen_state;
 
-import 'dart:convert';
-
 import 'package:attendance_tracka/src/core/built_value/serializers.dart';
 import 'package:attendance_tracka/src/features/app/model/user_model.dart';
 import 'package:built_value/built_value.dart';

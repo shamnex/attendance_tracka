@@ -2,7 +2,7 @@ import 'package:attendance_tracka/src/features/app/bloc/app_bloc.dart';
 import 'package:attendance_tracka/src/features/app/bloc/app_state.dart';
 import 'package:attendance_tracka/src/features/app/model/app_mode.dart';
 import 'package:attendance_tracka/src/features/auth/bloc/bloc.dart';
-import 'package:attendance_tracka/src/features/home/screens/organiser/organiser_screen.dart';
+import 'package:attendance_tracka/src/features/home/screens/organiser/organizer_home_scree.dart';
 import 'package:attendance_tracka/src/features/home/screens/volunteer/volunteer_screen.dart';
 import 'package:attendance_tracka/src/features/home/screens/welcome/welcome_screen.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +22,7 @@ class HomeScreen extends StatelessWidget {
           if (authState is AuthUnAuthenticated) {
             return WelcomeScreen();
           }
-          return appState.mode == AppMode.organizer ? const OrganiserScreen() : const VolunteerScreen();
+          return appState.mode == AppMode.organizer ? const OrganizerScreenHomeScreen() : const VolunteerScreen();
         },
       );
     });
