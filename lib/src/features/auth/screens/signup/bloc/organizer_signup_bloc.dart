@@ -56,10 +56,9 @@ class SignupBloc extends Bloc<OrganizerSignupEvent, OrganizerSignupState> with D
         yield state.rebuild((b) => b
           ..loading = true
           ..errorMessage = '');
-        final user = await repo.signup(
+        final user = await repo.organizerSignup(
           email: state.email,
           password: state.password,
-          userType: event.userType,
           organization: state.organization,
           organizationUserName: state.organizationUserName,
           apiURL: state.apiURL,
@@ -73,7 +72,7 @@ class SignupBloc extends Bloc<OrganizerSignupEvent, OrganizerSignupState> with D
     } on DioError catch (e) {
       yield state.rebuild((b) => b
         ..loading = false
-        ..errorMessage = handleNetworkError(e));
+        ..errorMessage = handleDioError(e));
     } catch (e) {
       yield state.rebuild((b) => b..loading = false);
       throw Exception();

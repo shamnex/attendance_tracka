@@ -38,8 +38,8 @@ class GetApiUrlBloc extends Bloc<GetApiUrlEvent, GetApiUrlState> with DioErrorHe
         }
       }
     } on DioError catch (e) {
-      yield ErrorState(handleNetworkError(e));
-      print(handleNetworkError(e));
+      yield ErrorState(handleDioError(e));
+      print(handleDioError(e));
     } catch (e) {
       yield ErrorState(e.toString());
       print(e.toString());

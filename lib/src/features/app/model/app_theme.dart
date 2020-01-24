@@ -31,20 +31,21 @@ class AppInputTheme {
     alignLabelWithHint: true,
     contentPadding: AppPaddings.body.copyWith(top: 16, bottom: 16),
     focusedBorder: OutlineInputBorder(
-      borderRadius: AppBorderRadius.a40,
+      borderRadius: AppBorderRadius.large_all,
       borderSide: BorderSide(color: Colors.white, width: 2),
     ),
     enabledBorder: OutlineInputBorder(
       borderSide: BorderSide(color: Colors.white70, width: 1),
-      borderRadius: AppBorderRadius.a40,
+      borderRadius: AppBorderRadius.large_all,
     ),
     disabledBorder: OutlineInputBorder(
       borderSide: BorderSide(color: Colors.white54, width: 1),
-      borderRadius: AppBorderRadius.a40,
+      borderRadius: AppBorderRadius.large_all,
     ),
-    errorBorder: OutlineInputBorder(borderRadius: AppBorderRadius.a40, borderSide: BorderSide(color: AppColors.error)),
+    errorBorder:
+        OutlineInputBorder(borderRadius: AppBorderRadius.large_all, borderSide: BorderSide(color: AppColors.error)),
     border: OutlineInputBorder(
-      borderRadius: AppBorderRadius.a40,
+      borderRadius: AppBorderRadius.large_all,
     ),
     filled: false,
     fillColor: AppColors.primary.shade50.withOpacity(.5),
@@ -65,7 +66,7 @@ final appThemeData = {
       alignLabelWithHint: true,
       contentPadding: AppPaddings.body.copyWith(top: 16, bottom: 16),
       focusedBorder: OutlineInputBorder(
-        borderRadius: AppBorderRadius.a40,
+        borderRadius: AppBorderRadius.large_all,
         borderSide: BorderSide(
           color: AppColors.primary.shade100.withOpacity(.8),
           width: 1,
@@ -73,19 +74,19 @@ final appThemeData = {
       ),
       enabledBorder: OutlineInputBorder(
         borderSide: BorderSide(color: AppColors.primary.shade50.withOpacity(.1)),
-        borderRadius: AppBorderRadius.a40,
+        borderRadius: AppBorderRadius.large_all,
       ),
       disabledBorder: OutlineInputBorder(
         borderSide: BorderSide(color: AppColors.primary.shade200.withOpacity(.1)),
-        borderRadius: AppBorderRadius.a40,
+        borderRadius: AppBorderRadius.large_all,
       ),
       errorBorder: OutlineInputBorder(
-          borderRadius: AppBorderRadius.a40,
+          borderRadius: AppBorderRadius.large_all,
           borderSide: BorderSide(
             color: AppColors.error,
           )),
       border: OutlineInputBorder(
-        borderRadius: AppBorderRadius.a40,
+        borderRadius: AppBorderRadius.large_all,
       ),
       filled: true,
       fillColor: AppColors.primary.shade50.withOpacity(.5),

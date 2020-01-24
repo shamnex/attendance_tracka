@@ -1,8 +1,10 @@
-import 'package:attendance_tracka/src/features/app/model/user_model.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class LoginEvent extends Equatable {
   const LoginEvent();
+
+  @override
+  List<Object> get props => [];
 }
 
 class PasswordChanged extends LoginEvent {
@@ -20,9 +22,20 @@ class EmailChanged extends LoginEvent {
   List<Object> get props => [email];
 }
 
-class Login extends LoginEvent {
-  final UserType userType;
-  Login(this.userType);
+class UserNameChanged extends LoginEvent {
+  final String username;
+  UserNameChanged(this.username);
   @override
-  List<Object> get props => [userType];
+  List<Object> get props => [username];
 }
+
+class ApiChanged extends LoginEvent {
+  final String apiURL;
+  ApiChanged(this.apiURL);
+  @override
+  List<Object> get props => [apiURL];
+}
+
+class OrganizerLogin extends LoginEvent {}
+
+class VolunteerLogin extends LoginEvent {}

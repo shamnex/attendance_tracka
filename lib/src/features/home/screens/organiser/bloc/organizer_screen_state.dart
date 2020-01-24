@@ -8,31 +8,28 @@ import 'package:built_value/serializer.dart';
 
 part 'organizer_screen_state.g.dart';
 
-abstract class OrganizerScreenState implements Built<OrganizerScreenState, OrganizerScreenStateBuilder> {
-  static OrganizerScreenState initialState() => OrganizerScreenState((b) => b
+abstract class OrganizerState implements Built<OrganizerState, OrganizerStateBuilder> {
+  static OrganizerState initialState() => OrganizerState((b) => b
     ..loading = false
     ..errorMessage = '');
 
   @nullable
-  BuiltList<User> get participants;
-  @nullable
-  BuiltList<User> get organizers;
+  BuiltList<User> get volunteers;
   String get errorMessage;
   bool get loading;
   bool get hasError => errorMessage.isNotEmpty;
-  bool get hasOrganizers => organizers != null && organizers.isEmpty;
-  bool get hasParticipants => participants != null && participants.isEmpty;
-  OrganizerScreenState._();
+  bool get hasOrganizers => volunteers != null && volunteers.isEmpty;
+  OrganizerState._();
 
-  factory OrganizerScreenState([updates(OrganizerScreenStateBuilder b)]) = _$OrganizerScreenState;
+  factory OrganizerState([updates(OrganizerStateBuilder b)]) = _$OrganizerState;
 
   Map<String, dynamic> toJson() {
-    return serializers.serializeWith(OrganizerScreenState.serializer, this);
+    return serializers.serializeWith(OrganizerState.serializer, this);
   }
 
-  static OrganizerScreenState fromJson(Map<String, dynamic> jsonString) {
-    return serializers.deserializeWith(OrganizerScreenState.serializer, jsonString);
+  static OrganizerState fromJson(Map<String, dynamic> jsonString) {
+    return serializers.deserializeWith(OrganizerState.serializer, jsonString);
   }
 
-  static Serializer<OrganizerScreenState> get serializer => _$organizerScreenStateSerializer;
+  static Serializer<OrganizerState> get serializer => _$organizerStateSerializer;
 }

@@ -6,22 +6,18 @@ part of organizer_screen_state;
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<OrganizerScreenState> _$organizerScreenStateSerializer =
-    new _$OrganizerScreenStateSerializer();
+Serializer<OrganizerState> _$organizerStateSerializer =
+    new _$OrganizerStateSerializer();
 
-class _$OrganizerScreenStateSerializer
-    implements StructuredSerializer<OrganizerScreenState> {
+class _$OrganizerStateSerializer
+    implements StructuredSerializer<OrganizerState> {
   @override
-  final Iterable<Type> types = const [
-    OrganizerScreenState,
-    _$OrganizerScreenState
-  ];
+  final Iterable<Type> types = const [OrganizerState, _$OrganizerState];
   @override
-  final String wireName = 'OrganizerScreenState';
+  final String wireName = 'OrganizerState';
 
   @override
-  Iterable<Object> serialize(
-      Serializers serializers, OrganizerScreenState object,
+  Iterable<Object> serialize(Serializers serializers, OrganizerState object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'errorMessage',
@@ -31,17 +27,10 @@ class _$OrganizerScreenStateSerializer
       serializers.serialize(object.loading,
           specifiedType: const FullType(bool)),
     ];
-    if (object.participants != null) {
+    if (object.volunteers != null) {
       result
-        ..add('participants')
-        ..add(serializers.serialize(object.participants,
-            specifiedType:
-                const FullType(BuiltList, const [const FullType(User)])));
-    }
-    if (object.organizers != null) {
-      result
-        ..add('organizers')
-        ..add(serializers.serialize(object.organizers,
+        ..add('volunteers')
+        ..add(serializers.serialize(object.volunteers,
             specifiedType:
                 const FullType(BuiltList, const [const FullType(User)])));
     }
@@ -49,10 +38,10 @@ class _$OrganizerScreenStateSerializer
   }
 
   @override
-  OrganizerScreenState deserialize(
+  OrganizerState deserialize(
       Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new OrganizerScreenStateBuilder();
+    final result = new OrganizerStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -60,14 +49,8 @@ class _$OrganizerScreenStateSerializer
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'participants':
-          result.participants.replace(serializers.deserialize(value,
-                  specifiedType:
-                      const FullType(BuiltList, const [const FullType(User)]))
-              as BuiltList<dynamic>);
-          break;
-        case 'organizers':
-          result.organizers.replace(serializers.deserialize(value,
+        case 'volunteers':
+          result.volunteers.replace(serializers.deserialize(value,
                   specifiedType:
                       const FullType(BuiltList, const [const FullType(User)]))
               as BuiltList<dynamic>);
@@ -87,85 +70,69 @@ class _$OrganizerScreenStateSerializer
   }
 }
 
-class _$OrganizerScreenState extends OrganizerScreenState {
+class _$OrganizerState extends OrganizerState {
   @override
-  final BuiltList<User> participants;
-  @override
-  final BuiltList<User> organizers;
+  final BuiltList<User> volunteers;
   @override
   final String errorMessage;
   @override
   final bool loading;
 
-  factory _$OrganizerScreenState(
-          [void Function(OrganizerScreenStateBuilder) updates]) =>
-      (new OrganizerScreenStateBuilder()..update(updates)).build();
+  factory _$OrganizerState([void Function(OrganizerStateBuilder) updates]) =>
+      (new OrganizerStateBuilder()..update(updates)).build();
 
-  _$OrganizerScreenState._(
-      {this.participants, this.organizers, this.errorMessage, this.loading})
+  _$OrganizerState._({this.volunteers, this.errorMessage, this.loading})
       : super._() {
     if (errorMessage == null) {
-      throw new BuiltValueNullFieldError(
-          'OrganizerScreenState', 'errorMessage');
+      throw new BuiltValueNullFieldError('OrganizerState', 'errorMessage');
     }
     if (loading == null) {
-      throw new BuiltValueNullFieldError('OrganizerScreenState', 'loading');
+      throw new BuiltValueNullFieldError('OrganizerState', 'loading');
     }
   }
 
   @override
-  OrganizerScreenState rebuild(
-          void Function(OrganizerScreenStateBuilder) updates) =>
+  OrganizerState rebuild(void Function(OrganizerStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  OrganizerScreenStateBuilder toBuilder() =>
-      new OrganizerScreenStateBuilder()..replace(this);
+  OrganizerStateBuilder toBuilder() =>
+      new OrganizerStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is OrganizerScreenState &&
-        participants == other.participants &&
-        organizers == other.organizers &&
+    return other is OrganizerState &&
+        volunteers == other.volunteers &&
         errorMessage == other.errorMessage &&
         loading == other.loading;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(
-        $jc($jc($jc(0, participants.hashCode), organizers.hashCode),
-            errorMessage.hashCode),
+    return $jf($jc($jc($jc(0, volunteers.hashCode), errorMessage.hashCode),
         loading.hashCode));
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('OrganizerScreenState')
-          ..add('participants', participants)
-          ..add('organizers', organizers)
+    return (newBuiltValueToStringHelper('OrganizerState')
+          ..add('volunteers', volunteers)
           ..add('errorMessage', errorMessage)
           ..add('loading', loading))
         .toString();
   }
 }
 
-class OrganizerScreenStateBuilder
-    implements Builder<OrganizerScreenState, OrganizerScreenStateBuilder> {
-  _$OrganizerScreenState _$v;
+class OrganizerStateBuilder
+    implements Builder<OrganizerState, OrganizerStateBuilder> {
+  _$OrganizerState _$v;
 
-  ListBuilder<User> _participants;
-  ListBuilder<User> get participants =>
-      _$this._participants ??= new ListBuilder<User>();
-  set participants(ListBuilder<User> participants) =>
-      _$this._participants = participants;
-
-  ListBuilder<User> _organizers;
-  ListBuilder<User> get organizers =>
-      _$this._organizers ??= new ListBuilder<User>();
-  set organizers(ListBuilder<User> organizers) =>
-      _$this._organizers = organizers;
+  ListBuilder<User> _volunteers;
+  ListBuilder<User> get volunteers =>
+      _$this._volunteers ??= new ListBuilder<User>();
+  set volunteers(ListBuilder<User> volunteers) =>
+      _$this._volunteers = volunteers;
 
   String _errorMessage;
   String get errorMessage => _$this._errorMessage;
@@ -175,12 +142,11 @@ class OrganizerScreenStateBuilder
   bool get loading => _$this._loading;
   set loading(bool loading) => _$this._loading = loading;
 
-  OrganizerScreenStateBuilder();
+  OrganizerStateBuilder();
 
-  OrganizerScreenStateBuilder get _$this {
+  OrganizerStateBuilder get _$this {
     if (_$v != null) {
-      _participants = _$v.participants?.toBuilder();
-      _organizers = _$v.organizers?.toBuilder();
+      _volunteers = _$v.volunteers?.toBuilder();
       _errorMessage = _$v.errorMessage;
       _loading = _$v.loading;
       _$v = null;
@@ -189,38 +155,35 @@ class OrganizerScreenStateBuilder
   }
 
   @override
-  void replace(OrganizerScreenState other) {
+  void replace(OrganizerState other) {
     if (other == null) {
       throw new ArgumentError.notNull('other');
     }
-    _$v = other as _$OrganizerScreenState;
+    _$v = other as _$OrganizerState;
   }
 
   @override
-  void update(void Function(OrganizerScreenStateBuilder) updates) {
+  void update(void Function(OrganizerStateBuilder) updates) {
     if (updates != null) updates(this);
   }
 
   @override
-  _$OrganizerScreenState build() {
-    _$OrganizerScreenState _$result;
+  _$OrganizerState build() {
+    _$OrganizerState _$result;
     try {
       _$result = _$v ??
-          new _$OrganizerScreenState._(
-              participants: _participants?.build(),
-              organizers: _organizers?.build(),
+          new _$OrganizerState._(
+              volunteers: _volunteers?.build(),
               errorMessage: errorMessage,
               loading: loading);
     } catch (_) {
       String _$failedField;
       try {
-        _$failedField = 'participants';
-        _participants?.build();
-        _$failedField = 'organizers';
-        _organizers?.build();
+        _$failedField = 'volunteers';
+        _volunteers?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'OrganizerScreenState', _$failedField, e.toString());
+            'OrganizerState', _$failedField, e.toString());
       }
       rethrow;
     }

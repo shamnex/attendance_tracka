@@ -1,25 +1,50 @@
 import 'dart:async';
+import 'package:dio/dio.dart';
+import 'package:attendance_tracka/src/core/network/http_error_helper.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import '../organizer_repository.dart';
 import './bloc.dart';
 
-class OrganizerScreenBloc extends HydratedBloc<OrganizerScreenEvent, OrganizerScreenState> {
-  OrganizerScreenBloc(this.repo);
+class OrganizerBloc extends HydratedBloc<OrganizerEvent, OrganizerState> with DioErrorHelper {
+  OrganizerBloc(this.repo);
   final OrganizerRepository repo;
   @override
-  OrganizerScreenState get initialState => super.initialState ?? OrganizerScreenState.initialState();
+  OrganizerState get initialState => super.initialState ?? OrganizerState.initialState();
 
   @override
-  Stream<OrganizerScreenState> mapEventToState(
-    OrganizerScreenEvent event,
+  Stream<OrganizerState> mapEventToState(
+    OrganizerEvent event,
   ) async* {
-    // TODO: Add Logic
+    try {
+      if (event is GetVolunteers) {
+        yield state.rebuild(
+          (e) => e
+            ..loading = true
+            ..errorMessage = '',
+        );
+        final volunteers = await repo.getVonluteers();
+        yield state.rebuild((e) => e
+          ..loading = false
+          ..errorMessage = ''
+          ..volunteers.addAll(volunteers));
+      }
+    } on DioError catch (error) {
+      yield state.rebuild((e) => e
+        ..loading = false
+        ..errorMessage = handleDioError(error));
+    } catch (e) {
+      print(e.toString());
+      yield state.rebuild((e) => e
+        ..loading = false
+        ..errorMessage = 'Somthing went wrong');
+      //! CRASH APP
+    }
   }
 
   @override
   fromJson(Map<String, dynamic> json) {
     try {
-      return OrganizerScreenState.fromJson(json);
+      return OrganizerState.fromJson(json);
     } catch (e) {
       return null;
     }

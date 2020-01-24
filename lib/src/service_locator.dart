@@ -34,7 +34,7 @@ Future<void> init(Flavor flavor) async {
         return DevAuthRepositoryImpl(sl(), sl());
       case Flavor.mock:
         return MockAuthRepositoryImpl(sl());
-      case Flavor.production:
+      default:
         return AuthRepositoryImpl(sl(), sl());
     }
   });

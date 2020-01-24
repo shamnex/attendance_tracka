@@ -8,7 +8,14 @@ abstract class AddVolunteersEvent extends Equatable {
 
 class AddVolunteer extends AddVolunteersEvent {
   final String volunteerEmail;
-  AddVolunteer(this.volunteerEmail);
+
+  final String organizerPassword;
+  final String apiURL;
+
+  final String organizerEmail;
+  AddVolunteer({this.volunteerEmail, this.organizerEmail, this.organizerPassword, this.apiURL});
   @override
   List<Object> get props => [volunteerEmail];
 }
+
+class Reset extends AddVolunteersEvent {}

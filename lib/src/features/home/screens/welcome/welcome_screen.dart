@@ -41,7 +41,7 @@ class WelcomeScreen extends StatelessWidget {
                           RichText(
                             text: TextSpan(
                               text: 'Are you an ',
-                              style: textTheme.headline,
+                              style: textTheme.subhead,
                               children: [
                                 TextSpan(
                                   text: 'Organizer ',

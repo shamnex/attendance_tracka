@@ -1,11 +1,8 @@
 import 'package:attendance_tracka/src/constants/border_radius.dart';
 import 'package:attendance_tracka/src/constants/colors.dart';
 import 'package:attendance_tracka/src/constants/paddings.dart';
-import 'package:attendance_tracka/src/features/app/bloc/app_bloc.dart';
-import 'package:attendance_tracka/src/features/app/bloc/app_state.dart';
 import 'package:attendance_tracka/src/widgets/blur_bg_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'auth_app_bar.dart';
 
@@ -30,6 +27,7 @@ class AuthScreenScaffold extends StatelessWidget {
           backgroundColor: theme.backgroundColor,
           body: SafeArea(
             child: NestedScrollView(
+              physics: AlwaysScrollableScrollPhysics(),
               headerSliverBuilder: (_, innerBoxIsScrolled) {
                 return [
                   SliverPersistentHeader(
@@ -51,7 +49,7 @@ class AuthScreenScaffold extends StatelessWidget {
                   margin: EdgeInsets.only(top: 16),
                   width: mq.size.width,
                   decoration: BoxDecoration(
-                    borderRadius: AppBorderRadius.t40,
+                    borderRadius: AppBorderRadius.large_top,
                     color: AppColors.secondary,
                     gradient: LinearGradient(
                       colors: [

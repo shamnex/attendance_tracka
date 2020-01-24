@@ -1,14 +1,14 @@
 import 'package:equatable/equatable.dart';
 
-abstract class OrganizerScreenEvent extends Equatable {
-  const OrganizerScreenEvent();
+abstract class OrganizerEvent extends Equatable {
+  const OrganizerEvent();
   @override
   List<Object> get props => [];
 }
 
-class AddVolunteers extends OrganizerScreenEvent {
-  final String email;
-  AddVolunteers(this.email);
+class GetVolunteers extends OrganizerEvent {
+  final String apiURL;
+  GetVolunteers(this.apiURL);
   @override
-  List<Object> get props => [email];
+  List<Object> get props => [apiURL];
 }

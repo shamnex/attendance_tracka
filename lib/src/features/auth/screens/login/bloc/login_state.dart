@@ -14,6 +14,9 @@ abstract class LoginState implements Built<LoginState, LoginStateBuilder> {
   String get password;
   String get email;
   @nullable
+  String get username;
+  String get apiURL;
+  @nullable
   User get user;
   String get errorMessage;
   bool get loading;
@@ -28,6 +31,7 @@ abstract class LoginState implements Built<LoginState, LoginStateBuilder> {
           ..password = ''
           ..email = ''
           ..errorMessage = ''
+          ..apiURL = ''
           ..loading = false
           ..user = null,
       );

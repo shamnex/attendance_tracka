@@ -11,16 +11,18 @@ class OrganiserService {
         case Flavor.development:
           return DevOrganizerRepositoryImpl(sl(), sl());
         case Flavor.mock:
-          return MockOrganizerRepositoryImpl(sl());
+          return MockOrganizerRepositoryImpl();
         case Flavor.production:
-          return OrganizerRepositoryImpl(sl(), sl());
+          return OrganizerRepositoryImpl(
+            sl(),
+          );
       }
     });
-    sl.registerLazySingleton<OrganizerScreenBloc>(() => OrganizerScreenBloc(sl()));
+    sl.registerLazySingleton<OrganizerBloc>(() => OrganizerBloc(sl()));
   }
 
   static dispose() async {
     sl.unregister<OrganizerRepository>();
-    sl.unregister<OrganizerScreenBloc>();
+    sl.unregister<OrganizerBloc>();
   }
 }

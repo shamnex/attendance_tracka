@@ -1,6 +1,5 @@
 import 'package:attendance_tracka/src/features/app/bloc/app_bloc.dart';
 import 'package:attendance_tracka/src/features/home/screens/organiser/bloc/bloc.dart';
-import 'package:attendance_tracka/src/features/home/screens/organiser/organizer_repository.dart';
 import 'package:attendance_tracka/src/features/home/screens/organiser/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -37,7 +36,7 @@ class _OrganizerScreenHomeScreenState extends State<OrganizerScreenHomeScreen> {
       onWillPop: () async => !await _navigatorKey.currentState.maybePop(),
       child: MultiBlocProvider(
         providers: [
-          BlocProvider<OrganizerScreenBloc>(create: (context) => sl()),
+          BlocProvider<OrganizerBloc>(create: (context) => sl()),
         ],
         child: Material(
           child: Navigator(

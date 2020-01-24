@@ -1,21 +1,25 @@
 import 'package:attendance_tracka/src/constants/colors.dart';
 import 'package:flutter/material.dart';
 
+import 'app_loading.dart';
+
 class AppButton extends StatefulWidget {
   final Function onPressed;
   final Widget child;
   final bool loading;
   final bool _isWhite;
+  final List<BoxShadow> boxShadow;
 
-  AppButton.white({Key key, this.onPressed, this.child, this.loading})
+  AppButton.white({Key key, this.onPressed, this.child, this.boxShadow, this.loading = false})
       : _isWhite = true,
         super(key: key);
 
   AppButton({
     Key key,
-    this.loading,
+    this.loading = false,
     this.onPressed,
     this.child,
+    this.boxShadow,
   })  : _isWhite = false,
         super(key: key);
 
@@ -34,13 +38,15 @@ class _AppButtonState extends State<AppButton> {
             height: 20,
             width: 120,
           ),
-          decoration: BoxDecoration(boxShadow: [
-            BoxShadow(
-              blurRadius: 30,
-              spreadRadius: 10,
-              color: AppColors.secondary,
-            )
-          ]),
+          decoration: BoxDecoration(
+              boxShadow: widget.boxShadow ??
+                  [
+                    BoxShadow(
+                      blurRadius: 30,
+                      spreadRadius: 10,
+                      color: AppColors.secondary,
+                    )
+                  ]),
         ),
         Container(
           alignment: Alignment.center,
@@ -49,9 +55,15 @@ class _AppButtonState extends State<AppButton> {
             child: SizedBox.expand(
               child: FlatButton(
                 splashColor: Colors.transparent,
-                onPressed: widget.onPressed,
+                onPressed: widget.loading ? null : widget.onPressed,
                 color: widget._isWhite ? Colors.white : Colors.transparent,
-                child: widget.child,
+                child: widget.loading
+                    ? Center(
+                        child: AppSpinner(
+                          color: widget._isWhite ? AppColors.primary : Colors.white,
+                        ),
+                      )
+                    : widget.child,
               ),
             ),
           ),

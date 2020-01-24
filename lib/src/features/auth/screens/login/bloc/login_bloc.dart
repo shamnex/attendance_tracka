@@ -26,16 +26,42 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> with DioErrorHelper {
           ..email = event.email
           ..errorMessage = '');
       }
+      if (event is UserNameChanged) {
+        yield state.rebuild((b) => b
+          ..username = event.username
+          ..errorMessage = '');
+      }
+      if (event is ApiChanged) {
+        yield state.rebuild((b) => b
+          ..apiURL = event.apiURL
+          ..errorMessage = '');
+      }
 
-      if (event is Login) {
+      if (event is VolunteerLogin) {
         yield state.rebuild((b) => b
           ..loading = true
           ..errorMessage = '');
-        final user = await repo.login(
+
+        final user = await repo.volunteerLogin(
           email: state.email,
           password: state.password,
-          userType: event.userType,
+          apiURL: state.apiURL,
         );
+
+        yield state.rebuild((b) => b
+          ..loading = false
+          ..errorMessage = ''
+          ..user = user.toBuilder());
+      }
+      if (event is OrganizerLogin) {
+        yield state.rebuild((b) => b
+          ..loading = true
+          ..errorMessage = '');
+        final user = await repo.organizerLogin(
+          email: state.email,
+          password: state.password,
+        );
+
         yield state.rebuild((b) => b
           ..loading = false
           ..errorMessage = ''
@@ -44,7 +70,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> with DioErrorHelper {
     } on DioError catch (e) {
       yield state.rebuild((b) => b
         ..loading = false
-        ..errorMessage = handleNetworkError(e));
+        ..errorMessage = handleDioError(e));
     } catch (e) {
       //TODO CRASHYLITICS??
       yield state.rebuild(

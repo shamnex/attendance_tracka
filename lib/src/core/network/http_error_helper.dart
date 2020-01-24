@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 
 mixin DioErrorHelper {
-  String handleNetworkError(DioError e) {
+  String handleDioError(DioError e) {
     switch (e.type) {
       case DioErrorType.DEFAULT:
         return "No Internet";

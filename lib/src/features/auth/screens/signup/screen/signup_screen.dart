@@ -12,7 +12,6 @@ import 'package:attendance_tracka/src/features/auth/routes/auth_routes.dart';
 import 'package:attendance_tracka/src/features/auth/screens/partials/auth_screen_scaffold.dart';
 import 'package:attendance_tracka/src/features/auth/screens/signup/bloc/api_bloc/bloc.dart';
 import 'package:attendance_tracka/src/features/auth/screens/signup/bloc/bloc.dart';
-import 'package:attendance_tracka/src/routes/app_routes.dart';
 import 'package:attendance_tracka/src/utils/input_validators.dart';
 import 'package:attendance_tracka/src/widgets/app_loading.dart';
 import 'package:attendance_tracka/src/widgets/buttons.dart';
@@ -32,7 +31,6 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   void initState() {
     signupBloc = BlocProvider.of(context);
-    print(signupBloc.state.organizationUserName);
     super.initState();
   }
 
@@ -60,7 +58,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 if (state.hasError) {
                   Scaffold.of(context).showSnackBar(SnackBar(
                     content: Text(state.errorMessage),
-                    shape: RoundedRectangleBorder(borderRadius: AppBorderRadius.a40),
+                    shape: RoundedRectangleBorder(borderRadius: AppBorderRadius.large_all),
                   ));
                 }
               },
@@ -79,7 +77,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             delegate: SliverChildListDelegate([
                               RichText(
                                 text: TextSpan(
-                                  text: 'Signing you up  as ${isVolunteer ? 'a' : 'an'} ',
+                                  text: 'Signing you up as ${isVolunteer ? 'a' : 'an'} ',
                                   style: textTheme.title
                                       .copyWith(color: isVolunteer ? theme.textTheme.body1.color : Colors.white),
                                   children: [
@@ -95,6 +93,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                 onTap: () {
                                   BlocProvider.of<AppBloc>(context)
                                       .add(AppModeChanged(mode: isVolunteer ? AppMode.organizer : AppMode.volunteer));
+                                  Navigator.of(context).pushReplacementNamed(AuthRoutes.login);
                                 },
                                 child: Text(
                                   'Are you ${isVolunteer ? 'an Organizer' : 'a Volunteer'} ?',
