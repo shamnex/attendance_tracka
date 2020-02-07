@@ -6,7 +6,7 @@ import 'package:dio/dio.dart';
 enum ActionRequired { createorg, signinorg }
 
 abstract class OrganizerRepository {
-  Future<List<User>> getVonluteers();
+  Future<List<User>> getVonluteers(User organizer);
   Future<bool> addVonluteers({
     String email,
     String password,
@@ -32,7 +32,7 @@ class OrganizerRepositoryImpl implements OrganizerRepository {
   }
 
   @override
-  Future<List<User>> getVonluteers() {
+  Future<List<User>> getVonluteers(User organizer) {
     // TODO: implement getVonluteers
     return null;
   }
@@ -51,7 +51,7 @@ class MockOrganizerRepositoryImpl implements OrganizerRepository {
   }
 
   @override
-  Future<List<User>> getVonluteers() {
+  Future<List<User>> getVonluteers(User organizer) {
     // TODO: implement getVonluteers
     return null;
   }
@@ -61,7 +61,6 @@ class DevOrganizerRepositoryImpl implements OrganizerRepository {
   DevOrganizerRepositoryImpl(HiveInterface hive, AppHTTPClient client) : _client = client;
 
   final AppHTTPClient _client;
-
   Future<bool> addVonluteers({
     String email,
     String password,
@@ -93,8 +92,35 @@ class DevOrganizerRepositoryImpl implements OrganizerRepository {
   }
 
   @override
-  Future<List<User>> getVonluteers() {
-    // TODO: implement getVonluteers
-    return null;
+  Future<List<User>> getVonluteers(
+    User organizer,
+  ) async {
+    try {
+      final url = '${organizer.apiURL}?actionreq=getvolunteers';
+      final res = await _client.get(url, useBaseURL: false);
+      if (res.data["status"] == "success") {
+        final volunteerEmails = (res.data["description"] as Iterable).map((c) => c.toString());
+
+        print(volunteerEmails);
+        return volunteerEmails
+            .map((email) => organizer.rebuild(
+                  (b) => b
+                    ..email = email
+                    ..type = UserType.volunteer,
+                ))
+            .toList();
+      } else {
+        throw DioError(
+            type: DioErrorType.RESPONSE,
+            response: Response(
+              data: {'message': res.data['description'] ?? 'Something went wrong'},
+            ));
+      }
+    } on DioError catch (_) {
+      rethrow;
+    } catch (_) {
+      print(_.toString());
+      rethrow;
+    }
   }
 }

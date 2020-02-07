@@ -16,12 +16,31 @@ class OrganiserScreen extends StatefulWidget {
   _OrganiserScreenState createState() => _OrganiserScreenState();
 }
 
-class _OrganiserScreenState extends State<OrganiserScreen> {
+class _OrganiserScreenState extends State<OrganiserScreen> with TickerProviderStateMixin {
+  AnimationController _animationController;
+  OrganizerBloc organizerBloc;
+  AppBloc appBloc;
+  @override
+  void initState() {
+    appBloc = context.bloc();
+    organizerBloc = context.bloc()..add(GetVolunteers(appBloc.state.currentUser));
+
+    _animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 1000));
+    _animationController.forward();
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return BlocBuilder<AppBloc, AppState>(builder: (context, appState) {
-      final user = appState.currentUser;
       return BlocBuilder<OrganizerBloc, OrganizerState>(builder: (context, organiserState) {
         final user = appState.currentUser;
         return Scaffold(
@@ -39,6 +58,7 @@ class _OrganiserScreenState extends State<OrganiserScreen> {
                   Expanded(
                     child: Center(
                       child: StaggeredAnimatedColumn(
+                        animationController: _animationController,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Text('Welcome ${user.email}'),
@@ -49,6 +69,7 @@ class _OrganiserScreenState extends State<OrganiserScreen> {
                   ),
                   Expanded(
                     child: StaggeredAnimatedColumn(
+                      animationController: _animationController,
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: <Widget>[
                         AppButton(

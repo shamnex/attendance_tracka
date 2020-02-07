@@ -25,7 +25,7 @@ dependencies:
    # Service locator
    get_it: ^2.0.1
    # Bloc for state management
-   flutter_bloc: ^3.0.0
+   flutter_bloc: ^3.1.0
    hydrated_bloc: ^3.0.0
    # Value equality
    equatable: ^1.0.1

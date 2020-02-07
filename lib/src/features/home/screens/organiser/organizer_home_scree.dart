@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../service_locator.dart';
+import 'add_volunteers/bloc/add_volunteers_bloc.dart';
 import 'bloc/organizer_screen_bloc.dart';
 import 'organiser_service_locator.dart';
 
@@ -37,6 +38,7 @@ class _OrganizerScreenHomeScreenState extends State<OrganizerScreenHomeScreen> {
       child: MultiBlocProvider(
         providers: [
           BlocProvider<OrganizerBloc>(create: (context) => sl()),
+          BlocProvider(create: (context) => AddVolunteersBloc(sl()))
         ],
         child: Material(
           child: Navigator(

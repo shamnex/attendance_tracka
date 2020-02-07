@@ -82,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     .copyWith(color: lightBG ? theme.textTheme.body1.color : Colors.white),
                                 children: [
                                   TextSpan(
-                                      text: lightBG ? 'Volunteer' : 'Organizer',
+                                      text: isVolunteer ? 'Volunteer' : 'Organizer',
                                       style: TextStyle(
                                         fontWeight: FontWeight.w900,
                                       ))
@@ -95,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     .add(AppModeChanged(mode: !isVolunteer ? AppMode.volunteer : AppMode.organizer));
                               },
                               child: Text(
-                                'Are you ${isVolunteer ? 'Volunteer' : 'an Organizer'} ?',
+                                'Are you ${isVolunteer ? 'an Organizer' : 'a Volunteer'} ?',
                                 style: textTheme.body1
                                     .copyWith(height: 1.7, color: lightBG ? theme.hintColor : Colors.white),
                               ),
@@ -232,7 +232,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 if (isVolunteer) {
                                   BlocProvider.of<AppBloc>(context).add(AppModeChanged(mode: AppMode.organizer));
                                 }
-                                Navigator.of(context).pushNamed(AuthRoutes.signup);
+                                Navigator.of(context).pushReplacementNamed(AuthRoutes.signup);
                               },
                               child: SizedBox(
                                 width: MediaQuery.of(context).size.width,

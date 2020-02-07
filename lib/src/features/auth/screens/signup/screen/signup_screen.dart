@@ -90,9 +90,10 @@ class _SignupScreenState extends State<SignupScreen> {
                                 ),
                               ),
                               GestureDetector(
-                                onTap: () {
+                                onTap: () async {
                                   BlocProvider.of<AppBloc>(context)
                                       .add(AppModeChanged(mode: isVolunteer ? AppMode.organizer : AppMode.volunteer));
+
                                   Navigator.of(context).pushReplacementNamed(AuthRoutes.login);
                                 },
                                 child: Text(

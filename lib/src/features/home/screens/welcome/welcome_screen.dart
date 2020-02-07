@@ -29,13 +29,18 @@ class WelcomeScreen extends StatelessWidget {
                   children: <Widget>[
                     Align(
                       child: StaggeredAnimatedColumn(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          Text(
-                            'Welcome!',
-                            style: textTheme.display1.copyWith(
-                              fontWeight: FontWeight.w900,
-                              color: theme.brightness == Brightness.light ? Colors.black87 : Colors.white,
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            child: FittedBox(
+                              child: Text(
+                                'WELCOME!',
+                                style: textTheme.display1.copyWith(
+                                  fontWeight: FontWeight.w900,
+                                  color: theme.brightness == Brightness.light ? Colors.black87 : Colors.white,
+                                ),
+                              ),
                             ),
                           ),
                           RichText(
@@ -59,21 +64,13 @@ class WelcomeScreen extends StatelessWidget {
                               ],
                             ),
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.of(context).pushNamed(AppRoutes.explanation);
-                            },
-                            child: Text(
-                              'What is this? 🧐',
-                              style: textTheme.caption.copyWith(height: 2),
-                            ),
-                          ),
                         ],
                       ),
                     ),
                     Align(
                       alignment: Alignment.bottomCenter,
                       child: StaggeredAnimatedColumn(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           AppButton(
                             onPressed: () {
@@ -94,6 +91,17 @@ class WelcomeScreen extends StatelessWidget {
                             child: Text(
                               'VOLUNTEER'.toUpperCase(),
                               style: textTheme.button.copyWith(color: Colors.black87),
+                            ),
+                          ),
+                          SizedBox(height: 16),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).pushNamed(AppRoutes.explanation);
+                            },
+                            child: Text(
+                              'Help',
+                              style: textTheme.caption.copyWith(height: 2),
+                              textAlign: TextAlign.center,
                             ),
                           ),
                           SizedBox(height: 16),

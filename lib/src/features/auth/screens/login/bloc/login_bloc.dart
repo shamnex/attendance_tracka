@@ -46,6 +46,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> with DioErrorHelper {
           email: state.email,
           password: state.password,
           apiURL: state.apiURL,
+          organizationUserName: state.username,
         );
 
         yield state.rebuild((b) => b
@@ -72,7 +73,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> with DioErrorHelper {
         ..loading = false
         ..errorMessage = handleDioError(e));
     } catch (e) {
-      //TODO CRASHYLITICS??
+      print(e.toString());
       yield state.rebuild(
         (b) => b..loading = false,
       );

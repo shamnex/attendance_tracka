@@ -22,7 +22,7 @@ class OrganizerBloc extends HydratedBloc<OrganizerEvent, OrganizerState> with Di
             ..loading = true
             ..errorMessage = '',
         );
-        final volunteers = await repo.getVonluteers();
+        final volunteers = await repo.getVonluteers(event.organizer);
         yield state.rebuild((e) => e
           ..loading = false
           ..errorMessage = ''
@@ -33,7 +33,6 @@ class OrganizerBloc extends HydratedBloc<OrganizerEvent, OrganizerState> with Di
         ..loading = false
         ..errorMessage = handleDioError(error));
     } catch (e) {
-      print(e.toString());
       yield state.rebuild((e) => e
         ..loading = false
         ..errorMessage = 'Somthing went wrong');

@@ -8,10 +8,18 @@ import 'package:built_value/serializer.dart';
 
 part 'user_model.g.dart';
 
+//  {
+//   "ORGANISATION_NAME": "Shamnex Corps",
+//   "ORGANISATIONN_ABB": "shamnex",
+//   "email": "shamnex@icloud.como",
+//   "API_URL": "api_url_here_oh",
+// }
+
 abstract class User with BaseModel implements Built<User, UserBuilder> {
   @nullable
   String get email;
 
+  @nullable
   @BuiltValueField(wireName: 'ORGANISATION_NAME')
   String get organization;
 

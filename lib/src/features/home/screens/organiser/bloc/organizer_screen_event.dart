@@ -1,3 +1,4 @@
+import 'package:attendance_tracka/src/features/app/model/user_model.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class OrganizerEvent extends Equatable {
@@ -7,8 +8,8 @@ abstract class OrganizerEvent extends Equatable {
 }
 
 class GetVolunteers extends OrganizerEvent {
-  final String apiURL;
-  GetVolunteers(this.apiURL);
+  final User organizer;
+  GetVolunteers(this.organizer);
   @override
-  List<Object> get props => [apiURL];
+  List<Object> get props => [organizer];
 }

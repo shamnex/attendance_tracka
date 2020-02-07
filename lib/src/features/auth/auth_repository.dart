@@ -22,7 +22,12 @@ abstract class AuthRepository with TokenManager {
   });
   Future<void> signOut();
   Future<String> getOrganisationABB(String organizationUserName);
-  Future<User> volunteerLogin({String email, String password, String apiURL});
+  Future<User> volunteerLogin({
+    String email,
+    String password,
+    String apiURL,
+    String organizationUserName,
+  });
 }
 
 class AuthRepositoryImpl extends TokenManagerImpl implements AuthRepository {
@@ -60,7 +65,12 @@ class AuthRepositoryImpl extends TokenManagerImpl implements AuthRepository {
   }
 
   @override
-  Future<User> volunteerLogin({String email, String password, String apiURL}) {
+  Future<User> volunteerLogin({
+    String email,
+    String password,
+    String apiURL,
+    String organizationUserName,
+  }) {
     // TODO: implement volunteerLogin
     return null;
   }
@@ -107,7 +117,12 @@ class MockAuthRepositoryImpl extends TokenManagerImpl implements AuthRepository 
   }
 
   @override
-  Future<User> volunteerLogin({String email, String password, String apiURL}) {
+  Future<User> volunteerLogin({
+    String email,
+    String password,
+    String apiURL,
+    String organizationUserName,
+  }) {
     // TODO: implement volunteerLogin
     return null;
   }
@@ -167,7 +182,9 @@ class DevAuthRepositoryImpl extends TokenManagerImpl implements AuthRepository {
 
       if (res.data["status"] == "success") {
         var userJson = res.data['description'];
-        return User.fromJson(userJson).rebuild((b) => b..email = email);
+        return User.fromJson(userJson).rebuild(
+          (b) => b..email = email,
+        );
       } else {
         throw DioError(
             type: DioErrorType.RESPONSE,
@@ -210,15 +227,24 @@ class DevAuthRepositoryImpl extends TokenManagerImpl implements AuthRepository {
   }
 
   @override
-  Future<User> volunteerLogin({String email, String password, String apiURL}) async {
+  Future<User> volunteerLogin({
+    String email,
+    String password,
+    String apiURL,
+    String organizationUserName,
+  }) async {
     assert(email != null);
     assert(password != null);
     assert(apiURL != null);
-    final url = '$apiURL?actionreq=signin&useremail=$email&password=$password';
+    assert(organizationUserName != null);
+    final url = '$apiURL?actionreq=signin&email=$email&password=$password';
+    print(url);
     final res = await _client.get(url, useBaseURL: false);
 
     if (res.data["status"] == "success") {
       var userJson = res.data['description'];
+      userJson['ORGANISATIONN_ABB'] = organizationUserName;
+      userJson['API_URL'] = apiURL;
       return User.fromJson(userJson).rebuild((b) => b..email = email);
     } else {
       throw DioError(

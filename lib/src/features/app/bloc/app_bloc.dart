@@ -13,7 +13,7 @@ class AppBloc extends HydratedBloc<AppEvent, AppState> {
     Stream<AppEvent> events,
     Stream<AppState> Function(AppEvent event) next,
   ) {
-    return super.transformEvents(events.debounceTime(Duration(milliseconds: 100)), next);
+    return super.transformEvents(events.debounceTime(Duration(milliseconds: 50)), next);
   }
 
   Flavor _flavor;
