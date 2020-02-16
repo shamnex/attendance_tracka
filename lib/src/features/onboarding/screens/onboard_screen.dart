@@ -84,7 +84,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
                 ),
                 const Spacer(),
                 Padding(
-                  padding: AppPaddings.body,
+                  padding: AppPaddings.bodyH,
                   child: AppButton(
                     onPressed: () {
                       BlocProvider.of<AppBloc>(context).add(HasOnboarded());

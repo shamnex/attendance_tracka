@@ -157,6 +157,7 @@ class DevAuthRepositoryImpl extends TokenManagerImpl implements AuthRepository {
     } on DioError catch (_) {
       rethrow;
     } catch (_) {
+      //!CRASHYLITICS??
       print(_.toString());
       rethrow;
     }
@@ -238,7 +239,6 @@ class DevAuthRepositoryImpl extends TokenManagerImpl implements AuthRepository {
     assert(apiURL != null);
     assert(organizationUserName != null);
     final url = '$apiURL?actionreq=signin&email=$email&password=$password';
-    print(url);
     final res = await _client.get(url, useBaseURL: false);
 
     if (res.data["status"] == "success") {

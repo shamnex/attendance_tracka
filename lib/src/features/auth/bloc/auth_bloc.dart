@@ -33,22 +33,18 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with DioErrorHelper {
       }
       if (event is Authenticate) {
         yield AuthLoading();
-        await Future.delayed(const Duration(milliseconds: 1000));
         yield AuthAuthenticated();
       }
       if (event is Deauthenticate) {
         yield AuthLoading();
         appBloc.add(UserLoggedOut());
-        await Future.delayed(const Duration(milliseconds: 1000));
         yield AuthUnAuthenticated();
       }
     } on DioError catch (_) {
       yield AuthLoading();
-      await Future.delayed(const Duration(milliseconds: 200));
       yield state;
     } catch (e) {
       yield AuthLoading();
-      await Future.delayed(const Duration(milliseconds: 200));
       yield state;
     }
   }

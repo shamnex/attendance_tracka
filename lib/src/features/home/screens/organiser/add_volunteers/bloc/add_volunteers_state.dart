@@ -1,3 +1,4 @@
+import 'package:attendance_tracka/src/features/app/model/user_model.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class AddVolunteersState extends Equatable {
@@ -15,4 +16,7 @@ class ErrorState extends AddVolunteersState {
   const ErrorState(this.error);
 }
 
-class AddedState extends AddVolunteersState {}
+class AddedState extends AddVolunteersState {
+  final User volunteer;
+  AddedState(this.volunteer);
+}

@@ -5,7 +5,6 @@ import 'package:attendance_tracka/src/constants/colors.dart';
 import 'package:attendance_tracka/src/constants/paddings.dart';
 import 'package:built_value/serializer.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import 'package:built_value/built_value.dart';
 import 'package:built_collection/built_collection.dart';
@@ -29,7 +28,7 @@ class AppInputTheme {
   static final outlineInputTheme = InputDecoration(
     hasFloatingPlaceholder: true,
     alignLabelWithHint: true,
-    contentPadding: AppPaddings.body.copyWith(top: 16, bottom: 16),
+    contentPadding: AppPaddings.bodyH.copyWith(top: 16, bottom: 16),
     focusedBorder: OutlineInputBorder(
       borderRadius: AppBorderRadius.large_all,
       borderSide: BorderSide(color: Colors.white, width: 2),
@@ -56,15 +55,20 @@ class AppInputTheme {
 
 final appThemeData = {
   AppTheme.OrangeLight: ThemeData(
-    fontFamily: GoogleFonts.raleway().fontFamily,
+    fontFamily: 'Raleway',
     brightness: Brightness.light,
     primaryColor: AppColors.primary,
+    colorScheme: ColorScheme.fromSwatch(
+      primarySwatch: AppColors.primary,
+    ),
     hintColor: AppColors.hint,
+    indicatorColor: AppColors.primary,
+    iconTheme: IconThemeData(color: AppColors.secondary),
     backgroundColor: AppColors.background,
     inputDecorationTheme: InputDecorationTheme(
       hasFloatingPlaceholder: true,
       alignLabelWithHint: true,
-      contentPadding: AppPaddings.body.copyWith(top: 16, bottom: 16),
+      contentPadding: AppPaddings.bodyH.copyWith(top: 16, bottom: 16),
       focusedBorder: OutlineInputBorder(
         borderRadius: AppBorderRadius.large_all,
         borderSide: BorderSide(
@@ -96,7 +100,7 @@ final appThemeData = {
   ),
   //===================
   AppTheme.OrangeDark: ThemeData(
-    fontFamily: GoogleFonts.raleway().fontFamily,
+    fontFamily: 'Raleway',
     brightness: Brightness.dark,
     primaryColor: AppColors.primary[700],
     backgroundColor: AppColors.backgroundDark,

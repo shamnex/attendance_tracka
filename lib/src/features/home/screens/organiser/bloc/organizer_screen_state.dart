@@ -9,7 +9,7 @@ import 'package:built_value/serializer.dart';
 part 'organizer_screen_state.g.dart';
 
 abstract class OrganizerState implements Built<OrganizerState, OrganizerStateBuilder> {
-  static OrganizerState initialState() => OrganizerState((b) => b
+  static OrganizerState initialState() => OrganizerState((s) => s
     ..loading = false
     ..errorMessage = '');
 
@@ -18,8 +18,10 @@ abstract class OrganizerState implements Built<OrganizerState, OrganizerStateBui
   String get errorMessage;
   bool get loading;
   bool get hasError => errorMessage.isNotEmpty;
-  bool get hasOrganizers => volunteers != null && volunteers.isEmpty;
+  bool get hasVolunteers => volunteers != null && volunteers.isNotEmpty;
   OrganizerState._();
+
+  OrganizerState clear() => rebuild((b) => b..volunteers.clear());
 
   factory OrganizerState([updates(OrganizerStateBuilder b)]) = _$OrganizerState;
 

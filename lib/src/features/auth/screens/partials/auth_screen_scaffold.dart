@@ -1,6 +1,7 @@
 import 'package:attendance_tracka/src/constants/border_radius.dart';
 import 'package:attendance_tracka/src/constants/colors.dart';
 import 'package:attendance_tracka/src/constants/paddings.dart';
+import 'package:attendance_tracka/src/widgets/app_loading.dart';
 import 'package:attendance_tracka/src/widgets/blur_bg_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -45,7 +46,7 @@ class AuthScreenScaffold extends StatelessWidget {
               body: SafeArea(child: Builder(builder: (context) {
                 return AnimatedContainer(
                   duration: Duration(milliseconds: 300),
-                  padding: AppPaddings.body.copyWith(top: 25),
+                  padding: AppPaddings.bodyH.copyWith(top: 25),
                   margin: EdgeInsets.only(top: 16),
                   width: mq.size.width,
                   decoration: BoxDecoration(
@@ -86,7 +87,10 @@ class AuthScreenScaffold extends StatelessWidget {
         if (loading)
           Positioned.fill(
             child: BluredBgWidget(
-              child: Center(child: Text('Loading...')),
+              child: Center(
+                  child: AppSpinner(
+                color: AppColors.primary,
+              )),
             ),
           )
       ],

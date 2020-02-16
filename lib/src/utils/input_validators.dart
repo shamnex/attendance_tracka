@@ -6,6 +6,7 @@ class InputValidators {
       if (value.isEmpty) {
         return 'Field is Required';
       }
+
       if (!validator.isEmail(value)) {
         return 'Please enter a valid email';
       }
@@ -17,9 +18,7 @@ class InputValidators {
     if (value.isEmpty) {
       return 'Field is Required';
     }
-    if (validator.isMultibyte(value)) {
-      return 'Invalid Username or Email';
-    }
+
     if (!validator.isLength(value, length)) {
       return 'Should be at least $length character${length > 1 ? 's' : ''}';
     }
@@ -30,9 +29,7 @@ class InputValidators {
     if (value.isEmpty) {
       return 'Field is Required';
     }
-    if (validator.isMultibyte(value)) {
-      return 'Invalid Username or Email';
-    }
+
     if (!validator.isURL(value)) {
       return 'Invalid URL';
     }

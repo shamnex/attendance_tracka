@@ -73,6 +73,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> with DioErrorHelper {
         ..loading = false
         ..errorMessage = handleDioError(e));
     } catch (e) {
+      //!CRASHYLITICS??
       print(e.toString());
       yield state.rebuild(
         (b) => b..loading = false,

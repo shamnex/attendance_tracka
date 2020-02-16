@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "307199461689",
+    "firebase_url": "https://attendace-tracka.firebaseio.com",
+    "project_id": "attendace-tracka",
+    "storage_bucket": "attendace-tracka.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:307199461689:android:e8a438ee046963f3c9c0e8",
+        "android_client_info": {
+          "package_name": "com.ai6.attendanca_tracka"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "307199461689-t06oj9b2ajcl5s8viq6ce7koo63bi3a9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhBVKqBpM0JxgwbucJjjXsPHvAEYfq-ck"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "307199461689-t06oj9b2ajcl5s8viq6ce7koo63bi3a9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../service_locator.dart';
 import 'add_volunteers/bloc/add_volunteers_bloc.dart';
 import 'bloc/organizer_screen_bloc.dart';
+import 'bloc/tab/organiser_screen_tab_bloc.dart';
 import 'organiser_service_locator.dart';
 
 final _navigatorKey = GlobalKey<NavigatorState>();
@@ -38,7 +39,8 @@ class _OrganizerScreenHomeScreenState extends State<OrganizerScreenHomeScreen> {
       child: MultiBlocProvider(
         providers: [
           BlocProvider<OrganizerBloc>(create: (context) => sl()),
-          BlocProvider(create: (context) => AddVolunteersBloc(sl()))
+          BlocProvider<AddVolunteersBloc>(create: (context) => sl()),
+          BlocProvider<OrganiserScreenTabBloc>(create: (context) => sl()),
         ],
         child: Material(
           child: Navigator(

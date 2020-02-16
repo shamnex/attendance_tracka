@@ -13,7 +13,7 @@ class ExplanationScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: AppPaddings.body,
+          padding: AppPaddings.bodyH,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,

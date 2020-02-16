@@ -1,5 +1,6 @@
 import 'package:attendance_tracka/src/features/auth/screens/auth_home_screen.dart';
 import 'package:attendance_tracka/src/features/home/home_screen.dart';
+import 'package:attendance_tracka/src/features/home/screens/mark_attendance/mark_attendance_screen.dart';
 import 'package:attendance_tracka/src/features/home/screens/welcome/explanation_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ class AppRoutes {
   static const String home = "/home";
   static const String explanation = "/explanation";
   static const String auth = "/auth";
+  static const String scan = "/scan";
 
   static Route<dynamic> router(RouteSettings settings) {
     return CupertinoPageRoute(builder: (context) {
@@ -23,6 +25,8 @@ class AppRoutes {
         return AuthHomeScreen();
       case explanation:
         return ExplanationScreen();
+      case scan:
+        return MarkAttendanceScreen();
       default:
         return HomeScreen();
     }

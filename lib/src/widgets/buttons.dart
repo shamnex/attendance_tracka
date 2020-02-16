@@ -1,4 +1,5 @@
 import 'package:attendance_tracka/src/constants/colors.dart';
+import 'package:attendance_tracka/src/features/app/model/app_theme.dart';
 import 'package:flutter/material.dart';
 
 import 'app_loading.dart';
@@ -10,11 +11,11 @@ class AppButton extends StatefulWidget {
   final bool _isWhite;
   final List<BoxShadow> boxShadow;
 
-  AppButton.white({Key key, this.onPressed, this.child, this.boxShadow, this.loading = false})
+  const AppButton.white({Key key, this.onPressed, this.child, this.boxShadow, this.loading = false})
       : _isWhite = true,
         super(key: key);
 
-  AppButton({
+  const AppButton({
     Key key,
     this.loading = false,
     this.onPressed,
@@ -30,55 +31,64 @@ class AppButton extends StatefulWidget {
 class _AppButtonState extends State<AppButton> {
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.bottomCenter,
-      children: <Widget>[
-        DecoratedBox(
-          child: SizedBox(
-            height: 20,
-            width: 120,
-          ),
-          decoration: BoxDecoration(
-              boxShadow: widget.boxShadow ??
-                  [
-                    BoxShadow(
-                      blurRadius: 30,
-                      spreadRadius: 10,
-                      color: AppColors.secondary,
-                    )
-                  ]),
-        ),
-        Container(
-          alignment: Alignment.center,
-          child: ClipRRect(
-            borderRadius: BorderRadius.all(Radius.circular(60)),
-            child: SizedBox.expand(
-              child: FlatButton(
-                splashColor: Colors.transparent,
-                onPressed: widget.loading ? null : widget.onPressed,
-                color: widget._isWhite ? Colors.white : Colors.transparent,
-                child: widget.loading
-                    ? Center(
-                        child: AppSpinner(
-                          color: widget._isWhite ? AppColors.primary : Colors.white,
-                        ),
+    return DefaultTextStyle(
+      style: TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.w900,
+      ),
+      child: Stack(
+        alignment: Alignment.bottomCenter,
+        children: <Widget>[
+          DecoratedBox(
+            child: SizedBox(
+              height: 10,
+              width: 200,
+            ),
+            decoration: BoxDecoration(
+                boxShadow: widget.boxShadow ??
+                    [
+                      BoxShadow(
+                        blurRadius: 20,
+                        spreadRadius: 4,
+                        color: AppColors.secondary.shade300,
                       )
-                    : widget.child,
+                    ]),
+          ),
+          Container(
+            alignment: Alignment.center,
+            child: ClipRRect(
+              borderRadius: BorderRadius.all(Radius.circular(60)),
+              child: SizedBox.expand(
+                child: FlatButton(
+                  splashColor: Colors.transparent,
+                  onPressed: widget.loading ? null : widget.onPressed,
+                  color: widget._isWhite ? Colors.white : Colors.transparent,
+                  child: widget.loading
+                      ? Center(
+                          child: AppSpinner(
+                            color: widget._isWhite ? AppColors.primary : Colors.white,
+                          ),
+                        )
+                      : widget.child,
+                ),
               ),
             ),
+            height: kToolbarHeight,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(60)),
+                gradient: widget._isWhite
+                    ? null
+                    : LinearGradient(
+                        begin: Alignment.topLeft.add(Alignment(.4, 0)),
+                        end: Alignment.bottomRight,
+                        colors: [
+                            AppColors.secondary.shade900,
+                            AppColors.primary,
+                            AppColors.primary,
+                          ])),
           ),
-          height: kToolbarHeight,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(60)),
-              gradient: widget._isWhite
-                  ? null
-                  : LinearGradient(begin: Alignment.topLeft.add(Alignment(.4, 0)), end: Alignment.bottomRight, colors: [
-                      AppColors.secondary.shade900,
-                      AppColors.primary,
-                      AppColors.primary,
-                    ])),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

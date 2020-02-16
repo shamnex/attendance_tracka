@@ -16,7 +16,7 @@ class GetApiUrlBloc extends Bloc<GetApiUrlEvent, GetApiUrlState> with DioErrorHe
   @override
   Stream<GetApiUrlState> transformEvents(
       Stream<GetApiUrlEvent> events, Stream<GetApiUrlState> Function(GetApiUrlEvent) next) {
-    return events.debounceTime(const Duration(milliseconds: 500)).switchMap(next);
+    return events.throttleTime(const Duration(milliseconds: 500)).switchMap(next);
   }
 
   @override
@@ -41,7 +41,8 @@ class GetApiUrlBloc extends Bloc<GetApiUrlEvent, GetApiUrlState> with DioErrorHe
       yield ErrorState(handleDioError(e));
       print(handleDioError(e));
     } catch (e) {
-      yield ErrorState(e.toString());
+      //!CRASHYLITICS??
+      yield ErrorState('Something went wrong');
       print(e.toString());
       throw Exception();
     }

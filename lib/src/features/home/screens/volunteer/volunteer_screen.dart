@@ -20,7 +20,7 @@ class _VolunteerScreenState extends State<VolunteerScreen> {
     return BlocBuilder<AppBloc, AppState>(builder: (context, appState) {
       final user = appState.currentUser;
       return Container(
-        padding: AppPaddings.body,
+        padding: AppPaddings.bodyH,
         child: Center(
           child: Column(children: <Widget>[
             const Spacer(),

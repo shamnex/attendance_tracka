@@ -17,7 +17,7 @@ class WelcomeScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: theme.backgroundColor,
       body: Padding(
-        padding: AppPaddings.body,
+        padding: AppPaddings.bodyH,
         child: SafeArea(
           child: Column(
             children: <Widget>[

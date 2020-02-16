@@ -26,7 +26,7 @@ class AuthAppBar extends SliverPersistentHeaderDelegate {
 
     return SizedBox.expand(
       child: Container(
-        padding: AppPaddings.body.copyWith(
+        padding: AppPaddings.bodyH.copyWith(
           bottom: 16 * ((shrinkOffset / maxHeight).clamp(0.5, 1.0)),
           top: 16 * ((shrinkOffset / maxHeight).clamp(0.5, 1.0)),
         ),
@@ -50,9 +50,9 @@ class AuthAppBar extends SliverPersistentHeaderDelegate {
         child: FittedBox(
           child: Center(
             child: Text(
-              title,
+              title.toUpperCase(),
               style: textTheme.display1.copyWith(
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w900,
                 color: scrolledToTop && lightBG ? Colors.white : Colors.black87,
               ),
             ),

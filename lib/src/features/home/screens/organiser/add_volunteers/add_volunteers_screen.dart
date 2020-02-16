@@ -35,6 +35,7 @@ class _AddVolunteersScreenState extends State<AddVolunteersScreen> {
   dispose() {
     super.dispose();
     emailEditingController.dispose();
+    bloc.add(Reset());
   }
 
   @override

@@ -9,7 +9,15 @@ abstract class OrganizerEvent extends Equatable {
 
 class GetVolunteers extends OrganizerEvent {
   final User organizer;
-  GetVolunteers(this.organizer);
+  final bool refresh;
+  GetVolunteers(this.organizer, {this.refresh = false});
   @override
   List<Object> get props => [organizer];
+}
+
+class VolunteerAdded extends OrganizerEvent {
+  final User volunteer;
+  VolunteerAdded(this.volunteer);
+  @override
+  List<Object> get props => [volunteer];
 }

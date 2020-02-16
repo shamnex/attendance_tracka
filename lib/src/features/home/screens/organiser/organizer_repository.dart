@@ -86,6 +86,7 @@ class DevOrganizerRepositoryImpl implements OrganizerRepository {
     } on DioError catch (_) {
       rethrow;
     } catch (_) {
+      //!CRASHYLITICS??
       print(_.toString());
       rethrow;
     }
@@ -100,8 +101,6 @@ class DevOrganizerRepositoryImpl implements OrganizerRepository {
       final res = await _client.get(url, useBaseURL: false);
       if (res.data["status"] == "success") {
         final volunteerEmails = (res.data["description"] as Iterable).map((c) => c.toString());
-
-        print(volunteerEmails);
         return volunteerEmails
             .map((email) => organizer.rebuild(
                   (b) => b

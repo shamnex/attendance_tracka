@@ -1,13 +1,20 @@
+import 'package:attendance_tracka/src/constants/colors.dart';
+import 'package:attendance_tracka/src/constants/icons.dart';
 import 'package:attendance_tracka/src/features/app/bloc/app_bloc.dart';
 import 'package:attendance_tracka/src/features/app/bloc/app_state.dart';
-import 'package:attendance_tracka/src/features/auth/bloc/bloc.dart';
-import 'package:attendance_tracka/src/features/home/screens/organiser/routes.dart';
-import 'package:attendance_tracka/src/widgets/buttons.dart';
-import 'package:attendance_tracka/src/widgets/staggered_animated_column.dart';
+import 'package:attendance_tracka/src/features/home/screens/organiser/bloc/tab/organiser_screen_tab_event.dart';
+import 'package:attendance_tracka/src/features/home/screens/organiser/partials/home_tab_screen.dart';
+import 'package:attendance_tracka/src/features/home/screens/organiser/partials/tab_button.dart';
+import 'package:attendance_tracka/src/features/home/screens/organiser/partials/volunteers_list_tab_screen.dart';
+import 'package:attendance_tracka/src/routes/app_routes.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_camera_ml_vision/flutter_camera_ml_vision.dart';
 
 import 'bloc/bloc.dart';
+import 'bloc/tab/organiser_screen_tab_bloc.dart';
+import 'bloc/tab/organizer_screen_tab.dart';
 
 class OrganiserScreen extends StatefulWidget {
   const OrganiserScreen({Key key}) : super(key: key);
@@ -23,8 +30,6 @@ class _OrganiserScreenState extends State<OrganiserScreen> with TickerProviderSt
   @override
   void initState() {
     appBloc = context.bloc();
-    organizerBloc = context.bloc()..add(GetVolunteers(appBloc.state.currentUser));
-
     _animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 1000));
     _animationController.forward();
 
@@ -39,67 +44,108 @@ class _OrganiserScreenState extends State<OrganiserScreen> with TickerProviderSt
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    return BlocBuilder<AppBloc, AppState>(builder: (context, appState) {
+    return BlocConsumer<AppBloc, AppState>(listenWhen: (prev, current) {
+      return !prev.userLoggedIn && current.userLoggedIn;
+    }, listener: (context, state) {
+      organizerBloc = context.bloc<OrganizerBloc>()..add(GetVolunteers(appBloc.state.currentUser));
+    }, builder: (context, appState) {
       return BlocBuilder<OrganizerBloc, OrganizerState>(builder: (context, organiserState) {
-        final user = appState.currentUser;
-        return Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.white,
-            elevation: 0,
-            title: Text('HOME'),
-          ),
-          body: SafeArea(
-            child: Container(
-              padding: EdgeInsets.all(16),
-              height: MediaQuery.of(context).size.height,
-              child: Center(
-                child: Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: <Widget>[
-                  Expanded(
-                    child: Center(
-                      child: StaggeredAnimatedColumn(
-                        animationController: _animationController,
-                        mainAxisAlignment: MainAxisAlignment.center,
+        return BlocBuilder<OrganiserScreenTabBloc, OrganizerScreenTab>(builder: (context, activeTab) {
+          final textTheme = Theme.of(context).textTheme;
+          final user = appState.currentUser;
+          return Scaffold(
+            floatingActionButton: FloatingActionButton(
+              tooltip: 'Mark Attendance',
+              child: SizedBox.expand(
+                child: Container(
+                  child: Icon(AppIcons.barcode),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: LinearGradient(
+                      colors: AppColors.primaryGradient,
+                    ),
+                  ),
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context, rootNavigator: true).pushNamed(AppRoutes.scan);
+              },
+            ),
+            floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+            bottomNavigationBar: Stack(
+              children: <Widget>[
+                Container(
+                  height: kToolbarHeight,
+                  decoration: BoxDecoration(boxShadow: [
+                    BoxShadow(
+                      color: AppColors.background,
+                      blurRadius: 40,
+                    )
+                  ]),
+                ),
+                SizedBox(
+                  height: kToolbarHeight,
+                  child: BottomAppBar(
+                    shape: CircularNotchedRectangle(),
+                    color: Colors.white,
+                    elevation: 0.0,
+                    notchMargin: 5,
+                    child: Container(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          Text('Welcome ${user.email}'),
-                          Text('Organiser Screen'),
+                          Expanded(
+                            child: TabButton(
+                              activeIcon: Icon(
+                                AppIcons.home,
+                                color: AppColors.secondary.shade900,
+                              ),
+                              inactiveIcon: Icon(
+                                AppIcons.home,
+                                color: Colors.grey.shade300,
+                              ),
+                              isActive: activeTab == OrganizerScreenTab.home,
+                              onPressed: () {
+                                context.bloc<OrganiserScreenTabBloc>().add(TabChanged(OrganizerScreenTab.home));
+                              },
+                            ),
+                          ),
+                          Expanded(child: SizedBox()),
+                          Expanded(
+                            child: TabButton(
+                              activeIcon: Icon(
+                                AppIcons.group_senior,
+                                size: 30,
+                                color: AppColors.secondary.shade900,
+                              ),
+                              inactiveIcon: Icon(
+                                AppIcons.group_senior,
+                                size: 30,
+                                color: Colors.grey.shade300,
+                              ),
+                              isActive: activeTab == OrganizerScreenTab.volunteers,
+                              onPressed: () {
+                                context.bloc<OrganiserScreenTabBloc>().add(TabChanged(OrganizerScreenTab.volunteers));
+                              },
+                            ),
+                          ),
                         ],
                       ),
+                      height: kToolbarHeight,
                     ),
                   ),
-                  Expanded(
-                    child: StaggeredAnimatedColumn(
-                      animationController: _animationController,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: <Widget>[
-                        AppButton(
-                          onPressed: () {
-                            Navigator.of(context).pushNamed(OrganizerRoutes.addVolunteers);
-                          },
-                          child: Text(
-                            'Add Volunteers',
-                            style: textTheme.button.copyWith(color: Colors.white),
-                          ),
-                        ),
-                        SizedBox(height: 16),
-                        AppButton(
-                          onPressed: () {
-                            BlocProvider.of<AuthBloc>(context).add(Deauthenticate());
-                          },
-                          child: Text(
-                            'SIGN OUT',
-                            style: textTheme.button.copyWith(color: Colors.white),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 25),
-                ]),
-              ),
+                ),
+              ],
             ),
-          ),
-        );
+            body: IndexedStack(
+              index: activeTab == OrganizerScreenTab.home ? 0 : 1,
+              children: <Widget>[
+                const OrganizerHomeTab(),
+                const VolunteersListTabScreen(),
+              ],
+            ),
+          );
+        });
       });
     });
   }

@@ -4,7 +4,11 @@ import 'package:flutter/painting.dart';
 class AppPaddings {
   const AppPaddings._();
 
-  static const EdgeInsets body = const EdgeInsets.symmetric(horizontal: 25);
+  static const EdgeInsets bodyH = const EdgeInsets.symmetric(horizontal: 25);
+  static const EdgeInsets bodyV = const EdgeInsets.symmetric(vertical: 25);
+  static const EdgeInsets xlH = const EdgeInsets.symmetric(horizontal: 32);
+  static const EdgeInsets lH = const EdgeInsets.symmetric(horizontal: 16);
+  static const EdgeInsets lA = const EdgeInsets.all(16);
+  static const EdgeInsets mH = const EdgeInsets.symmetric(horizontal: 8);
+  static const EdgeInsets sH = const EdgeInsets.symmetric(horizontal: 4);
 }
-
-///Colors Generated from http://mcg.mbitson.com/
