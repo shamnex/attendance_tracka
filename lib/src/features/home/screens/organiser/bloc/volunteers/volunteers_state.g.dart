@@ -6,18 +6,18 @@ part of organizer_screen_state;
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<OrganizerState> _$organizerStateSerializer =
-    new _$OrganizerStateSerializer();
+Serializer<VolunteersState> _$volunteersStateSerializer =
+    new _$VolunteersStateSerializer();
 
-class _$OrganizerStateSerializer
-    implements StructuredSerializer<OrganizerState> {
+class _$VolunteersStateSerializer
+    implements StructuredSerializer<VolunteersState> {
   @override
-  final Iterable<Type> types = const [OrganizerState, _$OrganizerState];
+  final Iterable<Type> types = const [VolunteersState, _$VolunteersState];
   @override
-  final String wireName = 'OrganizerState';
+  final String wireName = 'VolunteersState';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, OrganizerState object,
+  Iterable<Object> serialize(Serializers serializers, VolunteersState object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'errorMessage',
@@ -38,10 +38,10 @@ class _$OrganizerStateSerializer
   }
 
   @override
-  OrganizerState deserialize(
+  VolunteersState deserialize(
       Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new OrganizerStateBuilder();
+    final result = new VolunteersStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -70,7 +70,7 @@ class _$OrganizerStateSerializer
   }
 }
 
-class _$OrganizerState extends OrganizerState {
+class _$VolunteersState extends VolunteersState {
   @override
   final BuiltList<User> volunteers;
   @override
@@ -78,31 +78,31 @@ class _$OrganizerState extends OrganizerState {
   @override
   final bool loading;
 
-  factory _$OrganizerState([void Function(OrganizerStateBuilder) updates]) =>
-      (new OrganizerStateBuilder()..update(updates)).build();
+  factory _$VolunteersState([void Function(VolunteersStateBuilder) updates]) =>
+      (new VolunteersStateBuilder()..update(updates)).build();
 
-  _$OrganizerState._({this.volunteers, this.errorMessage, this.loading})
+  _$VolunteersState._({this.volunteers, this.errorMessage, this.loading})
       : super._() {
     if (errorMessage == null) {
-      throw new BuiltValueNullFieldError('OrganizerState', 'errorMessage');
+      throw new BuiltValueNullFieldError('VolunteersState', 'errorMessage');
     }
     if (loading == null) {
-      throw new BuiltValueNullFieldError('OrganizerState', 'loading');
+      throw new BuiltValueNullFieldError('VolunteersState', 'loading');
     }
   }
 
   @override
-  OrganizerState rebuild(void Function(OrganizerStateBuilder) updates) =>
+  VolunteersState rebuild(void Function(VolunteersStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  OrganizerStateBuilder toBuilder() =>
-      new OrganizerStateBuilder()..replace(this);
+  VolunteersStateBuilder toBuilder() =>
+      new VolunteersStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is OrganizerState &&
+    return other is VolunteersState &&
         volunteers == other.volunteers &&
         errorMessage == other.errorMessage &&
         loading == other.loading;
@@ -116,7 +116,7 @@ class _$OrganizerState extends OrganizerState {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('OrganizerState')
+    return (newBuiltValueToStringHelper('VolunteersState')
           ..add('volunteers', volunteers)
           ..add('errorMessage', errorMessage)
           ..add('loading', loading))
@@ -124,9 +124,9 @@ class _$OrganizerState extends OrganizerState {
   }
 }
 
-class OrganizerStateBuilder
-    implements Builder<OrganizerState, OrganizerStateBuilder> {
-  _$OrganizerState _$v;
+class VolunteersStateBuilder
+    implements Builder<VolunteersState, VolunteersStateBuilder> {
+  _$VolunteersState _$v;
 
   ListBuilder<User> _volunteers;
   ListBuilder<User> get volunteers =>
@@ -142,9 +142,9 @@ class OrganizerStateBuilder
   bool get loading => _$this._loading;
   set loading(bool loading) => _$this._loading = loading;
 
-  OrganizerStateBuilder();
+  VolunteersStateBuilder();
 
-  OrganizerStateBuilder get _$this {
+  VolunteersStateBuilder get _$this {
     if (_$v != null) {
       _volunteers = _$v.volunteers?.toBuilder();
       _errorMessage = _$v.errorMessage;
@@ -155,24 +155,24 @@ class OrganizerStateBuilder
   }
 
   @override
-  void replace(OrganizerState other) {
+  void replace(VolunteersState other) {
     if (other == null) {
       throw new ArgumentError.notNull('other');
     }
-    _$v = other as _$OrganizerState;
+    _$v = other as _$VolunteersState;
   }
 
   @override
-  void update(void Function(OrganizerStateBuilder) updates) {
+  void update(void Function(VolunteersStateBuilder) updates) {
     if (updates != null) updates(this);
   }
 
   @override
-  _$OrganizerState build() {
-    _$OrganizerState _$result;
+  _$VolunteersState build() {
+    _$VolunteersState _$result;
     try {
       _$result = _$v ??
-          new _$OrganizerState._(
+          new _$VolunteersState._(
               volunteers: _volunteers?.build(),
               errorMessage: errorMessage,
               loading: loading);
@@ -183,7 +183,7 @@ class OrganizerStateBuilder
         _volunteers?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'OrganizerState', _$failedField, e.toString());
+            'VolunteersState', _$failedField, e.toString());
       }
       rethrow;
     }

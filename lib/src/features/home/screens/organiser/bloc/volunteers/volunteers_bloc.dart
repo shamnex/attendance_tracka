@@ -2,12 +2,12 @@ import 'dart:async';
 import 'package:attendance_tracka/src/features/home/screens/organiser/add_volunteers/bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:attendance_tracka/src/core/network/http_error_helper.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import '../organizer_repository.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import '../../organizer_repository.dart';
 import './bloc.dart';
 
-class OrganizerBloc extends Bloc<OrganizerEvent, OrganizerState> with DioErrorHelper {
-  OrganizerBloc(this.repo, this.addVolunteersBloc) {
+class VolunteersBloc extends HydratedBloc<VolunteersEvent, VolunteersState> with DioErrorHelper {
+  VolunteersBloc(this.repo, this.addVolunteersBloc) {
     addVolunteersBloc.listen((state) {
       if (state is AddedState) {
         add(VolunteerAdded(state.volunteer));
@@ -17,11 +17,11 @@ class OrganizerBloc extends Bloc<OrganizerEvent, OrganizerState> with DioErrorHe
   final OrganizerRepository repo;
   final AddVolunteersBloc addVolunteersBloc;
   @override
-  OrganizerState get initialState => OrganizerState.initialState();
+  VolunteersState get initialState => VolunteersState.initialState();
 
   @override
-  Stream<OrganizerState> mapEventToState(
-    OrganizerEvent event,
+  Stream<VolunteersState> mapEventToState(
+    VolunteersEvent event,
   ) async* {
     try {
       if (event is GetVolunteers) {
@@ -39,6 +39,7 @@ class OrganizerBloc extends Bloc<OrganizerEvent, OrganizerState> with DioErrorHe
           ..errorMessage = ''
           ..volunteers.addAll(volunteers));
       }
+
       if (event is VolunteerAdded) {
         yield state.rebuild(
           (s) => s
@@ -65,7 +66,7 @@ class OrganizerBloc extends Bloc<OrganizerEvent, OrganizerState> with DioErrorHe
   @override
   fromJson(Map<String, dynamic> json) {
     try {
-      return OrganizerState.fromJson(json);
+      return VolunteersState.fromJson(json);
     } catch (e) {
       return null;
     }

@@ -55,10 +55,10 @@ class _$UserSerializer implements StructuredSerializer<User> {
         ..add(serializers.serialize(object.email,
             specifiedType: const FullType(String)));
     }
-    if (object.organization != null) {
+    if (object.organisation != null) {
       result
         ..add('ORGANISATION_NAME')
-        ..add(serializers.serialize(object.organization,
+        ..add(serializers.serialize(object.organisation,
             specifiedType: const FullType(String)));
     }
     if (object.type != null) {
@@ -92,7 +92,7 @@ class _$UserSerializer implements StructuredSerializer<User> {
               specifiedType: const FullType(String)) as String;
           break;
         case 'ORGANISATION_NAME':
-          result.organization = serializers.deserialize(value,
+          result.organisation = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'ORGANISATIONN_ABB':
@@ -139,7 +139,7 @@ class _$User extends User {
   @override
   final String email;
   @override
-  final String organization;
+  final String organisation;
   @override
   final String userName;
   @override
@@ -154,7 +154,7 @@ class _$User extends User {
 
   _$User._(
       {this.email,
-      this.organization,
+      this.organisation,
       this.userName,
       this.apiURL,
       this.type,
@@ -180,7 +180,7 @@ class _$User extends User {
     if (identical(other, this)) return true;
     return other is User &&
         email == other.email &&
-        organization == other.organization &&
+        organisation == other.organisation &&
         userName == other.userName &&
         apiURL == other.apiURL &&
         type == other.type &&
@@ -192,7 +192,7 @@ class _$User extends User {
     return $jf($jc(
         $jc(
             $jc(
-                $jc($jc($jc(0, email.hashCode), organization.hashCode),
+                $jc($jc($jc(0, email.hashCode), organisation.hashCode),
                     userName.hashCode),
                 apiURL.hashCode),
             type.hashCode),
@@ -203,7 +203,7 @@ class _$User extends User {
   String toString() {
     return (newBuiltValueToStringHelper('User')
           ..add('email', email)
-          ..add('organization', organization)
+          ..add('organisation', organisation)
           ..add('userName', userName)
           ..add('apiURL', apiURL)
           ..add('type', type)
@@ -219,9 +219,9 @@ class UserBuilder implements Builder<User, UserBuilder> {
   String get email => _$this._email;
   set email(String email) => _$this._email = email;
 
-  String _organization;
-  String get organization => _$this._organization;
-  set organization(String organization) => _$this._organization = organization;
+  String _organisation;
+  String get organisation => _$this._organisation;
+  set organisation(String organisation) => _$this._organisation = organisation;
 
   String _userName;
   String get userName => _$this._userName;
@@ -244,7 +244,7 @@ class UserBuilder implements Builder<User, UserBuilder> {
   UserBuilder get _$this {
     if (_$v != null) {
       _email = _$v.email;
-      _organization = _$v.organization;
+      _organisation = _$v.organisation;
       _userName = _$v.userName;
       _apiURL = _$v.apiURL;
       _type = _$v.type;
@@ -272,7 +272,7 @@ class UserBuilder implements Builder<User, UserBuilder> {
     final _$result = _$v ??
         new _$User._(
             email: email,
-            organization: organization,
+            organisation: organisation,
             userName: userName,
             apiURL: apiURL,
             type: type,

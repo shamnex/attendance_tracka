@@ -24,8 +24,8 @@ class _$OrganizerSignupStateSerializer
       Serializers serializers, OrganizerSignupState object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
-      'organization',
-      serializers.serialize(object.organization,
+      'organisation',
+      serializers.serialize(object.organisation,
           specifiedType: const FullType(String)),
       'password',
       serializers.serialize(object.password,
@@ -39,8 +39,8 @@ class _$OrganizerSignupStateSerializer
       'apiURL',
       serializers.serialize(object.apiURL,
           specifiedType: const FullType(String)),
-      'organizationUserName',
-      serializers.serialize(object.organizationUserName,
+      'organisationUserName',
+      serializers.serialize(object.organisationUserName,
           specifiedType: const FullType(String)),
       'loading',
       serializers.serialize(object.loading,
@@ -67,8 +67,8 @@ class _$OrganizerSignupStateSerializer
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'organization':
-          result.organization = serializers.deserialize(value,
+        case 'organisation':
+          result.organisation = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'password':
@@ -87,8 +87,8 @@ class _$OrganizerSignupStateSerializer
           result.apiURL = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'organizationUserName':
-          result.organizationUserName = serializers.deserialize(value,
+        case 'organisationUserName':
+          result.organisationUserName = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'user':
@@ -108,7 +108,7 @@ class _$OrganizerSignupStateSerializer
 
 class _$OrganizerSignupState extends OrganizerSignupState {
   @override
-  final String organization;
+  final String organisation;
   @override
   final String password;
   @override
@@ -118,7 +118,7 @@ class _$OrganizerSignupState extends OrganizerSignupState {
   @override
   final String apiURL;
   @override
-  final String organizationUserName;
+  final String organisationUserName;
   @override
   final User user;
   @override
@@ -129,18 +129,18 @@ class _$OrganizerSignupState extends OrganizerSignupState {
       (new OrganizerSignupStateBuilder()..update(updates)).build();
 
   _$OrganizerSignupState._(
-      {this.organization,
+      {this.organisation,
       this.password,
       this.email,
       this.errorMessage,
       this.apiURL,
-      this.organizationUserName,
+      this.organisationUserName,
       this.user,
       this.loading})
       : super._() {
-    if (organization == null) {
+    if (organisation == null) {
       throw new BuiltValueNullFieldError(
-          'OrganizerSignupState', 'organization');
+          'OrganizerSignupState', 'organisation');
     }
     if (password == null) {
       throw new BuiltValueNullFieldError('OrganizerSignupState', 'password');
@@ -155,9 +155,9 @@ class _$OrganizerSignupState extends OrganizerSignupState {
     if (apiURL == null) {
       throw new BuiltValueNullFieldError('OrganizerSignupState', 'apiURL');
     }
-    if (organizationUserName == null) {
+    if (organisationUserName == null) {
       throw new BuiltValueNullFieldError(
-          'OrganizerSignupState', 'organizationUserName');
+          'OrganizerSignupState', 'organisationUserName');
     }
     if (loading == null) {
       throw new BuiltValueNullFieldError('OrganizerSignupState', 'loading');
@@ -177,12 +177,12 @@ class _$OrganizerSignupState extends OrganizerSignupState {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is OrganizerSignupState &&
-        organization == other.organization &&
+        organisation == other.organisation &&
         password == other.password &&
         email == other.email &&
         errorMessage == other.errorMessage &&
         apiURL == other.apiURL &&
-        organizationUserName == other.organizationUserName &&
+        organisationUserName == other.organisationUserName &&
         user == other.user &&
         loading == other.loading;
   }
@@ -195,12 +195,12 @@ class _$OrganizerSignupState extends OrganizerSignupState {
                 $jc(
                     $jc(
                         $jc(
-                            $jc($jc(0, organization.hashCode),
+                            $jc($jc(0, organisation.hashCode),
                                 password.hashCode),
                             email.hashCode),
                         errorMessage.hashCode),
                     apiURL.hashCode),
-                organizationUserName.hashCode),
+                organisationUserName.hashCode),
             user.hashCode),
         loading.hashCode));
   }
@@ -208,12 +208,12 @@ class _$OrganizerSignupState extends OrganizerSignupState {
   @override
   String toString() {
     return (newBuiltValueToStringHelper('OrganizerSignupState')
-          ..add('organization', organization)
+          ..add('organisation', organisation)
           ..add('password', password)
           ..add('email', email)
           ..add('errorMessage', errorMessage)
           ..add('apiURL', apiURL)
-          ..add('organizationUserName', organizationUserName)
+          ..add('organisationUserName', organisationUserName)
           ..add('user', user)
           ..add('loading', loading))
         .toString();
@@ -224,9 +224,9 @@ class OrganizerSignupStateBuilder
     implements Builder<OrganizerSignupState, OrganizerSignupStateBuilder> {
   _$OrganizerSignupState _$v;
 
-  String _organization;
-  String get organization => _$this._organization;
-  set organization(String organization) => _$this._organization = organization;
+  String _organisation;
+  String get organisation => _$this._organisation;
+  set organisation(String organisation) => _$this._organisation = organisation;
 
   String _password;
   String get password => _$this._password;
@@ -244,10 +244,10 @@ class OrganizerSignupStateBuilder
   String get apiURL => _$this._apiURL;
   set apiURL(String apiURL) => _$this._apiURL = apiURL;
 
-  String _organizationUserName;
-  String get organizationUserName => _$this._organizationUserName;
-  set organizationUserName(String organizationUserName) =>
-      _$this._organizationUserName = organizationUserName;
+  String _organisationUserName;
+  String get organisationUserName => _$this._organisationUserName;
+  set organisationUserName(String organisationUserName) =>
+      _$this._organisationUserName = organisationUserName;
 
   UserBuilder _user;
   UserBuilder get user => _$this._user ??= new UserBuilder();
@@ -261,12 +261,12 @@ class OrganizerSignupStateBuilder
 
   OrganizerSignupStateBuilder get _$this {
     if (_$v != null) {
-      _organization = _$v.organization;
+      _organisation = _$v.organisation;
       _password = _$v.password;
       _email = _$v.email;
       _errorMessage = _$v.errorMessage;
       _apiURL = _$v.apiURL;
-      _organizationUserName = _$v.organizationUserName;
+      _organisationUserName = _$v.organisationUserName;
       _user = _$v.user?.toBuilder();
       _loading = _$v.loading;
       _$v = null;
@@ -293,12 +293,12 @@ class OrganizerSignupStateBuilder
     try {
       _$result = _$v ??
           new _$OrganizerSignupState._(
-              organization: organization,
+              organisation: organisation,
               password: password,
               email: email,
               errorMessage: errorMessage,
               apiURL: apiURL,
-              organizationUserName: organizationUserName,
+              organisationUserName: organisationUserName,
               user: _user?.build(),
               loading: loading);
     } catch (_) {

@@ -7,14 +7,16 @@ import 'package:attendance_tracka/src/features/home/screens/organiser/partials/h
 import 'package:attendance_tracka/src/features/home/screens/organiser/partials/tab_button.dart';
 import 'package:attendance_tracka/src/features/home/screens/organiser/partials/volunteers_list_tab_screen.dart';
 import 'package:attendance_tracka/src/routes/app_routes.dart';
+import 'package:attendance_tracka/src/utils/screen_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_camera_ml_vision/flutter_camera_ml_vision.dart';
-
-import 'bloc/bloc.dart';
+import 'bloc/participants/participants_bloc_bloc.dart';
+import 'bloc/participants/participants_bloc_event.dart';
 import 'bloc/tab/organiser_screen_tab_bloc.dart';
 import 'bloc/tab/organizer_screen_tab.dart';
+import 'bloc/volunteers/bloc.dart';
+import 'bloc/volunteers/volunteers_bloc.dart';
 
 class OrganiserScreen extends StatefulWidget {
   const OrganiserScreen({Key key}) : super(key: key);
@@ -25,13 +27,23 @@ class OrganiserScreen extends StatefulWidget {
 
 class _OrganiserScreenState extends State<OrganiserScreen> with TickerProviderStateMixin {
   AnimationController _animationController;
-  OrganizerBloc organizerBloc;
+  VolunteersBloc organizerBloc;
+  ParticipantsBloc particiapantsBLoc;
   AppBloc appBloc;
   @override
   void initState() {
     appBloc = context.bloc();
+    particiapantsBLoc = context.bloc();
+    organizerBloc = context.bloc();
+
     _animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 1000));
     _animationController.forward();
+    ScreenUtils.onWidgetDidBuild(() {
+      if (appBloc.state.userLoggedIn) {
+        organizerBloc..add(GetVolunteers(appBloc.state.currentUser));
+        particiapantsBLoc..add(GetParticipants(appBloc.state.currentUser.apiURL));
+      }
+    });
 
     super.initState();
   }
@@ -47,10 +59,11 @@ class _OrganiserScreenState extends State<OrganiserScreen> with TickerProviderSt
     return BlocConsumer<AppBloc, AppState>(listenWhen: (prev, current) {
       return !prev.userLoggedIn && current.userLoggedIn;
     }, listener: (context, state) {
-      organizerBloc = context.bloc<OrganizerBloc>()..add(GetVolunteers(appBloc.state.currentUser));
+      organizerBloc..add(GetVolunteers(appBloc.state.currentUser));
+      particiapantsBLoc..add(GetParticipants(appBloc.state.currentUser.apiURL));
     }, builder: (context, appState) {
-      return BlocBuilder<OrganizerBloc, OrganizerState>(builder: (context, organiserState) {
-        return BlocBuilder<OrganiserScreenTabBloc, OrganizerScreenTab>(builder: (context, activeTab) {
+      return BlocBuilder<VolunteersBloc, VolunteersState>(builder: (context, organiserState) {
+        return BlocBuilder<OrganiserTabBloc, OrganizerScreenTab>(builder: (context, activeTab) {
           final textTheme = Theme.of(context).textTheme;
           final user = appState.currentUser;
           return Scaffold(
@@ -106,7 +119,7 @@ class _OrganiserScreenState extends State<OrganiserScreen> with TickerProviderSt
                               ),
                               isActive: activeTab == OrganizerScreenTab.home,
                               onPressed: () {
-                                context.bloc<OrganiserScreenTabBloc>().add(TabChanged(OrganizerScreenTab.home));
+                                context.bloc<OrganiserTabBloc>().add(TabChanged(OrganizerScreenTab.home));
                               },
                             ),
                           ),
@@ -125,7 +138,7 @@ class _OrganiserScreenState extends State<OrganiserScreen> with TickerProviderSt
                               ),
                               isActive: activeTab == OrganizerScreenTab.volunteers,
                               onPressed: () {
-                                context.bloc<OrganiserScreenTabBloc>().add(TabChanged(OrganizerScreenTab.volunteers));
+                                context.bloc<OrganiserTabBloc>().add(TabChanged(OrganizerScreenTab.volunteers));
                               },
                             ),
                           ),

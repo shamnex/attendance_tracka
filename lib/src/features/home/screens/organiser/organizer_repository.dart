@@ -7,12 +7,8 @@ enum ActionRequired { createorg, signinorg }
 
 abstract class OrganizerRepository {
   Future<List<User>> getVonluteers(User organizer);
-  Future<bool> addVonluteers({
-    String email,
-    String password,
-    String volunteerEmail,
-    String apiURL,
-  });
+  Future<bool> addVonluteers({String email, String password, String volunteerEmail, String apiURL});
+  Future getParticipants({String apiURL});
 }
 
 class OrganizerRepositoryImpl implements OrganizerRepository {
@@ -36,6 +32,12 @@ class OrganizerRepositoryImpl implements OrganizerRepository {
     // TODO: implement getVonluteers
     return null;
   }
+
+  @override
+  Future getParticipants({String apiURL}) {
+    // TODO: implement getParticipants
+    return null;
+  }
 }
 
 class MockOrganizerRepositoryImpl implements OrganizerRepository {
@@ -53,6 +55,12 @@ class MockOrganizerRepositoryImpl implements OrganizerRepository {
   @override
   Future<List<User>> getVonluteers(User organizer) {
     // TODO: implement getVonluteers
+    return null;
+  }
+
+  @override
+  Future getParticipants({String apiURL}) {
+    // TODO: implement getParticipants
     return null;
   }
 }
@@ -108,6 +116,37 @@ class DevOrganizerRepositoryImpl implements OrganizerRepository {
                     ..type = UserType.volunteer,
                 ))
             .toList();
+      } else {
+        throw DioError(
+            type: DioErrorType.RESPONSE,
+            response: Response(
+              data: {'message': res.data['description'] ?? 'Something went wrong'},
+            ));
+      }
+    } on DioError catch (_) {
+      rethrow;
+    } catch (_) {
+      print(_.toString());
+      rethrow;
+    }
+  }
+
+  @override
+  Future getParticipants({String apiURL}) async {
+    try {
+      final url = '$apiURL?actionreq=get_json&api_url=$apiURL';
+      final res = await _client.get(url, useBaseURL: false);
+      print(res);
+      if (res.data["status"] == "success") {
+        return;
+        // final volunteerEmails = (res.data["description"] as Iterable).map((c) => c.toString());
+        // return volunteerEmails
+        //     .map((email) => organizer.rebuild(
+        //           (b) => b
+        //             ..email = email
+        //             ..type = UserType.volunteer,
+        //         ))
+        //     .toList();
       } else {
         throw DioError(
             type: DioErrorType.RESPONSE,

@@ -42,11 +42,19 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> with DioErrorHelper {
           ..loading = true
           ..errorMessage = '');
 
+        if (!event.haspassword) {
+          await repo.createVolunteerPassword(
+            email: state.email,
+            password: state.password,
+            organisationApiURL: state.apiURL,
+          );
+        }
+
         final user = await repo.volunteerLogin(
           email: state.email,
           password: state.password,
           apiURL: state.apiURL,
-          organizationUserName: state.username,
+          organisationUserName: state.username,
         );
 
         yield state.rebuild((b) => b

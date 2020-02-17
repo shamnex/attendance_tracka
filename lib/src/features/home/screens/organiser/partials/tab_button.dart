@@ -20,7 +20,7 @@ class TabButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<OrganiserScreenTabBloc, OrganizerScreenTab>(builder: (context, tab) {
+    return BlocBuilder<OrganiserTabBloc, OrganizerScreenTab>(builder: (context, tab) {
       return CupertinoButton(
           pressedOpacity: 0.9,
           onPressed: onPressed,

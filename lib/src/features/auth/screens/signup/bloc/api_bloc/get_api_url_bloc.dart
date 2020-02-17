@@ -16,7 +16,7 @@ class GetApiUrlBloc extends Bloc<GetApiUrlEvent, GetApiUrlState> with DioErrorHe
   @override
   Stream<GetApiUrlState> transformEvents(
       Stream<GetApiUrlEvent> events, Stream<GetApiUrlState> Function(GetApiUrlEvent) next) {
-    return events.throttleTime(const Duration(milliseconds: 500)).switchMap(next);
+    return events.throttleTime(const Duration(milliseconds: 500), trailing: true).switchMap(next);
   }
 
   @override
@@ -24,7 +24,7 @@ class GetApiUrlBloc extends Bloc<GetApiUrlEvent, GetApiUrlState> with DioErrorHe
     GetApiUrlEvent event,
   ) async* {
     try {
-      if (event is GetOrganizationApiUrl) {
+      if (event is GetOrganisationApiUrl) {
         if (event.organisationUsername.isEmpty) {
           return;
         }

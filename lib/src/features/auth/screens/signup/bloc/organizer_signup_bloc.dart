@@ -36,15 +36,15 @@ class SignupBloc extends Bloc<OrganizerSignupEvent, OrganizerSignupState> with D
           ..email = event.email
           ..errorMessage = '');
       }
-      if (event is OrganizationChanged) {
+      if (event is OrganisationChanged) {
         yield state.rebuild((b) => b
-          ..organization = event.organization
+          ..organisation = event.organisation
           ..errorMessage = '');
       }
 
       if (event is UserNameChanged) {
         yield state.rebuild((b) => b
-          ..organizationUserName = event.userName
+          ..organisationUserName = event.userName
           ..errorMessage = '');
       }
       if (event is ApiChanged) {
@@ -59,8 +59,8 @@ class SignupBloc extends Bloc<OrganizerSignupEvent, OrganizerSignupState> with D
         final user = await repo.organizerSignup(
           email: state.email,
           password: state.password,
-          organization: state.organization,
-          organizationUserName: state.organizationUserName,
+          organisation: state.organisation,
+          organisationUserName: state.organisationUserName,
           apiURL: state.apiURL,
         );
         yield state.rebuild(

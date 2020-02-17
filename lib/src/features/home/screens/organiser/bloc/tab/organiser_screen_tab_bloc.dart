@@ -3,7 +3,7 @@ import 'package:bloc/bloc.dart';
 import 'organiser_screen_tab_event.dart';
 import 'organizer_screen_tab.dart';
 
-class OrganiserScreenTabBloc extends Bloc<OrganizerScreenTabEvent, OrganizerScreenTab> {
+class OrganiserTabBloc extends Bloc<OrganizerScreenTabEvent, OrganizerScreenTab> {
   @override
   OrganizerScreenTab get initialState => OrganizerScreenTab.home;
 

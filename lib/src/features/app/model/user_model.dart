@@ -21,7 +21,7 @@ abstract class User with BaseModel implements Built<User, UserBuilder> {
 
   @nullable
   @BuiltValueField(wireName: 'ORGANISATION_NAME')
-  String get organization;
+  String get organisation;
 
   @BuiltValueField(wireName: 'ORGANISATIONN_ABB')
   String get userName;

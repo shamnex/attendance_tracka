@@ -5,6 +5,7 @@ import 'package:attendance_tracka/src/utils/string_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:dio/dio.dart';
+import 'package:validators/sanitizers.dart';
 
 enum ActionRequired { createorg, signinorg }
 
@@ -12,8 +13,8 @@ abstract class AuthRepository with TokenManager {
   Future<User> organizerSignup({
     String email,
     String password,
-    String organization,
-    String organizationUserName,
+    String organisation,
+    String organisationUserName,
     String apiURL,
   });
   Future<User> organizerLogin({
@@ -21,13 +22,20 @@ abstract class AuthRepository with TokenManager {
     String password,
   });
   Future<void> signOut();
-  Future<String> getOrganisationABB(String organizationUserName);
+  Future<String> getOrganisationABB(String organisationUserName);
   Future<User> volunteerLogin({
     String email,
     String password,
     String apiURL,
-    String organizationUserName,
+    String organisationUserName,
   });
+  Future<void> createVolunteerPassword({
+    String organisationApiURL,
+    String email,
+    String password,
+  });
+
+  Future<bool> volunteerHasPassword({String email, String organisationApiURL});
 }
 
 class AuthRepositoryImpl extends TokenManagerImpl implements AuthRepository {
@@ -47,8 +55,8 @@ class AuthRepositoryImpl extends TokenManagerImpl implements AuthRepository {
   Future<User> organizerSignup({
     String email,
     String password,
-    String organization,
-    String organizationUserName,
+    String organisation,
+    String organisationUserName,
     String apiURL,
   }) {
     return null;
@@ -59,7 +67,7 @@ class AuthRepositoryImpl extends TokenManagerImpl implements AuthRepository {
   }
 
   @override
-  Future<String> getOrganisationABB(String organizationUserName) {
+  Future<String> getOrganisationABB(String organisationUserName) {
     // TODO: implement getOrganisationABB
     return null;
   }
@@ -69,9 +77,24 @@ class AuthRepositoryImpl extends TokenManagerImpl implements AuthRepository {
     String email,
     String password,
     String apiURL,
-    String organizationUserName,
+    String organisationUserName,
   }) {
     // TODO: implement volunteerLogin
+    return null;
+  }
+
+  @override
+  Future<bool> volunteerHasPassword({String email, String organisationApiURL}) {
+    return null;
+  }
+
+  @override
+  Future<void> createVolunteerPassword({
+    String email,
+    String password,
+    String organisationApiURL,
+  }) {
+    // TODO: implement createVolunteerPassword
     return null;
   }
 }
@@ -94,8 +117,8 @@ class MockAuthRepositoryImpl extends TokenManagerImpl implements AuthRepository 
   Future<User> organizerSignup({
     String email,
     String password,
-    String organization,
-    String organizationUserName,
+    String organisation,
+    String organisationUserName,
     String apiURL,
   }) async {
     Future.delayed(Duration(seconds: 2));
@@ -103,7 +126,7 @@ class MockAuthRepositoryImpl extends TokenManagerImpl implements AuthRepository 
     return User.fromJson({
       'id': StringUtils.generateRandom(),
       'email': email,
-      'organization': organization,
+      'organisation': organisation,
     });
   }
 
@@ -112,7 +135,7 @@ class MockAuthRepositoryImpl extends TokenManagerImpl implements AuthRepository 
   }
 
   @override
-  Future<String> getOrganisationABB(String organizationUserName) {
+  Future<String> getOrganisationABB(String organisationUserName) {
     return null;
   }
 
@@ -121,9 +144,21 @@ class MockAuthRepositoryImpl extends TokenManagerImpl implements AuthRepository 
     String email,
     String password,
     String apiURL,
-    String organizationUserName,
+    String organisationUserName,
   }) {
     // TODO: implement volunteerLogin
+    return null;
+  }
+
+  @override
+  Future<bool> volunteerHasPassword({String email, String organisationApiURL}) {
+    // TODO: implement volunteerHasPassword
+    return null;
+  }
+
+  @override
+  Future<void> createVolunteerPassword({String organisationApiURL, String email, String password}) {
+    // TODO: implement createVolunteerPassword
     return null;
   }
 }
@@ -166,18 +201,18 @@ class DevAuthRepositoryImpl extends TokenManagerImpl implements AuthRepository {
   Future<User> organizerSignup({
     @required String email,
     @required String password,
-    @required String organization,
-    @required @required String organizationUserName,
+    @required String organisation,
+    @required @required String organisationUserName,
     @required String apiURL,
   }) async {
     assert(email != null);
     assert(password != null);
-    assert(organization != null);
-    assert(organizationUserName != null);
+    assert(organisation != null);
+    assert(organisationUserName != null);
     assert(apiURL != null);
     try {
       final url =
-          'actionreq=createorg&orgname=$organization&adminemail=$email&password=$password&apiurl=$apiURL&orgabb=$organizationUserName';
+          'actionreq=createorg&orgname=$organisation&adminemail=$email&password=$password&apiurl=$apiURL&orgabb=$organisationUserName';
 
       final res = await _client.get(url);
 
@@ -205,9 +240,9 @@ class DevAuthRepositoryImpl extends TokenManagerImpl implements AuthRepository {
   }
 
   @override
-  Future<String> getOrganisationABB(String organizationUserName) async {
+  Future<String> getOrganisationABB(String organisationUserName) async {
     try {
-      final url = 'actionreq=getorgabbrv&orgabb=$organizationUserName';
+      final url = 'actionreq=getorgabbrv&orgabb=$organisationUserName';
       final res = await _client.get(url);
 
       if (res.data["status"] == "success") {
@@ -232,20 +267,57 @@ class DevAuthRepositoryImpl extends TokenManagerImpl implements AuthRepository {
     String email,
     String password,
     String apiURL,
-    String organizationUserName,
+    String organisationUserName,
   }) async {
     assert(email != null);
     assert(password != null);
     assert(apiURL != null);
-    assert(organizationUserName != null);
+    assert(organisationUserName != null);
     final url = '$apiURL?actionreq=signin&email=$email&password=$password';
     final res = await _client.get(url, useBaseURL: false);
 
     if (res.data["status"] == "success") {
       var userJson = res.data['description'];
-      userJson['ORGANISATIONN_ABB'] = organizationUserName;
+      userJson['ORGANISATIONN_ABB'] = organisationUserName;
       userJson['API_URL'] = apiURL;
       return User.fromJson(userJson).rebuild((b) => b..email = email);
+    } else {
+      throw DioError(
+          type: DioErrorType.RESPONSE,
+          response: Response(
+            data: {'message': res.data['description']},
+          ));
+    }
+  }
+
+  @override
+  Future<bool> volunteerHasPassword({String email, String organisationApiURL}) async {
+    try {
+      final url = '$organisationApiURL?actionreq=check_email&email=$email';
+      final res = await _client.get(url, useBaseURL: false);
+
+      if (res.data["status"] == "success") {
+        return toBoolean(res.data['description'].toString().toLowerCase());
+      } else {
+        throw DioError(
+            type: DioErrorType.RESPONSE,
+            response: Response(
+              data: {'message': res.data['description']},
+            ));
+      }
+    } on DioError catch (_) {
+      rethrow;
+    } catch (_) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future createVolunteerPassword({String organisationApiURL, String email, String password}) async {
+    final url = '$organisationApiURL?actionreq=create_user_pass&vemail=$email&vpassword=$password';
+    final res = await _client.get(url, useBaseURL: false);
+    if (res.data["status"] == "success") {
+      return;
     } else {
       throw DioError(
           type: DioErrorType.RESPONSE,

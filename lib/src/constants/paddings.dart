@@ -10,5 +10,7 @@ class AppPaddings {
   static const EdgeInsets lH = const EdgeInsets.symmetric(horizontal: 16);
   static const EdgeInsets lA = const EdgeInsets.all(16);
   static const EdgeInsets mH = const EdgeInsets.symmetric(horizontal: 8);
+  static const EdgeInsets mV = const EdgeInsets.symmetric(vertical: 8);
   static const EdgeInsets sH = const EdgeInsets.symmetric(horizontal: 4);
+  static const EdgeInsets sV = const EdgeInsets.symmetric(vertical: 4);
 }

@@ -6,8 +6,7 @@ import 'package:attendance_tracka/src/constants/paddings.dart';
 import 'package:attendance_tracka/src/features/app/bloc/app_bloc.dart';
 import 'package:attendance_tracka/src/features/app/bloc/app_state.dart';
 import 'package:attendance_tracka/src/features/app/model/user_model.dart';
-import 'package:attendance_tracka/src/features/auth/bloc/bloc.dart';
-import 'package:attendance_tracka/src/features/home/screens/organiser/bloc/bloc.dart';
+import 'package:attendance_tracka/src/features/home/screens/organiser/bloc/volunteers/bloc.dart';
 import 'package:attendance_tracka/src/widgets/app_loading.dart';
 import 'package:attendance_tracka/src/widgets/buttons.dart';
 import 'package:attendance_tracka/src/widgets/staggered_animated_column.dart';
@@ -30,7 +29,7 @@ class VolunteersListTabScreen extends StatefulWidget {
 
 class _VolunteersListTabScreenState extends State<VolunteersListTabScreen> with TickerProviderStateMixin {
   AnimationController _animationController;
-  OrganizerBloc organizerBloc;
+  VolunteersBloc organizerBloc;
   AppBloc appBloc;
   Completer<bool> _refreshCompleter;
 
@@ -57,7 +56,7 @@ class _VolunteersListTabScreenState extends State<VolunteersListTabScreen> with 
     final textTheme = Theme.of(context).textTheme;
 
     return BlocBuilder<AppBloc, AppState>(builder: (context, appState) {
-      return BlocConsumer<OrganizerBloc, OrganizerState>(
+      return BlocConsumer<VolunteersBloc, VolunteersState>(
           listenWhen: (prev, current) => prev.loading && !current.loading,
           listener: (context, organiserState) {
             if (!_refreshCompleter.isCompleted) {

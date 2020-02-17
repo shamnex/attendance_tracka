@@ -4,7 +4,7 @@ import 'package:attendance_tracka/src/constants/icons.dart';
 import 'package:attendance_tracka/src/constants/paddings.dart';
 import 'package:attendance_tracka/src/features/app/bloc/app_bloc.dart';
 import 'package:attendance_tracka/src/features/app/bloc/app_state.dart';
-import 'package:attendance_tracka/src/features/home/screens/organiser/bloc/bloc.dart';
+import 'package:attendance_tracka/src/features/home/screens/organiser/bloc/volunteers/bloc.dart';
 import 'package:attendance_tracka/src/widgets/staggered_animated_column.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -23,7 +23,7 @@ class OrganizerHomeTab extends StatefulWidget {
 
 class _OrganizerHomeTabState extends State<OrganizerHomeTab> with TickerProviderStateMixin {
   AnimationController _animationController;
-  OrganizerBloc organizerBloc;
+  VolunteersBloc organizerBloc;
   AppBloc appBloc;
   @override
   void initState() {
@@ -44,7 +44,7 @@ class _OrganizerHomeTabState extends State<OrganizerHomeTab> with TickerProvider
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AppBloc, AppState>(builder: (context, appState) {
-      return BlocBuilder<OrganizerBloc, OrganizerState>(builder: (context, organiserState) {
+      return BlocBuilder<VolunteersBloc, VolunteersState>(builder: (context, organiserState) {
         final textTheme = Theme.of(context).textTheme;
         final user = appState.currentUser;
 

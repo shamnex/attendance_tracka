@@ -38,12 +38,12 @@ class EmailChanged extends OrganizerSignupEvent {
   List<Object> get props => [email];
 }
 
-class OrganizationChanged extends OrganizerSignupEvent {
-  final String organization;
-  OrganizationChanged(this.organization);
+class OrganisationChanged extends OrganizerSignupEvent {
+  final String organisation;
+  OrganisationChanged(this.organisation);
 
   @override
-  List<Object> get props => [organization];
+  List<Object> get props => [organisation];
 }
 
 class SignUp extends OrganizerSignupEvent {

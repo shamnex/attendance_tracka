@@ -105,15 +105,15 @@ class _SignupScreenState extends State<SignupScreen> {
                               SizedBox(height: 30),
                               if (!isVolunteer)
                                 TextFormField(
-                                    initialValue: state.organization,
-                                    onChanged: (value) => signupBloc.add(OrganizationChanged(value)),
+                                    initialValue: state.organisation,
+                                    onChanged: (value) => signupBloc.add(OrganisationChanged(value)),
                                     validator: (value) => InputValidators.minLength(value, length: 3),
                                     keyboardType: TextInputType.emailAddress,
                                     style: TextStyle(color: isVolunteer ? textTheme.body1.color : Colors.white),
                                     decoration: !isVolunteer
-                                        ? AppInputTheme.outlineInputTheme.copyWith(hintText: 'Organization')
+                                        ? AppInputTheme.outlineInputTheme.copyWith(hintText: 'Organisation')
                                         : InputDecoration(
-                                            hintText: 'Organization',
+                                            hintText: 'Organisation',
                                             filled: isVolunteer ? true : false,
                                             hintStyle: TextStyle(
                                               color: isVolunteer ? AppColors.hint : Colors.white,
@@ -121,12 +121,12 @@ class _SignupScreenState extends State<SignupScreen> {
                                           )),
                               SizedBox(height: 16),
                               TextFormField(
-                                  initialValue: state.organizationUserName,
+                                  initialValue: state.organisationUserName,
                                   obscureText: false,
                                   onChanged: (value) {
                                     if (value.trim().isEmpty) return;
                                     if (isVolunteer) {
-                                      BlocProvider.of<GetApiUrlBloc>(context).add(GetOrganizationApiUrl(value.trim()));
+                                      BlocProvider.of<GetApiUrlBloc>(context).add(GetOrganisationApiUrl(value.trim()));
                                     }
                                     signupBloc.add(UserNameChanged(value.trim()));
                                   },
@@ -135,7 +135,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                   },
                                   style: TextStyle(color: isVolunteer ? textTheme.body1.color : Colors.white),
                                   decoration: !isVolunteer
-                                      ? AppInputTheme.outlineInputTheme.copyWith(hintText: 'Organization Username')
+                                      ? AppInputTheme.outlineInputTheme.copyWith(hintText: 'Organisation Username')
                                       : InputDecoration(
                                           suffixIcon: Builder(
                                             builder: (BuildContext context) {
@@ -162,7 +162,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                               return SizedBox();
                                             },
                                           ),
-                                          hintText: 'Organization Username',
+                                          hintText: 'Organisation Username',
                                           filled: isVolunteer ? true : false,
                                           hintStyle: TextStyle(
                                             color: isVolunteer ? AppColors.hint : Colors.white,

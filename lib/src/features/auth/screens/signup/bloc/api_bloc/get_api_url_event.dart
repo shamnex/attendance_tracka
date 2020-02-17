@@ -6,9 +6,9 @@ abstract class GetApiUrlEvent extends Equatable {
   const GetApiUrlEvent();
 }
 
-class GetOrganizationApiUrl extends GetApiUrlEvent {
+class GetOrganisationApiUrl extends GetApiUrlEvent {
   final String organisationUsername;
-  GetOrganizationApiUrl(this.organisationUsername);
+  GetOrganisationApiUrl(this.organisationUsername);
 
   @override
   List<Object> get props => [organisationUsername];

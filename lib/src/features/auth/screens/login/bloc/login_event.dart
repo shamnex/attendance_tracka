@@ -38,4 +38,7 @@ class ApiChanged extends LoginEvent {
 
 class OrganizerLogin extends LoginEvent {}
 
-class VolunteerLogin extends LoginEvent {}
+class VolunteerLogin extends LoginEvent {
+  VolunteerLogin({this.haspassword});
+  final bool haspassword;
+}

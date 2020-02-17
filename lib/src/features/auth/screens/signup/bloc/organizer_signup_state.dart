@@ -11,12 +11,12 @@ part 'organizer_signup_state.g.dart';
 abstract class OrganizerSignupState implements Built<OrganizerSignupState, OrganizerSignupStateBuilder> {
   // fields go here
   // fields go here
-  String get organization;
+  String get organisation;
   String get password;
   String get email;
   String get errorMessage;
   String get apiURL;
-  String get organizationUserName;
+  String get organisationUserName;
   @nullable
   User get user;
 
@@ -39,8 +39,8 @@ abstract class OrganizerSignupState implements Built<OrganizerSignupState, Organ
 
   static OrganizerSignupState initialState() => OrganizerSignupState(
         (b) => b
-          ..organization = ''
-          ..organizationUserName = ''
+          ..organisation = ''
+          ..organisationUserName = ''
           ..password = ''
           ..email = ''
           ..errorMessage = ''
