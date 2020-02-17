@@ -1,6 +1,6 @@
 import 'package:attendance_tracka/src/core/network/http_client.dart';
+import 'package:attendance_tracka/src/features/app/model/meetup_model.dart';
 import 'package:attendance_tracka/src/features/app/model/user_model.dart';
-import 'package:hive/hive.dart';
 import 'package:dio/dio.dart';
 
 enum ActionRequired { createorg, signinorg }
@@ -8,7 +8,7 @@ enum ActionRequired { createorg, signinorg }
 abstract class OrganizerRepository {
   Future<List<User>> getVonluteers(User organizer);
   Future<bool> addVonluteers({String email, String password, String volunteerEmail, String apiURL});
-  Future getParticipants({String apiURL});
+  Future<List<MeetUp>> getMeetupRecords({String apiURL});
 }
 
 class OrganizerRepositoryImpl implements OrganizerRepository {
@@ -34,8 +34,8 @@ class OrganizerRepositoryImpl implements OrganizerRepository {
   }
 
   @override
-  Future getParticipants({String apiURL}) {
-    // TODO: implement getParticipants
+  Future<List<MeetUp>> getMeetupRecords({String apiURL}) {
+    // TODO: implement getMeetupRecords
     return null;
   }
 }
@@ -59,14 +59,14 @@ class MockOrganizerRepositoryImpl implements OrganizerRepository {
   }
 
   @override
-  Future getParticipants({String apiURL}) {
-    // TODO: implement getParticipants
+  Future<List<MeetUp>> getMeetupRecords({String apiURL}) {
+    // TODO: implement getMeetupRecords
     return null;
   }
 }
 
 class DevOrganizerRepositoryImpl implements OrganizerRepository {
-  DevOrganizerRepositoryImpl(HiveInterface hive, AppHTTPClient client) : _client = client;
+  DevOrganizerRepositoryImpl(AppHTTPClient client) : _client = client;
 
   final AppHTTPClient _client;
   Future<bool> addVonluteers({
@@ -132,21 +132,18 @@ class DevOrganizerRepositoryImpl implements OrganizerRepository {
   }
 
   @override
-  Future getParticipants({String apiURL}) async {
+  Future<List<MeetUp>> getMeetupRecords({String apiURL}) async {
     try {
       final url = '$apiURL?actionreq=get_json&api_url=$apiURL';
       final res = await _client.get(url, useBaseURL: false);
-      print(res);
       if (res.data["status"] == "success") {
-        return;
-        // final volunteerEmails = (res.data["description"] as Iterable).map((c) => c.toString());
-        // return volunteerEmails
-        //     .map((email) => organizer.rebuild(
-        //           (b) => b
-        //             ..email = email
-        //             ..type = UserType.volunteer,
-        //         ))
-        //     .toList();
+        final int iteration = res.data["description"]["iter"];
+        final memebers = res.data["description"]["json"] as Iterable<dynamic>;
+
+        return List.generate(iteration, (index) {
+          index++; //increment because index starts 0
+          return MeetUp((b) => b..attendance.addAll([...memebers.map((member) => member["MEETUP_$index"])]));
+        });
       } else {
         throw DioError(
             type: DioErrorType.RESPONSE,
@@ -157,7 +154,6 @@ class DevOrganizerRepositoryImpl implements OrganizerRepository {
     } on DioError catch (_) {
       rethrow;
     } catch (_) {
-      print(_.toString());
       rethrow;
     }
   }

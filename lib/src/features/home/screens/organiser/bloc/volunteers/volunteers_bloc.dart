@@ -17,7 +17,7 @@ class VolunteersBloc extends HydratedBloc<VolunteersEvent, VolunteersState> with
   final OrganizerRepository repo;
   final AddVolunteersBloc addVolunteersBloc;
   @override
-  VolunteersState get initialState => VolunteersState.initialState();
+  VolunteersState get initialState => super.initialState ?? VolunteersState.initialState();
 
   @override
   Stream<VolunteersState> mapEventToState(

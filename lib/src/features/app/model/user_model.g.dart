@@ -6,14 +6,11 @@ part of user_model;
 // BuiltValueGenerator
 // **************************************************************************
 
-const UserType _$participant = const UserType._('participant');
 const UserType _$organizer = const UserType._('organizer');
 const UserType _$volunteer = const UserType._('volunteer');
 
 UserType _$valueOf(String name) {
   switch (name) {
-    case 'participant':
-      return _$participant;
     case 'organizer':
       return _$organizer;
     case 'volunteer':
@@ -24,7 +21,6 @@ UserType _$valueOf(String name) {
 }
 
 final BuiltSet<UserType> _$values = new BuiltSet<UserType>(const <UserType>[
-  _$participant,
   _$organizer,
   _$volunteer,
 ]);

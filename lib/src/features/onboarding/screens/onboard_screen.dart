@@ -36,81 +36,75 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
 
   @override
   Widget build(BuildContext context) {
+    //TODO REFACTOR TO FLUTTER_BLOC
     return ChangeNotifierProvider(
       lazy: true,
       create: (_) => pageController,
-      child: Scaffold(
-          body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            SizedBox(
-              height: MediaQuery.of(context).size.height * .1,
-              child: Center(
-                child: Text(
-                  'TRACKA',
-                  style: Theme.of(context).textTheme.body2.copyWith(
-                        color: AppColors.primary,
-                        fontWeight: FontWeight.w700,
-                      ),
+      child: Builder(builder: (context) {
+        return Scaffold(
+            body: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              SizedBox(
+                height: MediaQuery.of(context).size.height * .05,
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * .65,
+                child: PageView(
+                  onPageChanged: (index) {
+                    setState(() {
+                      activeIndex = index;
+                    });
+                  },
+                  controller: pageController,
+                  children: <Widget>[
+                    ...List.generate(
+                        onBoardTexts.length,
+                        (index) => OnboardCard(
+                              offset: pageOffset - index,
+                              text: onBoardTexts[index],
+                            ))
+                  ],
                 ),
               ),
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * .65,
-              child: PageView(
-                onPageChanged: (index) {
-                  setState(() {
-                    activeIndex = index;
-                  });
-                },
-                controller: pageController,
+              Expanded(
+                  child: Column(
                 children: <Widget>[
-                  ...List.generate(
-                      onBoardTexts.length,
-                      (index) => OnboardCard(
-                            offset: pageOffset - index,
-                            text: onBoardTexts[index],
-                          ))
-                ],
-              ),
-            ),
-            Expanded(
-                child: Column(
-              children: <Widget>[
-                BuildIndicators(
-                  activeItem: activeIndex,
-                  itemCount: onBoardTexts.length,
-                ),
-                const Spacer(),
-                Padding(
-                  padding: AppPaddings.bodyH,
-                  child: AppButton(
+                  BuildIndicators(
+                    activeItem: activeIndex,
+                    itemCount: onBoardTexts.length,
+                  ),
+                  const Spacer(),
+                  Padding(
+                    padding: AppPaddings.bodyH,
+                    child: AppButton(
+                      onPressed: () {
+                        BlocProvider.of<AppBloc>(context).add(HasOnboarded());
+                      },
+                      child: Text(
+                        'Get Started'.toUpperCase(),
+                        style: Theme.of(context).textTheme.button.copyWith(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                  const Spacer(),
+                  FlatButton(
                     onPressed: () {
                       BlocProvider.of<AppBloc>(context).add(HasOnboarded());
                     },
                     child: Text(
-                      'Get Started'.toUpperCase(),
-                      style: Theme.of(context).textTheme.button.copyWith(color: Colors.white),
+                      'Skip',
+                      style: Theme.of(context).textTheme.button.copyWith(color: AppColors.secondary.shade200),
                     ),
                   ),
-                ),
-                const Spacer(),
-                FlatButton(
-                  onPressed: () {
-                    BlocProvider.of<AppBloc>(context).add(HasOnboarded());
-                  },
-                  child: Text(
-                    'Skip',
-                    style: Theme.of(context).textTheme.button.copyWith(color: AppColors.secondary.shade200),
-                  ),
-                ),
-                const Spacer(),
-              ],
-            )),
-          ],
-        ),
-      )),
+                  const Spacer(),
+                ],
+              )),
+            ],
+          ),
+        ));
+      }),
     );
   }
 }

@@ -22,7 +22,11 @@ class HomeScreen extends StatelessWidget {
           if (authState is AuthUnAuthenticated) {
             return WelcomeScreen();
           }
-          return appState.mode == AppMode.organizer ? const OrganizerScreenHomeScreen() : const VolunteerScreen();
+          if (authState is AuthAuthenticated) {
+            return appState.mode == AppMode.organizer
+                ? const OrganizerScreenHomeScreen()
+                : VolunteerScreen(iteration: appState.iteration);
+          }
         },
       );
     });

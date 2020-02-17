@@ -37,6 +37,12 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
       serializers.serialize(object.hasCompletedWalkThrough,
           specifiedType: const FullType(bool)),
     ];
+    if (object.iteration != null) {
+      result
+        ..add('iteration')
+        ..add(serializers.serialize(object.iteration,
+            specifiedType: const FullType(int)));
+    }
     if (object.currentUser != null) {
       result
         ..add('currentUser')
@@ -64,6 +70,10 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
         case 'loading':
           result.loading = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'iteration':
+          result.iteration = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
         case 'flavor':
           result.flavor = serializers.deserialize(value,
@@ -98,6 +108,8 @@ class _$AppState extends AppState {
   @override
   final bool loading;
   @override
+  final int iteration;
+  @override
   final Flavor flavor;
   @override
   final AppMode mode;
@@ -114,6 +126,7 @@ class _$AppState extends AppState {
   _$AppState._(
       {this.hasOnboarded,
       this.loading,
+      this.iteration,
       this.flavor,
       this.mode,
       this.theme,
@@ -153,6 +166,7 @@ class _$AppState extends AppState {
     return other is AppState &&
         hasOnboarded == other.hasOnboarded &&
         loading == other.loading &&
+        iteration == other.iteration &&
         flavor == other.flavor &&
         mode == other.mode &&
         theme == other.theme &&
@@ -166,7 +180,11 @@ class _$AppState extends AppState {
         $jc(
             $jc(
                 $jc(
-                    $jc($jc($jc(0, hasOnboarded.hashCode), loading.hashCode),
+                    $jc(
+                        $jc(
+                            $jc($jc(0, hasOnboarded.hashCode),
+                                loading.hashCode),
+                            iteration.hashCode),
                         flavor.hashCode),
                     mode.hashCode),
                 theme.hashCode),
@@ -179,6 +197,7 @@ class _$AppState extends AppState {
     return (newBuiltValueToStringHelper('AppState')
           ..add('hasOnboarded', hasOnboarded)
           ..add('loading', loading)
+          ..add('iteration', iteration)
           ..add('flavor', flavor)
           ..add('mode', mode)
           ..add('theme', theme)
@@ -198,6 +217,10 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   bool _loading;
   bool get loading => _$this._loading;
   set loading(bool loading) => _$this._loading = loading;
+
+  int _iteration;
+  int get iteration => _$this._iteration;
+  set iteration(int iteration) => _$this._iteration = iteration;
 
   Flavor _flavor;
   Flavor get flavor => _$this._flavor;
@@ -226,6 +249,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
     if (_$v != null) {
       _hasOnboarded = _$v.hasOnboarded;
       _loading = _$v.loading;
+      _iteration = _$v.iteration;
       _flavor = _$v.flavor;
       _mode = _$v.mode;
       _theme = _$v.theme;
@@ -257,6 +281,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
           new _$AppState._(
               hasOnboarded: hasOnboarded,
               loading: loading,
+              iteration: iteration,
               flavor: flavor,
               mode: mode,
               theme: theme,

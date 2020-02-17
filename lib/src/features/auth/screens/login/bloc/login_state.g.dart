@@ -34,6 +34,12 @@ class _$LoginStateSerializer implements StructuredSerializer<LoginState> {
       serializers.serialize(object.loading,
           specifiedType: const FullType(bool)),
     ];
+    if (object.iteration != null) {
+      result
+        ..add('iteration')
+        ..add(serializers.serialize(object.iteration,
+            specifiedType: const FullType(int)));
+    }
     if (object.username != null) {
       result
         ..add('username')
@@ -68,6 +74,10 @@ class _$LoginStateSerializer implements StructuredSerializer<LoginState> {
           result.email = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'iteration':
+          result.iteration = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
         case 'username':
           result.username = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -101,6 +111,8 @@ class _$LoginState extends LoginState {
   @override
   final String email;
   @override
+  final int iteration;
+  @override
   final String username;
   @override
   final String apiURL;
@@ -117,6 +129,7 @@ class _$LoginState extends LoginState {
   _$LoginState._(
       {this.password,
       this.email,
+      this.iteration,
       this.username,
       this.apiURL,
       this.user,
@@ -153,6 +166,7 @@ class _$LoginState extends LoginState {
     return other is LoginState &&
         password == other.password &&
         email == other.email &&
+        iteration == other.iteration &&
         username == other.username &&
         apiURL == other.apiURL &&
         user == other.user &&
@@ -166,7 +180,9 @@ class _$LoginState extends LoginState {
         $jc(
             $jc(
                 $jc(
-                    $jc($jc($jc(0, password.hashCode), email.hashCode),
+                    $jc(
+                        $jc($jc($jc(0, password.hashCode), email.hashCode),
+                            iteration.hashCode),
                         username.hashCode),
                     apiURL.hashCode),
                 user.hashCode),
@@ -179,6 +195,7 @@ class _$LoginState extends LoginState {
     return (newBuiltValueToStringHelper('LoginState')
           ..add('password', password)
           ..add('email', email)
+          ..add('iteration', iteration)
           ..add('username', username)
           ..add('apiURL', apiURL)
           ..add('user', user)
@@ -198,6 +215,10 @@ class LoginStateBuilder implements Builder<LoginState, LoginStateBuilder> {
   String _email;
   String get email => _$this._email;
   set email(String email) => _$this._email = email;
+
+  int _iteration;
+  int get iteration => _$this._iteration;
+  set iteration(int iteration) => _$this._iteration = iteration;
 
   String _username;
   String get username => _$this._username;
@@ -225,6 +246,7 @@ class LoginStateBuilder implements Builder<LoginState, LoginStateBuilder> {
     if (_$v != null) {
       _password = _$v.password;
       _email = _$v.email;
+      _iteration = _$v.iteration;
       _username = _$v.username;
       _apiURL = _$v.apiURL;
       _user = _$v.user?.toBuilder();
@@ -256,6 +278,7 @@ class LoginStateBuilder implements Builder<LoginState, LoginStateBuilder> {
           new _$LoginState._(
               password: password,
               email: email,
+              iteration: iteration,
               username: username,
               apiURL: apiURL,
               user: _user?.build(),

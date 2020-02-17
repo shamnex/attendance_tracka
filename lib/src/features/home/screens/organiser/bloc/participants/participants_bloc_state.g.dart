@@ -27,7 +27,13 @@ class _$ParticipantsStateSerializer
       serializers.serialize(object.loading,
           specifiedType: const FullType(bool)),
     ];
-
+    if (object.meetup != null) {
+      result
+        ..add('meetup')
+        ..add(serializers.serialize(object.meetup,
+            specifiedType:
+                const FullType(BuiltList, const [const FullType(MeetUp)])));
+    }
     return result;
   }
 
@@ -47,6 +53,12 @@ class _$ParticipantsStateSerializer
           result.errorMessage = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'meetup':
+          result.meetup.replace(serializers.deserialize(value,
+                  specifiedType:
+                      const FullType(BuiltList, const [const FullType(MeetUp)]))
+              as BuiltList<dynamic>);
+          break;
         case 'loading':
           result.loading = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
@@ -62,13 +74,16 @@ class _$ParticipantsState extends ParticipantsState {
   @override
   final String errorMessage;
   @override
+  final BuiltList<MeetUp> meetup;
+  @override
   final bool loading;
 
   factory _$ParticipantsState(
           [void Function(ParticipantsStateBuilder) updates]) =>
       (new ParticipantsStateBuilder()..update(updates)).build();
 
-  _$ParticipantsState._({this.errorMessage, this.loading}) : super._() {
+  _$ParticipantsState._({this.errorMessage, this.meetup, this.loading})
+      : super._() {
     if (errorMessage == null) {
       throw new BuiltValueNullFieldError('ParticipantsState', 'errorMessage');
     }
@@ -90,18 +105,21 @@ class _$ParticipantsState extends ParticipantsState {
     if (identical(other, this)) return true;
     return other is ParticipantsState &&
         errorMessage == other.errorMessage &&
+        meetup == other.meetup &&
         loading == other.loading;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, errorMessage.hashCode), loading.hashCode));
+    return $jf($jc(
+        $jc($jc(0, errorMessage.hashCode), meetup.hashCode), loading.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('ParticipantsState')
           ..add('errorMessage', errorMessage)
+          ..add('meetup', meetup)
           ..add('loading', loading))
         .toString();
   }
@@ -115,6 +133,11 @@ class ParticipantsStateBuilder
   String get errorMessage => _$this._errorMessage;
   set errorMessage(String errorMessage) => _$this._errorMessage = errorMessage;
 
+  ListBuilder<MeetUp> _meetup;
+  ListBuilder<MeetUp> get meetup =>
+      _$this._meetup ??= new ListBuilder<MeetUp>();
+  set meetup(ListBuilder<MeetUp> meetup) => _$this._meetup = meetup;
+
   bool _loading;
   bool get loading => _$this._loading;
   set loading(bool loading) => _$this._loading = loading;
@@ -124,6 +147,7 @@ class ParticipantsStateBuilder
   ParticipantsStateBuilder get _$this {
     if (_$v != null) {
       _errorMessage = _$v.errorMessage;
+      _meetup = _$v.meetup?.toBuilder();
       _loading = _$v.loading;
       _$v = null;
     }
@@ -145,8 +169,24 @@ class ParticipantsStateBuilder
 
   @override
   _$ParticipantsState build() {
-    final _$result = _$v ??
-        new _$ParticipantsState._(errorMessage: errorMessage, loading: loading);
+    _$ParticipantsState _$result;
+    try {
+      _$result = _$v ??
+          new _$ParticipantsState._(
+              errorMessage: errorMessage,
+              meetup: _meetup?.build(),
+              loading: loading);
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'meetup';
+        _meetup?.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'ParticipantsState', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

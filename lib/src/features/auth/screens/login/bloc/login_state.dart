@@ -14,6 +14,8 @@ abstract class LoginState implements Built<LoginState, LoginStateBuilder> {
   String get password;
   String get email;
   @nullable
+  int get iteration;
+  @nullable
   String get username;
   String get apiURL;
   @nullable

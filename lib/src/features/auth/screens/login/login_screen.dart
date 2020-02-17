@@ -18,6 +18,7 @@ import 'package:attendance_tracka/src/features/auth/screens/signup/bloc/check_vo
 import 'package:attendance_tracka/src/utils/input_validators.dart';
 import 'package:attendance_tracka/src/widgets/app_loading.dart';
 import 'package:attendance_tracka/src/widgets/buttons.dart';
+import 'package:attendance_tracka/src/widgets/snack_bar.dart';
 import 'package:attendance_tracka/src/widgets/staggered_animated_column.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -59,14 +60,14 @@ class _LoginScreenState extends State<LoginScreen> {
             listener: (context, state) {
               if (state.loggedIn) {
                 appBloc.add(UserLoggedIn(state.user));
+                if (appBloc.state.mode == AppMode.volunteer) {
+                  appBloc.add(IterationChanged(state.iteration));
+                }
                 BlocProvider.of<AuthBloc>(context).add(Authenticate());
                 Navigator.of(context, rootNavigator: true).maybePop();
               }
               if (state.hasError) {
-                Scaffold.of(context).showSnackBar(SnackBar(
-                  content: Text(state.errorMessage),
-                  shape: RoundedRectangleBorder(borderRadius: AppBorderRadius.large_all),
-                ));
+                AppSnacks.showError(context, message: state.errorMessage);
               }
             },
             child: BlocBuilder<LoginBloc, LoginState>(builder: (context, state) {

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:attendance_tracka/src/core/network/http_error_helper.dart';
 import 'package:attendance_tracka/src/features/auth/auth_repository.dart';
+import 'package:attendance_tracka/src/features/auth/screens/login/model/volunteer_login_success.dart';
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import './bloc.dart';
@@ -50,7 +51,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> with DioErrorHelper {
           );
         }
 
-        final user = await repo.volunteerLogin(
+        final VolunteerLoginSuccess success = await repo.volunteerLogin(
           email: state.email,
           password: state.password,
           apiURL: state.apiURL,
@@ -60,7 +61,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> with DioErrorHelper {
         yield state.rebuild((b) => b
           ..loading = false
           ..errorMessage = ''
-          ..user = user.toBuilder());
+          ..iteration = success.iteration
+          ..user = success.user.toBuilder());
       }
       if (event is OrganizerLogin) {
         yield state.rebuild((b) => b

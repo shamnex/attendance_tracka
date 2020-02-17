@@ -11,9 +11,17 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(AppState.serializer)
       ..add(AppTheme.serializer)
       ..add(Flavor.serializer)
+      ..add(MeetUp.serializer)
+      ..add(ParticipantsState.serializer)
       ..add(User.serializer)
       ..add(UserType.serializer)
       ..add(VolunteersState.serializer)
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(MeetUp)]),
+          () => new ListBuilder<MeetUp>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(String)]),
+          () => new ListBuilder<String>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(User)]),
           () => new ListBuilder<User>()))

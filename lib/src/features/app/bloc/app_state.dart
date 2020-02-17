@@ -14,6 +14,8 @@ part 'app_state.g.dart';
 abstract class AppState implements Built<AppState, AppStateBuilder> {
   bool get hasOnboarded;
   bool get loading;
+  @nullable
+  int get iteration;
   Flavor get flavor;
   AppMode get mode;
   AppTheme get theme;

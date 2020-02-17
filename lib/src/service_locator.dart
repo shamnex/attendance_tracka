@@ -11,6 +11,7 @@ import 'package:path_provider/path_provider.dart' as path_provider;
 import 'core/network/http_client.dart';
 import 'core/network/token_manager.dart';
 import 'features/auth/bloc/auth_bloc.dart';
+import 'features/home/screens/mark_attendance/mark_attendance_repository.dart';
 
 final sl = GetIt.instance..allowReassignment = true;
 
@@ -36,6 +37,16 @@ Future<void> init(Flavor flavor) async {
         return MockAuthRepositoryImpl(sl());
       default:
         return AuthRepositoryImpl(sl(), sl());
+    }
+  });
+  sl.registerLazySingleton<MarkAttendanceRepository>(() {
+    switch (flavor) {
+      case Flavor.development:
+        return DevMarkAttendanceRepositoryImpl(sl());
+      case Flavor.mock:
+        return MockMarkAttendanceRepositoryImpl();
+      default:
+        return MarkAttendanceRepositoryImpl(sl());
     }
   });
   //! GLOBAL STATE STUFFS

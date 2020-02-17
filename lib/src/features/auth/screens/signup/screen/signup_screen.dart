@@ -15,6 +15,7 @@ import 'package:attendance_tracka/src/features/auth/screens/signup/bloc/bloc.dar
 import 'package:attendance_tracka/src/utils/input_validators.dart';
 import 'package:attendance_tracka/src/widgets/app_loading.dart';
 import 'package:attendance_tracka/src/widgets/buttons.dart';
+import 'package:attendance_tracka/src/widgets/snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -56,10 +57,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   Navigator.of(context, rootNavigator: true).pop();
                 }
                 if (state.hasError) {
-                  Scaffold.of(context).showSnackBar(SnackBar(
-                    content: Text(state.errorMessage),
-                    shape: RoundedRectangleBorder(borderRadius: AppBorderRadius.large_all),
-                  ));
+                  AppSnacks.showError(context, message: state.errorMessage);
                 }
               },
               child: BlocBuilder<SignupBloc, OrganizerSignupState>(builder: (context, state) {

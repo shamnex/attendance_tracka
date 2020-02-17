@@ -19,6 +19,8 @@ environment:
 dependencies:
    flutter:
       sdk: flutter
+   shimmer: ^1.0.1
+   flushbar: ^1.9.1
 
    get_it: ^2.0.1
    # Bloc for state management

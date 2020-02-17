@@ -12,7 +12,7 @@ class OrganiserService {
     sl.registerFactory<OrganizerRepository>(() {
       switch (flavor) {
         case Flavor.development:
-          return DevOrganizerRepositoryImpl(sl(), sl());
+          return DevOrganizerRepositoryImpl(sl());
         case Flavor.mock:
           return MockOrganizerRepositoryImpl();
         default:

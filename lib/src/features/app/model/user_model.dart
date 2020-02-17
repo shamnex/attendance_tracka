@@ -46,7 +46,6 @@ abstract class User with BaseModel implements Built<User, UserBuilder> {
 }
 
 class UserType extends EnumClass {
-  static const UserType participant = _$participant;
   static const UserType organizer = _$organizer;
   static const UserType volunteer = _$volunteer;
   const UserType._(String name) : super(name);

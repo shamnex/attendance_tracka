@@ -1,3 +1,4 @@
+import 'package:attendance_tracka/src/constants/icons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +12,10 @@ class AppBackButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      icon: const Icon(CupertinoIcons.back),
+      icon: Icon(
+        AppIcons.back_ui,
+        color: color,
+      ),
       color: color,
       onPressed: () {
         if (onPressed != null) {

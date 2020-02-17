@@ -40,3 +40,10 @@ class AppModeChanged extends AppEvent {
   @override
   List<Object> get props => [mode];
 }
+
+class IterationChanged extends AppEvent {
+  final int iteration;
+  IterationChanged(this.iteration);
+  @override
+  List<Object> get props => [iteration];
+}

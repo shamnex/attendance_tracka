@@ -19,6 +19,7 @@ abstract class VolunteersState implements Built<VolunteersState, VolunteersState
   bool get loading;
   bool get hasError => errorMessage.isNotEmpty;
   bool get hasVolunteers => volunteers != null && volunteers.isNotEmpty;
+  bool get noRegisteredVolunteers => volunteers != null && volunteers.isEmpty;
   static VolunteersState initialState() => VolunteersState((s) => s
     ..loading = false
     ..errorMessage = '');

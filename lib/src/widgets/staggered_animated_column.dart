@@ -43,11 +43,10 @@ class _StaggeredAnimatedColumnState extends State<StaggeredAnimatedColumn> with 
 
   @override
   void dispose() {
-    super.dispose();
-
     if (widget._animationController == null) {
       _animationController.dispose();
     }
+    super.dispose();
   }
 
   @override

@@ -8,13 +8,13 @@ import 'package:rxdart/rxdart.dart';
 class AppBloc extends HydratedBloc<AppEvent, AppState> {
   AppBloc(Flavor flavor) : _flavor = flavor;
 
-  @override
-  Stream<AppState> transformEvents(
-    Stream<AppEvent> events,
-    Stream<AppState> Function(AppEvent event) next,
-  ) {
-    return super.transformEvents(events.debounceTime(Duration(milliseconds: 50)), next);
-  }
+  // @override
+  // Stream<AppState> transformEvents(
+  //   Stream<AppEvent> events,
+  //   Stream<AppState> Function(AppEvent event) next,
+  // ) {
+  //   return super.transformEvents(events.debounceTime(Duration(milliseconds: 50)), next);
+  // }
 
   Flavor _flavor;
   @override
@@ -24,6 +24,9 @@ class AppBloc extends HydratedBloc<AppEvent, AppState> {
   Stream<AppState> mapEventToState(AppEvent event) async* {
     if (event is AppModeChanged) {
       yield state.rebuild((b) => b..mode = event.mode);
+    }
+    if (event is IterationChanged) {
+      yield state.rebuild((b) => b..iteration = event.iteration);
     }
     if (event is ThemeChanged) {
       yield state.rebuild((b) => b..theme = event.theme);

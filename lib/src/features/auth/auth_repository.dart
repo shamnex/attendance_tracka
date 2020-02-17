@@ -1,6 +1,7 @@
 import 'package:attendance_tracka/src/core/network/http_client.dart';
 import 'package:attendance_tracka/src/core/network/token_manager.dart';
 import 'package:attendance_tracka/src/features/app/model/user_model.dart';
+import 'package:attendance_tracka/src/features/auth/screens/login/model/volunteer_login_success.dart';
 import 'package:attendance_tracka/src/utils/string_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -23,7 +24,7 @@ abstract class AuthRepository with TokenManager {
   });
   Future<void> signOut();
   Future<String> getOrganisationABB(String organisationUserName);
-  Future<User> volunteerLogin({
+  Future<VolunteerLoginSuccess> volunteerLogin({
     String email,
     String password,
     String apiURL,
@@ -73,7 +74,7 @@ class AuthRepositoryImpl extends TokenManagerImpl implements AuthRepository {
   }
 
   @override
-  Future<User> volunteerLogin({
+  Future<VolunteerLoginSuccess> volunteerLogin({
     String email,
     String password,
     String apiURL,
@@ -140,7 +141,7 @@ class MockAuthRepositoryImpl extends TokenManagerImpl implements AuthRepository 
   }
 
   @override
-  Future<User> volunteerLogin({
+  Future<VolunteerLoginSuccess> volunteerLogin({
     String email,
     String password,
     String apiURL,
@@ -263,7 +264,7 @@ class DevAuthRepositoryImpl extends TokenManagerImpl implements AuthRepository {
   }
 
   @override
-  Future<User> volunteerLogin({
+  Future<VolunteerLoginSuccess> volunteerLogin({
     String email,
     String password,
     String apiURL,
@@ -277,10 +278,12 @@ class DevAuthRepositoryImpl extends TokenManagerImpl implements AuthRepository {
     final res = await _client.get(url, useBaseURL: false);
 
     if (res.data["status"] == "success") {
-      var userJson = res.data['description'];
-      userJson['ORGANISATIONN_ABB'] = organisationUserName;
-      userJson['API_URL'] = apiURL;
-      return User.fromJson(userJson).rebuild((b) => b..email = email);
+      var resJson = res.data['description'];
+      resJson['ORGANISATIONN_ABB'] = organisationUserName;
+      resJson['API_URL'] = apiURL;
+      final int iter = resJson['ITER_NO'];
+      final user = User.fromJson(resJson).rebuild((b) => b..email = email);
+      return VolunteerLoginSuccess(user: user, iteration: iter);
     } else {
       throw DioError(
           type: DioErrorType.RESPONSE,
