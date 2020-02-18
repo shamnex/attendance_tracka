@@ -441,7 +441,7 @@ class _MarkAttendanceScreenState extends State<MarkAttendanceScreen> {
                             return ValueListenableBuilder<int>(
                               valueListenable: iter,
                               builder: (context, iterValue, _) {
-                                if (state is CodeScanned || isEmail(emailNotifierValue)) {
+                                if (state is CodeScanned || emailNotifierValue.isNotEmpty) {
                                   return Column(
                                     children: <Widget>[
                                       Container(
@@ -497,11 +497,14 @@ class _MarkAttendanceScreenState extends State<MarkAttendanceScreen> {
                                             if (iterValue == null) {
                                               return AppSnacks.showError(context, message: 'Please select meetup day');
                                             }
-                                            markAttendanceBloc.add(AttendanceMarked(
-                                              apiURL: widget.apiURL,
-                                              email: state is CodeScanned ? state.email : emailNotifierValue,
-                                              interation: iterValue + 1,
-                                            ));
+
+                                            if (state is CodeScanned ? true : _formKey.currentState.validate()) {
+                                              markAttendanceBloc.add(AttendanceMarked(
+                                                apiURL: widget.apiURL,
+                                                email: state is CodeScanned ? state.email : emailNotifierValue,
+                                                interation: iterValue + 1,
+                                              ));
+                                            }
                                           },
                                         ),
                                       ),
