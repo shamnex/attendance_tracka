@@ -8,11 +8,20 @@ abstract class ScanQRCodeState extends Equatable {
 
 class ScanQRCodeInitial extends ScanQRCodeState {}
 
+class ScannerDisabled extends ScanQRCodeState {
+  ScannerDisabled([this.reason]);
+  final String reason;
+  @override
+  List<Object> get props => [reason];
+}
+
 class ScanQRCodeLoading extends ScanQRCodeState {}
 
 class ScanQRCodeError extends ScanQRCodeState {
   final String errorMessage;
   ScanQRCodeError(this.errorMessage);
+  @override
+  List<Object> get props => [errorMessage];
 }
 
 class CodeScanned extends ScanQRCodeState {

@@ -41,9 +41,10 @@ dependencies:
    validators: ^2.0.0+1
    # immutable classes or something like that
    built_value: ^7.0.0
-
    # barcode scanner
    flutter_camera_ml_vision: ^2.2.5
+   # url Launchers
+   url_launcher: ^5.4.1
 
 dev_dependencies:
    flutter_test:

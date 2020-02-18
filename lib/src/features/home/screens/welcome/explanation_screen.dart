@@ -1,6 +1,10 @@
+import 'package:attendance_tracka/src/constants/colors.dart';
 import 'package:attendance_tracka/src/constants/paddings.dart';
-import 'package:attendance_tracka/src/widgets/buttons.dart';
+import 'package:attendance_tracka/src/widgets/app_back_button.dart';
+import 'package:attendance_tracka/src/widgets/app_bar.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ExplanationScreen extends StatelessWidget {
   const ExplanationScreen({Key key}) : super(key: key);
@@ -11,14 +15,19 @@ class ExplanationScreen extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Scaffold(
+      appBar: AppAppBar(
+        title: 'HELP',
+        leading: AppBackButton(
+          color: Colors.white,
+        ),
+      ),
       body: SafeArea(
         child: Padding(
           padding: AppPaddings.bodyH,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              const Spacer(),
+              SizedBox(height: 30),
               Text(
                 'Explanation',
                 style: textTheme.display1.copyWith(
@@ -51,14 +60,42 @@ class ExplanationScreen extends StatelessWidget {
                     ]),
               ),
               const Spacer(),
-              AppButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text(
-                  'GO BACK',
-                  style: textTheme.button.copyWith(color: Colors.white),
-                ),
+              Divider(),
+              RichText(
+                textAlign: TextAlign.center,
+                text: TextSpan(
+                    text: "Attendance Tracka by: ",
+                    style: textTheme.subhead.copyWith(fontWeight: FontWeight.w300),
+                    children: [
+                      TextSpan(
+                        text: '@tejuafonja ,',
+                        style: TextStyle(color: AppColors.primary),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () async {
+                            var url = 'https://twitter.com';
+                            await launch('$url/tejuafonja');
+                          },
+                      ),
+                      TextSpan(
+                        text: ' @kennydukor ',
+                        style: TextStyle(color: AppColors.primary),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () async {
+                            var url = 'https://twitter.com';
+                            await launch('$url/kennydukor');
+                          },
+                      ),
+                      TextSpan(text: 'and '),
+                      TextSpan(
+                        text: '@shamnex',
+                        style: TextStyle(color: AppColors.primary),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () async {
+                            var url = 'https://twitter.com';
+                            await launch('$url/shamnex');
+                          },
+                      ),
+                    ]),
               ),
               SizedBox(height: 25),
             ],

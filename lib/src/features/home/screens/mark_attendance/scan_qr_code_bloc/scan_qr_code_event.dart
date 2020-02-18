@@ -8,6 +8,13 @@ abstract class ScanQRCodeEvent extends Equatable {
 
 class ResetScanner extends ScanQRCodeEvent {}
 
+class DisableScanner extends ScanQRCodeEvent {
+  final String message;
+  DisableScanner([this.message]);
+  @override
+  List<Object> get props => [message];
+}
+
 class OnCodeScanned extends ScanQRCodeEvent {
   final Barcode data;
   OnCodeScanned(this.data);

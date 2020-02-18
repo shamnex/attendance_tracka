@@ -1,5 +1,4 @@
 import 'package:attendance_tracka/src/constants/colors.dart';
-import 'package:attendance_tracka/src/features/app/model/app_theme.dart';
 import 'package:flutter/material.dart';
 
 import 'app_loading.dart';

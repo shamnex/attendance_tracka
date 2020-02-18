@@ -26,10 +26,7 @@ class MenuButton extends StatelessWidget {
           BlocProvider.of<AppBloc>(context).add(HasOnboarded());
         }
       },
-      icon: Icon(
-        AppIcons.account_circle,
-        color: Colors.white,
-      ),
+      icon: Icon(AppIcons.account_circle, color: Colors.white),
       itemBuilder: (context) {
         return [
           PopupMenuItem(

@@ -6,58 +6,41 @@ part of sign_up_state;
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<OrganizerSignupState> _$organizerSignupStateSerializer =
-    new _$OrganizerSignupStateSerializer();
+Serializer<OrganizerSignupState> _$organizerSignupStateSerializer = new _$OrganizerSignupStateSerializer();
 
-class _$OrganizerSignupStateSerializer
-    implements StructuredSerializer<OrganizerSignupState> {
+class _$OrganizerSignupStateSerializer implements StructuredSerializer<OrganizerSignupState> {
   @override
-  final Iterable<Type> types = const [
-    OrganizerSignupState,
-    _$OrganizerSignupState
-  ];
+  final Iterable<Type> types = const [OrganizerSignupState, _$OrganizerSignupState];
   @override
   final String wireName = 'OrganizerSignupState';
 
   @override
-  Iterable<Object> serialize(
-      Serializers serializers, OrganizerSignupState object,
+  Iterable<Object> serialize(Serializers serializers, OrganizerSignupState object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'organisation',
-      serializers.serialize(object.organisation,
-          specifiedType: const FullType(String)),
+      serializers.serialize(object.organisation, specifiedType: const FullType(String)),
       'password',
-      serializers.serialize(object.password,
-          specifiedType: const FullType(String)),
+      serializers.serialize(object.password, specifiedType: const FullType(String)),
       'email',
-      serializers.serialize(object.email,
-          specifiedType: const FullType(String)),
+      serializers.serialize(object.email, specifiedType: const FullType(String)),
       'errorMessage',
-      serializers.serialize(object.errorMessage,
-          specifiedType: const FullType(String)),
+      serializers.serialize(object.errorMessage, specifiedType: const FullType(String)),
       'apiURL',
-      serializers.serialize(object.apiURL,
-          specifiedType: const FullType(String)),
+      serializers.serialize(object.apiURL, specifiedType: const FullType(String)),
       'organisationUserName',
-      serializers.serialize(object.organisationUserName,
-          specifiedType: const FullType(String)),
+      serializers.serialize(object.organisationUserName, specifiedType: const FullType(String)),
       'loading',
-      serializers.serialize(object.loading,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(object.loading, specifiedType: const FullType(bool)),
     ];
     if (object.user != null) {
-      result
-        ..add('user')
-        ..add(serializers.serialize(object.user,
-            specifiedType: const FullType(User)));
+      result..add('user')..add(serializers.serialize(object.user, specifiedType: const FullType(User)));
     }
     return result;
   }
 
   @override
-  OrganizerSignupState deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+  OrganizerSignupState deserialize(Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new OrganizerSignupStateBuilder();
 
@@ -68,36 +51,28 @@ class _$OrganizerSignupStateSerializer
       final dynamic value = iterator.current;
       switch (key) {
         case 'organisation':
-          result.organisation = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+          result.organisation = serializers.deserialize(value, specifiedType: const FullType(String)) as String;
           break;
         case 'password':
-          result.password = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+          result.password = serializers.deserialize(value, specifiedType: const FullType(String)) as String;
           break;
         case 'email':
-          result.email = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+          result.email = serializers.deserialize(value, specifiedType: const FullType(String)) as String;
           break;
         case 'errorMessage':
-          result.errorMessage = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+          result.errorMessage = serializers.deserialize(value, specifiedType: const FullType(String)) as String;
           break;
         case 'apiURL':
-          result.apiURL = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+          result.apiURL = serializers.deserialize(value, specifiedType: const FullType(String)) as String;
           break;
         case 'organisationUserName':
-          result.organisationUserName = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+          result.organisationUserName = serializers.deserialize(value, specifiedType: const FullType(String)) as String;
           break;
         case 'user':
-          result.user.replace(serializers.deserialize(value,
-              specifiedType: const FullType(User)) as User);
+          result.user.replace(serializers.deserialize(value, specifiedType: const FullType(User)) as User);
           break;
         case 'loading':
-          result.loading = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+          result.loading = serializers.deserialize(value, specifiedType: const FullType(bool)) as bool;
           break;
       }
     }
@@ -124,8 +99,7 @@ class _$OrganizerSignupState extends OrganizerSignupState {
   @override
   final bool loading;
 
-  factory _$OrganizerSignupState(
-          [void Function(OrganizerSignupStateBuilder) updates]) =>
+  factory _$OrganizerSignupState([void Function(OrganizerSignupStateBuilder) updates]) =>
       (new OrganizerSignupStateBuilder()..update(updates)).build();
 
   _$OrganizerSignupState._(
@@ -139,8 +113,7 @@ class _$OrganizerSignupState extends OrganizerSignupState {
       this.loading})
       : super._() {
     if (organisation == null) {
-      throw new BuiltValueNullFieldError(
-          'OrganizerSignupState', 'organisation');
+      throw new BuiltValueNullFieldError('OrganizerSignupState', 'organisation');
     }
     if (password == null) {
       throw new BuiltValueNullFieldError('OrganizerSignupState', 'password');
@@ -149,15 +122,13 @@ class _$OrganizerSignupState extends OrganizerSignupState {
       throw new BuiltValueNullFieldError('OrganizerSignupState', 'email');
     }
     if (errorMessage == null) {
-      throw new BuiltValueNullFieldError(
-          'OrganizerSignupState', 'errorMessage');
+      throw new BuiltValueNullFieldError('OrganizerSignupState', 'errorMessage');
     }
     if (apiURL == null) {
       throw new BuiltValueNullFieldError('OrganizerSignupState', 'apiURL');
     }
     if (organisationUserName == null) {
-      throw new BuiltValueNullFieldError(
-          'OrganizerSignupState', 'organisationUserName');
+      throw new BuiltValueNullFieldError('OrganizerSignupState', 'organisationUserName');
     }
     if (loading == null) {
       throw new BuiltValueNullFieldError('OrganizerSignupState', 'loading');
@@ -165,13 +136,11 @@ class _$OrganizerSignupState extends OrganizerSignupState {
   }
 
   @override
-  OrganizerSignupState rebuild(
-          void Function(OrganizerSignupStateBuilder) updates) =>
+  OrganizerSignupState rebuild(void Function(OrganizerSignupStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  OrganizerSignupStateBuilder toBuilder() =>
-      new OrganizerSignupStateBuilder()..replace(this);
+  OrganizerSignupStateBuilder toBuilder() => new OrganizerSignupStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -193,11 +162,7 @@ class _$OrganizerSignupState extends OrganizerSignupState {
         $jc(
             $jc(
                 $jc(
-                    $jc(
-                        $jc(
-                            $jc($jc(0, organisation.hashCode),
-                                password.hashCode),
-                            email.hashCode),
+                    $jc($jc($jc($jc(0, organisation.hashCode), password.hashCode), email.hashCode),
                         errorMessage.hashCode),
                     apiURL.hashCode),
                 organisationUserName.hashCode),
@@ -220,8 +185,7 @@ class _$OrganizerSignupState extends OrganizerSignupState {
   }
 }
 
-class OrganizerSignupStateBuilder
-    implements Builder<OrganizerSignupState, OrganizerSignupStateBuilder> {
+class OrganizerSignupStateBuilder implements Builder<OrganizerSignupState, OrganizerSignupStateBuilder> {
   _$OrganizerSignupState _$v;
 
   String _organisation;
@@ -246,8 +210,7 @@ class OrganizerSignupStateBuilder
 
   String _organisationUserName;
   String get organisationUserName => _$this._organisationUserName;
-  set organisationUserName(String organisationUserName) =>
-      _$this._organisationUserName = organisationUserName;
+  set organisationUserName(String organisationUserName) => _$this._organisationUserName = organisationUserName;
 
   UserBuilder _user;
   UserBuilder get user => _$this._user ??= new UserBuilder();
@@ -307,8 +270,7 @@ class OrganizerSignupStateBuilder
         _$failedField = 'user';
         _user?.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
-            'OrganizerSignupState', _$failedField, e.toString());
+        throw new BuiltValueNestedFieldError('OrganizerSignupState', _$failedField, e.toString());
       }
       rethrow;
     }

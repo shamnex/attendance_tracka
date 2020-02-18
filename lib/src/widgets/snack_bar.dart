@@ -23,7 +23,6 @@ class AppSnacks {
       ]),
       forwardAnimationCurve: Curves.ease,
       reverseAnimationCurve: Curves.ease,
-      margin: EdgeInsets.only(top: kToolbarHeight),
       flushbarPosition: FlushbarPosition.TOP,
       backgroundColor: AppColors.error,
       animationDuration: const Duration(milliseconds: 600),

@@ -26,6 +26,9 @@ class ScanQRCodeBloc extends Bloc<ScanQRCodeEvent, ScanQRCodeState> {
     if (event is ResetScanner) {
       yield ScanQRCodeInitial();
     }
+    if (event is DisableScanner) {
+      yield event.message != null ? ScannerDisabled(event.message) : ScannerDisabled();
+    }
 
     if (event is OnCodeScanned) {
       if (state is! ScanQRCodeError) {
@@ -35,18 +38,19 @@ class ScanQRCodeBloc extends Bloc<ScanQRCodeEvent, ScanQRCodeState> {
       try {
         final items = event.data.rawValue.split("\n");
         final keys = <String>[];
+
         var proccessedData = items.map<Map<String, String>>((item) {
           var mapList = item.split(':');
           keys.add(mapList.first);
           return {'${mapList.first}': '${mapList.last}'};
         }).toList();
-
         final yieldableState = CodeScanned(proccessedData);
         if (keys.contains('Email')) {
+          //simple check is there's email in the keys
           if (validators.isEmail(yieldableState.email)) {
             yield yieldableState;
           } else {
-            yield ScanQRCodeError('This participant is not yet registered');
+            yield ScanQRCodeError('Invalid Email Address');
           }
         } else {
           yield ScanQRCodeError('Invalid QRCode');

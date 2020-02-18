@@ -1,7 +1,5 @@
 library organizer_screen_state;
 
-import 'dart:convert';
-
 import 'package:attendance_tracka/src/core/built_value/serializers.dart';
 import 'package:attendance_tracka/src/features/app/model/user_model.dart';
 import 'package:built_value/built_value.dart';
@@ -23,8 +21,6 @@ abstract class VolunteersState implements Built<VolunteersState, VolunteersState
   static VolunteersState initialState() => VolunteersState((s) => s
     ..loading = false
     ..errorMessage = '');
-  // fields go here
-
   VolunteersState clear() => rebuild((b) => b..volunteers.clear());
 
   factory VolunteersState([updates(VolunteersStateBuilder b)]) = _$VolunteersState;
