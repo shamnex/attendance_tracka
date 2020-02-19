@@ -42,7 +42,7 @@ class AppHydratedStorageImpl implements HydratedStorage {
   @override
   Future<void> clear() async {
     _storage.clear();
-    await _db.deleteFromDisk();
+    await _db.clear();
   }
 
   @override

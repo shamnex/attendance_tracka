@@ -37,6 +37,16 @@ class AppColors {
   );
   static const int _primaryColor = 0xFFEF962B;
   static const int _secondaryColor = 0xFF743E00;
+  static const Color background = Color(0xFFEDEDED);
+  static const Color backgroundDark = Color(0xff303030);
+  static const Color text = Colors.black87;
+  static List<Color> primaryGradient = [primary, secondary.shade900];
+
+  static const Color success = Color(0xFF009944);
+  static const Color error = Color(0xFFFF7777);
+  static const Color warning = Color(0xFFf0541e);
+  static const Color information = Color(0xFF63c0df);
+  static const Color hint = Color(0xFF959595);
 }
 
 ///Colors Generated from http://mcg.mbitson.com/

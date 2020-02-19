@@ -9,15 +9,17 @@ abstract class TokenManager {
 }
 
 class TokenManagerImpl implements TokenManager {
-  TokenManagerImpl(HiveInterface hive) : _hive = hive;
-  var key = Hive.generateSecureKey();
+  TokenManagerImpl(HiveInterface hive) {
+    _hive = hive;
+    init();
+  }
   static String _tokenKey = 'token';
-  final HiveInterface _hive;
+  HiveInterface _hive;
   String token;
   LazyBox<String> db;
 
   init() async {
-    db = await _hive.openLazyBox<String>(_tokenKey, encryptionKey: key);
+    db = await _hive.openLazyBox<String>(_tokenKey);
   }
 
   @override

@@ -1,4 +1,4 @@
-package com.example.attendance_tracka
+package com.ai6.attendanca_tracka
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

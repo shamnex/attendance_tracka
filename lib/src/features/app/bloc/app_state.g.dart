@@ -37,7 +37,18 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
       serializers.serialize(object.hasCompletedWalkThrough,
           specifiedType: const FullType(bool)),
     ];
-
+    if (object.iteration != null) {
+      result
+        ..add('iteration')
+        ..add(serializers.serialize(object.iteration,
+            specifiedType: const FullType(int)));
+    }
+    if (object.currentUser != null) {
+      result
+        ..add('currentUser')
+        ..add(serializers.serialize(object.currentUser,
+            specifiedType: const FullType(User)));
+    }
     return result;
   }
 
@@ -60,6 +71,10 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
           result.loading = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
+        case 'iteration':
+          result.iteration = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
         case 'flavor':
           result.flavor = serializers.deserialize(value,
               specifiedType: const FullType(Flavor)) as Flavor;
@@ -76,6 +91,10 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
           result.hasCompletedWalkThrough = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
+        case 'currentUser':
+          result.currentUser.replace(serializers.deserialize(value,
+              specifiedType: const FullType(User)) as User);
+          break;
       }
     }
 
@@ -89,6 +108,8 @@ class _$AppState extends AppState {
   @override
   final bool loading;
   @override
+  final int iteration;
+  @override
   final Flavor flavor;
   @override
   final AppMode mode;
@@ -96,6 +117,8 @@ class _$AppState extends AppState {
   final AppTheme theme;
   @override
   final bool hasCompletedWalkThrough;
+  @override
+  final User currentUser;
 
   factory _$AppState([void Function(AppStateBuilder) updates]) =>
       (new AppStateBuilder()..update(updates)).build();
@@ -103,10 +126,12 @@ class _$AppState extends AppState {
   _$AppState._(
       {this.hasOnboarded,
       this.loading,
+      this.iteration,
       this.flavor,
       this.mode,
       this.theme,
-      this.hasCompletedWalkThrough})
+      this.hasCompletedWalkThrough,
+      this.currentUser})
       : super._() {
     if (hasOnboarded == null) {
       throw new BuiltValueNullFieldError('AppState', 'hasOnboarded');
@@ -141,10 +166,12 @@ class _$AppState extends AppState {
     return other is AppState &&
         hasOnboarded == other.hasOnboarded &&
         loading == other.loading &&
+        iteration == other.iteration &&
         flavor == other.flavor &&
         mode == other.mode &&
         theme == other.theme &&
-        hasCompletedWalkThrough == other.hasCompletedWalkThrough;
+        hasCompletedWalkThrough == other.hasCompletedWalkThrough &&
+        currentUser == other.currentUser;
   }
 
   @override
@@ -152,11 +179,17 @@ class _$AppState extends AppState {
     return $jf($jc(
         $jc(
             $jc(
-                $jc($jc($jc(0, hasOnboarded.hashCode), loading.hashCode),
-                    flavor.hashCode),
-                mode.hashCode),
-            theme.hashCode),
-        hasCompletedWalkThrough.hashCode));
+                $jc(
+                    $jc(
+                        $jc(
+                            $jc($jc(0, hasOnboarded.hashCode),
+                                loading.hashCode),
+                            iteration.hashCode),
+                        flavor.hashCode),
+                    mode.hashCode),
+                theme.hashCode),
+            hasCompletedWalkThrough.hashCode),
+        currentUser.hashCode));
   }
 
   @override
@@ -164,10 +197,12 @@ class _$AppState extends AppState {
     return (newBuiltValueToStringHelper('AppState')
           ..add('hasOnboarded', hasOnboarded)
           ..add('loading', loading)
+          ..add('iteration', iteration)
           ..add('flavor', flavor)
           ..add('mode', mode)
           ..add('theme', theme)
-          ..add('hasCompletedWalkThrough', hasCompletedWalkThrough))
+          ..add('hasCompletedWalkThrough', hasCompletedWalkThrough)
+          ..add('currentUser', currentUser))
         .toString();
   }
 }
@@ -182,6 +217,10 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   bool _loading;
   bool get loading => _$this._loading;
   set loading(bool loading) => _$this._loading = loading;
+
+  int _iteration;
+  int get iteration => _$this._iteration;
+  set iteration(int iteration) => _$this._iteration = iteration;
 
   Flavor _flavor;
   Flavor get flavor => _$this._flavor;
@@ -200,16 +239,22 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   set hasCompletedWalkThrough(bool hasCompletedWalkThrough) =>
       _$this._hasCompletedWalkThrough = hasCompletedWalkThrough;
 
+  UserBuilder _currentUser;
+  UserBuilder get currentUser => _$this._currentUser ??= new UserBuilder();
+  set currentUser(UserBuilder currentUser) => _$this._currentUser = currentUser;
+
   AppStateBuilder();
 
   AppStateBuilder get _$this {
     if (_$v != null) {
       _hasOnboarded = _$v.hasOnboarded;
       _loading = _$v.loading;
+      _iteration = _$v.iteration;
       _flavor = _$v.flavor;
       _mode = _$v.mode;
       _theme = _$v.theme;
       _hasCompletedWalkThrough = _$v.hasCompletedWalkThrough;
+      _currentUser = _$v.currentUser?.toBuilder();
       _$v = null;
     }
     return this;
@@ -230,14 +275,29 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
 
   @override
   _$AppState build() {
-    final _$result = _$v ??
-        new _$AppState._(
-            hasOnboarded: hasOnboarded,
-            loading: loading,
-            flavor: flavor,
-            mode: mode,
-            theme: theme,
-            hasCompletedWalkThrough: hasCompletedWalkThrough);
+    _$AppState _$result;
+    try {
+      _$result = _$v ??
+          new _$AppState._(
+              hasOnboarded: hasOnboarded,
+              loading: loading,
+              iteration: iteration,
+              flavor: flavor,
+              mode: mode,
+              theme: theme,
+              hasCompletedWalkThrough: hasCompletedWalkThrough,
+              currentUser: _currentUser?.build());
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'currentUser';
+        _currentUser?.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'AppState', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

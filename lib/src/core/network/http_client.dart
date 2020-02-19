@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:io';
 import 'package:attendance_tracka/env/url.dart';
 import 'package:attendance_tracka/src/core/network/token_manager.dart';
@@ -10,8 +9,12 @@ import 'package:meta/meta.dart';
 abstract class AppHTTPClient {
   AppHTTPClient(Flavor flavor);
   String baseURL;
-  Future<Response> get(String url);
-  Future<Response> post(String endpoint, {@required dynamic body});
+  Future<Response> get(String url, {bool useBaseURL = true});
+  Future<Response> post(
+    String endpoint, {
+    @required dynamic body,
+  });
+  Future<Response> put(String endpoint, {@required dynamic body});
   Future<Response> upload(String endpoint, {@required List<File> file, @required dynamic body});
 }
 
@@ -39,12 +42,21 @@ class AppHTTPClientImpl implements AppHTTPClient {
   }
 
   String baseURL;
-  Future<Response> get(String url, {Function(int, int) onReceiveProgress}) async {
-    return _client.get(baseURL + url, onReceiveProgress: onReceiveProgress);
+  Future<Response> get(String url, {Function(int, int) onReceiveProgress, bool useBaseURL = true}) async {
+    print('${useBaseURL ? baseURL : ''}$url');
+    return _client.get('${useBaseURL ? baseURL : ''}$url', onReceiveProgress: onReceiveProgress);
   }
 
   Future<Response> post(String endpoint, {@required dynamic body}) async {
     return _client.post(
+      baseURL + endpoint,
+      data: body,
+      options: Options(),
+    );
+  }
+
+  Future<Response> put(String endpoint, {@required dynamic body}) async {
+    return _client.put(
       baseURL + endpoint,
       data: body,
       options: Options(),
@@ -73,8 +85,8 @@ class AppHTTPClientImpl implements AppHTTPClient {
 
   void _setupLoggingInterceptor() async {
     _client.interceptors.add(InterceptorsWrapper(onRequest: (Options options) async {
-      final token = _tokenManager.token ?? await _tokenManager.getToken() ?? '';
-      options.headers[" bearer"] = token;
+      // final token = _tokenManager.token ?? await _tokenManager.getToken() ?? '';
+      // options.headers[" bearer"] = token;
       return options; //continue
     }));
   }

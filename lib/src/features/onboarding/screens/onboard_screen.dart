@@ -1,12 +1,12 @@
 import 'package:attendance_tracka/src/constants/colors.dart';
+import 'package:attendance_tracka/src/constants/paddings.dart';
 import 'package:attendance_tracka/src/features/app/bloc/app_bloc.dart';
 import 'package:attendance_tracka/src/features/app/bloc/app_event.dart';
-import 'package:attendance_tracka/src/features/app/model/app_theme.dart';
+import 'package:attendance_tracka/src/features/onboarding/screens/partials/indicators.dart';
+import 'package:attendance_tracka/src/features/onboarding/screens/partials/onboard_card.dart';
 import 'package:attendance_tracka/src/widgets/buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'dart:math' as math;
-
 import 'package:provider/provider.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -36,201 +36,75 @@ class _OnboardingScreenState extends State<OnboardingScreen> with TickerProvider
 
   @override
   Widget build(BuildContext context) {
+    //TODO REFACTOR TO FLUTTER_BLOC
     return ChangeNotifierProvider(
       lazy: true,
       create: (_) => pageController,
-      child: Scaffold(
-          body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            SizedBox(
-              height: MediaQuery.of(context).size.height * .1,
-              child: Center(
-                child: Text(
-                  'TRACKA',
-                  style: Theme.of(context).textTheme.body2.copyWith(
-                        color: AppColors.primary,
-                        fontWeight: FontWeight.w700,
-                      ),
+      child: Builder(builder: (context) {
+        return Scaffold(
+            body: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              SizedBox(
+                height: MediaQuery.of(context).size.height * .05,
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * .65,
+                child: PageView(
+                  onPageChanged: (index) {
+                    setState(() {
+                      activeIndex = index;
+                    });
+                  },
+                  controller: pageController,
+                  children: <Widget>[
+                    ...List.generate(
+                        onBoardTexts.length,
+                        (index) => OnboardCard(
+                              offset: pageOffset - index,
+                              text: onBoardTexts[index],
+                            ))
+                  ],
                 ),
               ),
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * .65,
-              child: PageView(
-                onPageChanged: (index) {
-                  setState(() {
-                    activeIndex = index;
-                  });
-                },
-                controller: pageController,
+              Expanded(
+                  child: Column(
                 children: <Widget>[
-                  ...List.generate(
-                      onBoardTexts.length,
-                      (index) => _OnboardCard(
-                            offset: pageOffset - index,
-                            text: onBoardTexts[index],
-                          ))
-                ],
-              ),
-            ),
-            Expanded(
-                child: Column(
-              children: <Widget>[
-                _BuildIndicators(
-                  activeItem: activeIndex,
-                  itemCount: onBoardTexts.length,
-                ),
-                const Spacer(),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 32.0),
-                  child: AppButton(
+                  BuildIndicators(
+                    activeItem: activeIndex,
+                    itemCount: onBoardTexts.length,
+                  ),
+                  const Spacer(),
+                  Padding(
+                    padding: AppPaddings.bodyH,
+                    child: AppButton(
+                      onPressed: () {
+                        BlocProvider.of<AppBloc>(context).add(HasOnboarded());
+                      },
+                      child: Text(
+                        'Get Started'.toUpperCase(),
+                        style: Theme.of(context).textTheme.button.copyWith(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                  const Spacer(),
+                  FlatButton(
                     onPressed: () {
-                      BlocProvider.of<AppBloc>(context).add(ThemeChanged(theme: AppTheme.OrangeDark));
+                      BlocProvider.of<AppBloc>(context).add(HasOnboarded());
                     },
                     child: Text(
-                      'Get Started'.toUpperCase(),
-                      style: Theme.of(context).textTheme.button.copyWith(color: Colors.white),
+                      'Skip',
+                      style: Theme.of(context).textTheme.button.copyWith(color: AppColors.secondary.shade200),
                     ),
                   ),
-                ),
-                const Spacer(),
-                FlatButton(
-                  onPressed: () {},
-                  child: Text(
-                    'Skip',
-                    style: Theme.of(context).textTheme.button.copyWith(color: AppColors.secondary.shade200),
-                  ),
-                ),
-                const Spacer(),
-              ],
-            )),
-          ],
-        ),
-      )),
-    );
-  }
-}
-
-class _OnboardCard extends StatefulWidget {
-  final String text;
-  const _OnboardCard({Key key, this.text, this.offset}) : super(key: key);
-  final double offset;
-
-  @override
-  __OnboardCardState createState() => __OnboardCardState();
-}
-
-class __OnboardCardState extends State<_OnboardCard> with TickerProviderStateMixin {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    double gauss = math.exp(-(math.pow((widget.offset.abs() - 0.5), 2) / 0.08));
-    double scale = (1 - (widget.offset.abs() * .5)).clamp(0.8, 1.0);
-
-    return Transform.scale(
-      scale: Curves.easeInOut.transform(scale),
-      child: Transform.translate(
-        offset: Offset(-80 * Curves.easeIn.transform(gauss) * widget.offset.sign, 0),
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              child: Stack(
-                alignment: Alignment.bottomCenter,
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.only(bottom: 40),
-                    height: 100,
-                    width: 140,
-                    decoration: BoxDecoration(color: Colors.transparent, boxShadow: [
-                      BoxShadow(
-                        blurRadius: 50,
-                        color: AppColors.primary.shade900,
-                      ),
-                    ]),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(bottom: 40, left: 8, right: 8),
-                    decoration: BoxDecoration(
-                      color: AppColors.primary.shade50,
-                      borderRadius: BorderRadius.circular(16), //<--custom shape
-                    ),
-                    child: Column(
-                      children: <Widget>[
-                        ClipRRect(
-                            //<--clipping image
-                            borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-                            child: SizedBox()),
-                        Expanded(
-                          child: SizedBox.expand(), //<-- will be replaced soon :)
-                        ),
-                      ],
-                    ),
-                  ),
+                  const Spacer(),
                 ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-              child: Text(
-                widget.text,
-                style: Theme.of(context).textTheme.body2,
-                maxLines: 2,
-                textAlign: TextAlign.center,
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _BuildIndicators extends StatelessWidget {
-  const _BuildIndicators({
-    Key key,
-    this.itemCount,
-    this.activeItem,
-    this.radius,
-  })  : assert(activeItem <= itemCount),
-        super(key: key);
-
-  final int itemCount;
-  final int activeItem;
-  final double radius;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(
-        itemCount,
-        (index) => AnimatedContainer(
-          duration: const Duration(milliseconds: 300),
-          margin: EdgeInsets.only(right: radius ?? 10),
-          height: radius ?? 10,
-          width: radius ?? 10,
-          decoration: BoxDecoration(
-            color: index == activeItem ? AppColors.primary : AppColors.primary.shade100,
-            shape: BoxShape.circle,
+              )),
+            ],
           ),
-        ),
-      ),
+        ));
+      }),
     );
   }
 }
